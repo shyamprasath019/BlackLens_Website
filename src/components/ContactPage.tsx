@@ -11,6 +11,8 @@ export function ContactPage() {
     message: '',
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -20,16 +22,57 @@ export function ContactPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  if (!import.meta.env.VITE_WEB3FORMS_KEY) {
+    console.warn("Web3Forms key missing");
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, this would send the data to a backend
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', serviceType: '', message: '' });
-    }, 3000);
+    setLoading(true);
+    setError(null);
+    setSubmitted(false);
+
+    const payload = {
+      access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+      subject: "New Enquiry - Black Lens Photography",
+      from_name: formData.name,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      service: formData.serviceType,
+      message: formData.message,
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          serviceType: "",
+          message: "",
+        });
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setError("Network error. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   const serviceTypes = [
     'Wedding Photography',
@@ -173,6 +216,12 @@ export function ContactPage() {
                   </motion.div>
                 )}
 
+                {error && (
+                      <div className="bg-red-500/20 border border-red-500 text-white p-4 rounded-lg mb-6">
+                        {error}
+                      </div>
+                    )}
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-white mb-3">
@@ -263,12 +312,17 @@ export function ContactPage() {
 
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full bg-[#d4af37] text-[#0a0a0a] px-6 py-4 rounded-lg hover:bg-[#b8964f] transition-colors flex items-center justify-center gap-2"
+                    disabled={loading}
+                    whileHover={!loading ? { scale: 1.02 } : undefined}
+                    whileTap={!loading ? { scale: 0.98 } : undefined}
+                    className={`w-full px-6 py-4 rounded-lg flex items-center justify-center gap-2 transition-colors
+                      ${loading 
+                        ? "bg-[#b8964f] cursor-not-allowed" 
+                        : "bg-[#d4af37] hover:bg-[#b8964f]"
+                      } text-[#0a0a0a]`}
                   >
                     <Send className="w-5 h-5" />
-                    Send Message
+                    {loading ? "Sending..." : "Send Message"}
                   </motion.button>
                 </form>
               </div>
