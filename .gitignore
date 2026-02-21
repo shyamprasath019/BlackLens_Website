@@ -1,21 +1,31 @@
-# Environment variables
-.env
-
-# Node dependencies
+# Dependencies
 node_modules/
+sanity/node_modules/
 
-# Build output
+# Production build
 dist/
+build/
+
+# Vite cache
+.vite/
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Environment variables
+.env
+.env.*
+sanity/.env
+
 # OS files
 .DS_Store
 Thumbs.db
 
-# Editor files
+# IDE files
 .vscode/
 .idea/
+
+# Misc
+coverage/
