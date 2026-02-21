@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
 import { Camera, Film, Users, Award, ArrowRight, Star } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useEffect, useState } from 'react';
+import { sanityClient } from '../lib/sanityClient';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -58,6 +60,53 @@ export function HomePage({ onNavigate }: HomePageProps) {
     { number: '50K+', label: 'Photos Captured' },
   ];
 
+  const [homeContent, setHomeContent] = useState<{
+  heroTitle: string;
+  heroSubtitle: string;
+  heroCTA: string;
+  } | null>(null);
+
+  const [servicesData, setServicesData] = useState<
+  {
+    title: string;
+    description: string;
+    imageUrl?: string;
+    features?: string[];
+  }[]
+  >([]);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "homePage"][0]{
+          heroTitle,
+          heroSubtitle,
+          heroCTA
+        }`
+      )
+      // .then(setHomeContent)
+      .then((data) => {
+        console.log("Sanity homePage data:", data);
+        setHomeContent(data);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+  sanityClient
+    .fetch(
+      `*[_type == "service"]{
+        title,
+        description,
+        "imageUrl": image.asset->url,
+        features
+      }`
+    )
+    .then(setServicesData)
+    .catch(console.error);
+  }, []);
+
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -79,24 +128,36 @@ export function HomePage({ onNavigate }: HomePageProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="inline-block mb-6 px-6 py-3 bg-[#d4af37]/20 border border-[#d4af37] rounded-full">
-              <span className="text-[#d4af37] text-sm tracking-wider">PREMIUM PHOTOGRAPHY STUDIO</span>
-            </div>
             <h1 className="text-white mb-8 max-w-4xl mx-auto px-4">
-              Capturing Stories.<br />Creating Timeless Memories.
+              {homeContent?.heroTitle ?? (
+                <>
+                  Capturing Stories.<br />Creating Timeless Memories.
+                </>
+              )}
             </h1>
+
             <p className="text-[#e5e5e5] text-xl mb-10 max-w-2xl mx-auto px-4">
-              Professional photography and videography services across Tamil Nadu. 
-              Specializing in weddings, portraits, and cinematic storytelling.
+              {homeContent?.heroSubtitle ??
+                "Professional photography and videography services across Tamil Nadu. Specializing in weddings, portraits, and cinematic storytelling."}
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-              <motion.button
+              {/* <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate('contact')}
                 className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors flex items-center justify-center gap-2"
               >
                 Book a Shoot
+                <ArrowRight className="w-5 h-5" />
+              </motion.button> */}
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => onNavigate('contact')}
+                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors flex items-center justify-center gap-2"
+              >
+                {homeContent?.heroCTA ?? "Book a Shoot"}
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
               <motion.button
@@ -165,7 +226,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
+            {(servicesData.length > 0 ? servicesData : services).map((service, index) => (
               <motion.div
                 key={service.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -176,7 +237,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] hover:border-[#d4af37] transition-all cursor-pointer group"
               >
                 <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-[#d4af37]/20 transition-colors">
+                  {service.icon && (
                   <service.icon className="w-7 h-7 text-[#d4af37]" />
+                )}
                 </div>
                 <h3 className="text-white mb-3">{service.title}</h3>
                 <p className="text-[#9ca3af] text-sm leading-relaxed">{service.description}</p>
