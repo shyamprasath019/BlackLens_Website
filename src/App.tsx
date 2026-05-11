@@ -1,44 +1,60 @@
-import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { Suspense, lazy, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { HomePage } from './components/HomePage';
-import { ServicesPage } from './components/ServicesPage';
-import { PortfolioPage } from './components/PortfolioPage';
-import { PackagesPage } from './components/PackagesPage';
-import { AboutPage } from './components/AboutPage';
-import { ContactPage } from './components/ContactPage';
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+// Lazy load page components
+const HomePage = lazy(() => import('./components/HomePage').then(module => ({ default: module.HomePage })));
+const ServicesPage = lazy(() => import('./components/ServicesPage').then(module => ({ default: module.ServicesPage })));
+const PortfolioPage = lazy(() => import('./components/PortfolioPage').then(module => ({ default: module.PortfolioPage })));
+const PackagesPage = lazy(() => import('./components/PackagesPage').then(module => ({ default: module.PackagesPage })));
+const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ default: module.AboutPage })));
+const ContactPage = lazy(() => import('./components/ContactPage').then(module => ({ default: module.ContactPage })));
 
-  const handleNavigate = (page: string) => {
-    setCurrentPage(page);
-  };
+// Loading Fallback Component
+const PageLoader = () => (
+  <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <HomePage onNavigate={handleNavigate} />;
-      case 'services':
-        return <ServicesPage onNavigate={handleNavigate} />;
-      case 'portfolio':
-        return <PortfolioPage />;
-      case 'packages':
-        return <PackagesPage onNavigate={handleNavigate} />;
-      case 'about':
-        return <AboutPage onNavigate={handleNavigate} />;
-      case 'contact':
-        return <ContactPage />;
-      default:
-        return <HomePage onNavigate={handleNavigate} />;
-    }
-  };
+import { Studio } from 'sanity';
+import config from './sanity/sanity.config';
 
+const AdminPanel = () => {
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      <Header currentPage={currentPage} onNavigate={handleNavigate} />
-      <main>{renderPage()}</main>
-      <Footer onNavigate={handleNavigate} />
+    <div className="h-screen max-h-screen overflow-hidden">
+      <Studio config={config} />
     </div>
   );
+};
+
+export default function App() {
+  return (
+    <HelmetProvider>
+      <Router>
+        <div className="min-h-screen bg-[#0a0a0a]">
+          <Header />
+          <main>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/portfolio" element={<PortfolioPage />} />
+                <Route path="/packages" element={<PackagesPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/admin/*" element={<AdminPanel />} />
+                {/* Fallback to home */}
+                <Route path="*" element={<HomePage />} />
+              </Routes>
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </HelmetProvider>
+  );
 }
+

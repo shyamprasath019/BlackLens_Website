@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useEffect } from 'react';
+import { sanityClient, urlFor } from '../lib/sanityClient';
+import { Helmet } from 'react-helmet-async';
 
 export function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -18,7 +21,9 @@ export function PortfolioPage() {
     { id: 'cinematography', label: 'Cinematography' },
   ];
 
-  const portfolioItems = [
+  const [portfolioItems, setPortfolioItems] = useState<
+    { id: string | number; category: string; image: any; alt?: string }[]
+  >([
     {
       id: 1,
       category: 'weddings',
@@ -103,7 +108,31 @@ export function PortfolioPage() {
       image: 'https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
       alt: 'Cinematography camera equipment',
     },
-  ];
+  ]);
+
+  const getOptimizedUrl = (image: any) => {
+    if (!image) return '';
+    if (typeof image === 'string') return image; // fallback string URLs
+    return urlFor(image).auto('format').fit('max').width(800).url(); // optimize for portfolio grid
+  };
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "portfolioItem"]{
+          "id": _id,
+          category,
+          image,
+          alt
+        }`
+      )
+      .then((data) => {
+        if (data && data.length > 0) {
+          setPortfolioItems(data);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   const filteredItems =
     selectedCategory === 'all'
@@ -112,6 +141,11 @@ export function PortfolioPage() {
 
   return (
     <div className="min-h-screen pt-20">
+      <Helmet>
+        <title>Portfolio | Black Lens Photography</title>
+        <meta name="description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12 text-center">
@@ -165,11 +199,11 @@ export function PortfolioPage() {
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.02 }}
                   className="relative cursor-pointer group overflow-hidden rounded-lg"
-                  onClick={() => setLightboxImage(item.image)}
+                  onClick={() => setLightboxImage(getOptimizedUrl(item.image))}
                 >
                   <ImageWithFallback
-                    src={item.image}
-                    alt={item.alt}
+                    src={getOptimizedUrl(item.image)}
+                    alt={item.alt || 'Portfolio Item'}
                     className="w-full h-auto"
                   />
                   <div className="absolute inset-0 bg-[#0a0a0a]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -207,7 +241,7 @@ export function PortfolioPage() {
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
               src={lightboxImage}
-              alt="Portfolio image"
+              alt="Portfolio image lightbox"
               className="max-w-full max-h-[90vh] object-contain rounded-lg"
             />
           </motion.div>

@@ -1,13 +1,15 @@
-import { motion } from 'motion/react';
 import { Camera, Heart, Baby, Gift, Briefcase, ShoppingBag, Shirt, Video, ArrowRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useEffect, useState } from 'react';
+import { sanityClient, urlFor } from '../lib/sanityClient';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
-interface ServicesPageProps {
-  onNavigate: (page: string) => void;
-}
-
-export function ServicesPage({ onNavigate }: ServicesPageProps) {
-  const services = [
+export function ServicesPage() {
+  const [services, setServices] = useState<
+    { icon: any; title: string; description: string; features: string[]; image: any }[]
+  >([
     {
       icon: Camera,
       title: 'Photo Studio',
@@ -64,10 +66,51 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
       features: ['Wedding Films', 'Instagram Reels', 'YouTube Shorts', 'Commercial Videos'],
       image: 'https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
     },
-  ];
+  ]);
+
+  const getOptimizedUrl = (image: any) => {
+    if (!image) return '';
+    if (typeof image === 'string') return image; // fallback string URLs
+    return urlFor(image).auto('format').fit('max').width(1000).url(); // optimize for half-width service blocks
+  };
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "service"]{
+          title,
+          description,
+          features,
+          image
+        }`
+      )
+      .then((data) => {
+        if (data && data.length > 0) {
+          // Map icons back to data based on title
+          const mappedData = data.map((item: any) => {
+            let Icon = Camera;
+            if (item.title.toLowerCase().includes('wedding') || item.title.toLowerCase().includes('event')) Icon = Heart;
+            if (item.title.toLowerCase().includes('maternity') || item.title.toLowerCase().includes('baby')) Icon = Baby;
+            if (item.title.toLowerCase().includes('birthday')) Icon = Gift;
+            if (item.title.toLowerCase().includes('product')) Icon = ShoppingBag;
+            if (item.title.toLowerCase().includes('fashion')) Icon = Shirt;
+            if (item.title.toLowerCase().includes('corporate')) Icon = Briefcase;
+            if (item.title.toLowerCase().includes('video') || item.title.toLowerCase().includes('cine')) Icon = Video;
+            return { ...item, icon: Icon };
+          });
+          setServices(mappedData);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <div className="min-h-screen pt-20">
+      <Helmet>
+        <title>Our Services | Black Lens Photography</title>
+        <meta name="description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12 text-center">
@@ -107,7 +150,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                     className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden"
                   >
                     <ImageWithFallback
-                      src={service.image}
+                      src={getOptimizedUrl(service.image)}
                       alt={`${service.title} - Black Lens Photography Chennai`}
                       className="w-full h-full object-cover"
                     />
@@ -135,15 +178,13 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                     </ul>
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => onNavigate('contact')}
-                    className="bg-[#d4af37] text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2"
+                  <Link
+                    to="/contact"
+                    className="bg-[#d4af37] text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2 font-medium"
                   >
                     Enquire Now
                     <ArrowRight className="w-5 h-5" />
-                  </motion.button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -202,22 +243,18 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
               Contact us today to discuss your photography needs and get a custom quote
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => onNavigate('contact')}
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors"
+              <Link
+                to="/contact"
+                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors font-medium text-center"
               >
                 Contact Us
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => onNavigate('packages')}
-                className="bg-transparent text-white px-10 py-4 rounded-lg border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all"
+              </Link>
+              <Link
+                to="/packages"
+                className="bg-transparent text-white px-10 py-4 rounded-lg border-2 border-white hover:bg-white hover:text-[#0a0a0a] transition-all font-medium text-center"
               >
                 View Packages
-              </motion.button>
+              </Link>
             </div>
           </motion.div>
         </div>

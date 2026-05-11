@@ -1,12 +1,10 @@
 import { motion } from 'motion/react';
 import { Camera, Heart, Award, Users, Target, Eye } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
-interface AboutPageProps {
-  onNavigate: (page: string) => void;
-}
-
-export function AboutPage({ onNavigate }: AboutPageProps) {
+export function AboutPage() {
   const values = [
     {
       icon: Heart,
@@ -62,6 +60,11 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
   return (
     <div className="min-h-screen pt-20">
+      <Helmet>
+        <title>About Us | Black Lens Photography</title>
+        <meta name="description" content="Learn about Black Lens Photography, our team, and our passion for capturing timeless moments." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -345,14 +348,12 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <p className="text-[#9ca3af] mb-10 max-w-2xl mx-auto px-4">
               Ready to work with us? Get in touch and let's discuss your photography needs
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('contact')}
-              className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors"
+            <Link
+              to="/contact"
+              className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors font-medium inline-block"
             >
               Contact Us Today
-            </motion.button>
+            </Link>
           </motion.div>
         </div>
       </section>

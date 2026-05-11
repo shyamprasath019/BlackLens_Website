@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin, Send, MessageSquare } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -88,6 +89,11 @@ export function ContactPage() {
 
   return (
     <div className="min-h-screen pt-20">
+      <Helmet>
+        <title>Contact Us | Black Lens Photography</title>
+        <meta name="description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12 text-center">

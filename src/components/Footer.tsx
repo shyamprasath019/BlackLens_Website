@@ -1,10 +1,9 @@
-import { Camera, Phone, Mail, MapPin, Instagram, Youtube, Facebook } from 'lucide-react';
+import { Camera, Phone, Mail, MapPin, Instagram, Youtube, Facebook, MessageCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { sanityClient } from '../lib/sanityClient';
+import { Link } from 'react-router-dom';
 
-interface FooterProps {
-  onNavigate: (page: string) => void;
-}
-
-export function Footer({ onNavigate }: FooterProps) {
+export function Footer() {
   const services = [
     'Event Photography',
     'Pre-Wedding Shoots',
@@ -15,13 +14,29 @@ export function Footer({ onNavigate }: FooterProps) {
   ];
 
   const quickLinks = [
-    { name: 'Home', id: 'home' },
-    { name: 'Services', id: 'services' },
-    { name: 'Portfolio', id: 'portfolio' },
-    { name: 'Packages', id: 'packages' },
-    { name: 'About', id: 'about' },
-    { name: 'Contact', id: 'contact' },
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Packages', path: '/packages' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
   ];
+
+  const [settings, setSettings] = useState<{
+    instagram?: string;
+    facebook?: string;
+    whatsapp?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(`*[_type == "siteSettings"][0]{ instagram, facebook, whatsapp }`)
+      .then(setSettings)
+      .catch(console.error);
+  }, []);
 
   return (
     <footer className="bg-[#0a0a0a] border-t border-[#1a1a1a] mt-20">
@@ -29,29 +44,29 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Section */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <Link to="/" className="flex items-center gap-3 mb-6">
               <div className="bg-[#d4af37] p-2 rounded-lg">
                 <Camera className="w-6 h-6 text-[#0a0a0a]" />
               </div>
               <div>
-                <div className="text-white tracking-tight leading-tight">Black Lens</div>
+                <div className="text-white tracking-tight leading-tight font-medium">Black Lens</div>
                 <div className="text-[#d4af37] text-xs tracking-wider">PHOTOGRAPHY</div>
               </div>
-            </div>
+            </Link>
             <p className="text-[#9ca3af] text-sm mb-6 leading-relaxed">
               Professional Photography & Videography Services in Chennai and across Tamil Nadu. 
               Capturing stories, creating timeless memories.
             </p>
             <div className="flex gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+              <a href={settings?.instagram || "https://instagram.com"} target="_blank" rel="noopener noreferrer" 
                 className="text-[#9ca3af] hover:text-[#d4af37] transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+              <a href={settings?.whatsapp || "https://wa.me/91"} target="_blank" rel="noopener noreferrer"
                 className="text-[#9ca3af] hover:text-[#d4af37] transition-colors">
-                <Youtube className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5" />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+              <a href={settings?.facebook || "https://facebook.com"} target="_blank" rel="noopener noreferrer"
                 className="text-[#9ca3af] hover:text-[#d4af37] transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
@@ -63,16 +78,14 @@ export function Footer({ onNavigate }: FooterProps) {
             <h4 className="text-white mb-6">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() => {
-                      onNavigate(link.id);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors"
                   >
                     {link.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

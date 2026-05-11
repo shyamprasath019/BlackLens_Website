@@ -1,25 +1,20 @@
-import { motion } from 'motion/react';
 import { Check, Star, ArrowRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { sanityClient } from '../lib/sanityClient';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
-interface PackagesPageProps {
-  onNavigate: (page: string) => void;
-}
-
-export function PackagesPage({ onNavigate }: PackagesPageProps) {
-  const packages = [
+export function PackagesPage() {
+  const [packages, setPackages] = useState<
+    { name: string; price: string; description: string; features: string[]; popular: boolean; duration?: string }[]
+  >([
     {
       name: 'Basic',
       price: '₹15,000',
       duration: 'Starting from',
       description: 'Perfect for small events and intimate gatherings',
-      features: [
-        '4 hours coverage',
-        '200+ edited photos',
-        'Online gallery',
-        'Basic editing',
-        '2 photographers',
-        '15-day delivery',
-      ],
+      features: ['4 hours coverage', '200+ edited photos', 'Online gallery', 'Basic editing', '2 photographers', '15-day delivery'],
       popular: false,
     },
     {
@@ -27,16 +22,7 @@ export function PackagesPage({ onNavigate }: PackagesPageProps) {
       price: '₹35,000',
       duration: 'Starting from',
       description: 'Most popular choice for weddings and major events',
-      features: [
-        '8 hours coverage',
-        '500+ edited photos',
-        'Online gallery + USB',
-        'Premium editing',
-        '3 photographers + 1 videographer',
-        'Cinematic video highlights',
-        'Premium album',
-        '10-day delivery',
-      ],
+      features: ['8 hours coverage', '500+ edited photos', 'Online gallery + USB', 'Premium editing', '3 photographers + 1 videographer', 'Cinematic video highlights', 'Premium album', '10-day delivery'],
       popular: true,
     },
     {
@@ -44,22 +30,30 @@ export function PackagesPage({ onNavigate }: PackagesPageProps) {
       price: '₹75,000',
       duration: 'Starting from',
       description: 'Complete coverage with premium deliverables',
-      features: [
-        'Full day coverage',
-        '1000+ edited photos',
-        'Online gallery + USB + Cloud',
-        'Luxury editing & retouching',
-        '4 photographers + 2 videographers',
-        'Cinematic wedding film',
-        'Same-day edit video',
-        'Luxury photobook album',
-        'Pre-wedding shoot included',
-        'Drone coverage',
-        '7-day delivery',
-      ],
+      features: ['Full day coverage', '1000+ edited photos', 'Online gallery + USB + Cloud', 'Luxury editing & retouching', '4 photographers + 2 videographers', 'Cinematic wedding film', 'Same-day edit video', 'Luxury photobook album', 'Pre-wedding shoot included', 'Drone coverage', '7-day delivery'],
       popular: false,
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "package"] | order(price asc) {
+          name,
+          price,
+          description,
+          features,
+          popular,
+          "duration": "Starting from"
+        }`
+      )
+      .then((data) => {
+        if (data && data.length > 0) {
+          setPackages(data);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   const additionalServices = [
     { name: 'Pre-Wedding Shoot', price: '₹12,000' },
@@ -74,6 +68,11 @@ export function PackagesPage({ onNavigate }: PackagesPageProps) {
 
   return (
     <div className="min-h-screen pt-20">
+      <Helmet>
+        <title>Packages & Pricing | Black Lens Photography</title>
+        <meta name="description" content="View our photography and videography packages. We offer custom packages for weddings, events, and portraits." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="py-24 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12 text-center">
@@ -132,18 +131,16 @@ export function PackagesPage({ onNavigate }: PackagesPageProps) {
                     ))}
                   </ul>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => onNavigate('contact')}
-                    className={`w-full py-4 rounded-lg transition-colors ${
+                  <Link
+                    to="/contact"
+                    className={`block text-center w-full py-4 rounded-lg transition-colors font-medium ${
                       pkg.popular
                         ? 'bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f]'
                         : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-[#0a0a0a]'
                     }`}
                   >
                     Book This Package
-                  </motion.button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -198,15 +195,13 @@ export function PackagesPage({ onNavigate }: PackagesPageProps) {
                 Every event is unique. Let us create a personalized package that perfectly matches 
                 your requirements and budget.
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => onNavigate('contact')}
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2"
+              <Link
+                to="/contact"
+                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2 font-medium"
               >
                 Request Custom Quote
                 <ArrowRight className="w-5 h-5" />
-              </motion.button>
+              </Link>
             </motion.div>
           </div>
         </div>

@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Camera } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Link, useLocation } from 'react-router-dom';
 
-interface HeaderProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
-export function Header({ currentPage, onNavigate }: HeaderProps) {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,16 +17,20 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
   }, []);
 
   const navLinks = [
-    { name: 'Home', id: 'home' },
-    { name: 'Services', id: 'services' },
-    { name: 'Portfolio', id: 'portfolio' },
-    { name: 'Packages', id: 'packages' },
-    { name: 'About', id: 'about' },
-    { name: 'Contact', id: 'contact' },
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Packages', path: '/packages' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
   ];
 
-  const handleNavClick = (pageId: string) => {
-    onNavigate(pageId);
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname !== '/') return false;
+    return location.pathname.startsWith(path);
+  };
+
+  const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -47,55 +48,54 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
+            <Link
+              to="/"
               className="flex items-center gap-3 cursor-pointer"
-              onClick={() => handleNavClick('home')}
+              onClick={closeMobileMenu}
             >
               <div className="bg-[#d4af37] p-2 rounded-lg">
                 <Camera className="w-6 h-6 text-[#0a0a0a]" />
               </div>
               <div>
-                <div className="text-white tracking-tight leading-tight">Black Lens</div>
+                <div className="text-white tracking-tight leading-tight font-medium">Black Lens</div>
                 <div className="text-[#d4af37] text-xs tracking-wider">PHOTOGRAPHY</div>
               </div>
-            </motion.div>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-10">
               {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.id)}
+                <Link
+                  key={link.path}
+                  to={link.path}
                   className={`relative text-sm tracking-wide transition-colors ${
-                    currentPage === link.id ? 'text-[#d4af37]' : 'text-white hover:text-[#d4af37]'
+                    isActive(link.path) ? 'text-[#d4af37]' : 'text-white hover:text-[#d4af37]'
                   }`}
                 >
                   {link.name}
-                  {currentPage === link.id && (
+                  {isActive(link.path) && (
                     <motion.div
                       layoutId="activeNav"
                       className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#d4af37]"
                     />
                   )}
-                </button>
+                </Link>
               ))}
             </nav>
 
             {/* CTA Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleNavClick('contact')}
-              className="hidden md:block bg-[#d4af37] text-[#0a0a0a] px-8 py-3 rounded-lg hover:bg-[#b8964f] transition-colors"
+            <Link
+              to="/contact"
+              className="hidden md:block bg-[#d4af37] text-[#0a0a0a] px-8 py-3 rounded-lg hover:bg-[#b8964f] transition-colors font-medium text-center"
             >
               Book a Shoot
-            </motion.button>
+            </Link>
 
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden text-white p-2"
+              aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -115,28 +115,37 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           >
             <nav className="flex flex-col items-center gap-8 p-8 pt-12">
               {navLinks.map((link, index) => (
-                <motion.button
-                  key={link.id}
+                <motion.div
+                  key={link.path}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  onClick={() => handleNavClick(link.id)}
-                  className={`text-2xl ${
-                    currentPage === link.id ? 'text-[#d4af37]' : 'text-white'
-                  }`}
                 >
-                  {link.name}
-                </motion.button>
+                  <Link
+                    to={link.path}
+                    onClick={closeMobileMenu}
+                    className={`text-2xl font-medium ${
+                      isActive(link.path) ? 'text-[#d4af37]' : 'text-white'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
               ))}
-              <motion.button
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.1 }}
-                onClick={() => handleNavClick('contact')}
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg mt-6"
+                className="w-full"
               >
-                Book a Shoot
-              </motion.button>
+                <Link
+                  to="/contact"
+                  onClick={closeMobileMenu}
+                  className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg mt-6 block text-center font-medium"
+                >
+                  Book a Shoot
+                </Link>
+              </motion.div>
             </nav>
           </motion.div>
         )}

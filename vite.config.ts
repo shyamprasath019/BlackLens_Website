@@ -2,9 +2,17 @@
   import { defineConfig } from 'vite';
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
+  import Sitemap from 'vite-plugin-sitemap';
 
   export default defineConfig({
-    plugins: [react()],
+    plugins: [
+      react(),
+      Sitemap({
+        hostname: 'https://blacklensphotography.com',
+        dynamicRoutes: ['/', '/about', '/services', '/portfolio', '/packages', '/contact'],
+        outDir: 'dist'
+      })
+    ],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
@@ -51,7 +59,9 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'build',
+      rollupOptions: {
+        external: ['react/compiler-runtime']
+      }
     },
     server: {
       port: 3000,
