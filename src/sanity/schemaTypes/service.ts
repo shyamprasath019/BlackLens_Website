@@ -23,5 +23,12 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
     }),
+    defineField({
+      name: 'featured',
+      title: 'Featured on Homepage',
+      type: 'boolean',
+      description: 'If checked, this service will be highlighted on the main Home Page.',
+      initialValue: false,
+    }),
   ],
 });

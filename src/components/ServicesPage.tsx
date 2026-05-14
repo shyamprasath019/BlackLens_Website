@@ -169,7 +169,7 @@ export function ServicesPage() {
                   <div className="mb-8">
                     <h4 className="text-white mb-4">What's Included:</h4>
                     <ul className="space-y-3">
-                      {service.features.map((feature) => (
+                      {service.features && service.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-3 text-[#9ca3af]">
                           <div className="w-1.5 h-1.5 bg-[#d4af37] rounded-full mt-2.5 flex-shrink-0"></div>
                           <span className="leading-relaxed">{feature}</span>

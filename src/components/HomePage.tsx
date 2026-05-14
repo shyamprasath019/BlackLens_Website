@@ -66,7 +66,7 @@ export function HomePage() {
 
     // Fetch Services
     sanityClient
-      .fetch(`*[_type == "service"]{ title, description, image, features }`)
+      .fetch(`*[_type == "service" && featured == true][0...4]{ title, description, image, features }`)
       .then(data => { if (data && data.length > 0) setServicesData(data); })
       .catch(console.error);
 
@@ -84,7 +84,7 @@ export function HomePage() {
 
     // Fetch Testimonials
     sanityClient
-      .fetch(`*[_type == "testimonial"][0...3]{ name, quote, rating, service }`)
+      .fetch(`*[_type == "testimonial"]{ name, quote, rating, service }`)
       .then(data => { if (data && data.length > 0) setTestimonialsData(data); })
       .catch(console.error);
   }, []);
@@ -322,35 +322,49 @@ export function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(testimonialsData.length > 0
-              ? testimonialsData
-              : [
-                  { name: 'Priya & Rahul', quote: 'Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.', rating: 5, service: 'Wedding Photography' },
-                  { name: 'Ananya Sharma', quote: 'The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!', rating: 5, service: 'Pre-Wedding Shoot' },
-                  { name: 'Tech Innovations Pvt Ltd', quote: 'Outstanding product photography that elevated our brand. Highly professional team!', rating: 5, service: 'Product Photography' },
-                ]
-            ).map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a]"
-              >
-                <div className="flex gap-1 mb-6">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-[#d4af37] text-[#d4af37]" />
-                  ))}
+          <div className="overflow-hidden relative w-full py-4">
+            {/* Left and right fading edges for a premium look */}
+            <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-[#1a1a1a] to-transparent z-10"></div>
+            <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-[#1a1a1a] to-transparent z-10"></div>
+            
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+              className="flex gap-6 w-max"
+            >
+              {[
+                ...(testimonialsData.length > 0
+                  ? testimonialsData
+                  : [
+                      { name: 'Priya & Rahul', quote: 'Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.', rating: 5, service: 'Wedding Photography' },
+                      { name: 'Ananya Sharma', quote: 'The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!', rating: 5, service: 'Pre-Wedding Shoot' },
+                      { name: 'Tech Innovations Pvt Ltd', quote: 'Outstanding product photography that elevated our brand. Highly professional team!', rating: 5, service: 'Product Photography' },
+                    ]),
+                ...(testimonialsData.length > 0
+                  ? testimonialsData
+                  : [
+                      { name: 'Priya & Rahul', quote: 'Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.', rating: 5, service: 'Wedding Photography' },
+                      { name: 'Ananya Sharma', quote: 'The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!', rating: 5, service: 'Pre-Wedding Shoot' },
+                      { name: 'Tech Innovations Pvt Ltd', quote: 'Outstanding product photography that elevated our brand. Highly professional team!', rating: 5, service: 'Product Photography' },
+                    ])
+              ].map((testimonial, index) => (
+                <div
+                  key={`${testimonial.name}-${index}`}
+                  className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] w-80 md:w-96 flex-shrink-0 hover:border-[#d4af37] transition-colors"
+                >
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-[#d4af37] text-[#d4af37]" />
+                    ))}
+                  </div>
+                  <p className="text-[#e5e5e5] mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
+                  <div>
+                    <p className="text-white mb-1">{testimonial.name}</p>
+                    <p className="text-[#9ca3af] text-sm">{testimonial.service}</p>
+                  </div>
                 </div>
-                <p className="text-[#e5e5e5] mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
-                <div>
-                  <p className="text-white mb-1">{testimonial.name}</p>
-                  <p className="text-[#9ca3af] text-sm">{testimonial.service}</p>
-                </div>
-              </motion.div>
-            ))}
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>

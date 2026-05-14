@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy, useEffect } from 'react';
 import { Header } from './components/Header';
@@ -30,31 +30,38 @@ const AdminPanel = () => {
   );
 };
 
+const MainLayout = () => (
+  <>
+    <Header />
+    <main>
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
+    </main>
+    <Footer />
+  </>
+);
+
 export default function App() {
   return (
     <HelmetProvider>
       <Router>
         <div className="min-h-screen bg-[#0a0a0a]">
-          <Header />
-          <main>
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/portfolio" element={<PortfolioPage />} />
-                <Route path="/packages" element={<PackagesPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/admin/*" element={<AdminPanel />} />
-                {/* Fallback to home */}
-                <Route path="*" element={<HomePage />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/packages" element={<PackagesPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              {/* Fallback to home */}
+              <Route path="*" element={<HomePage />} />
+            </Route>
+            <Route path="/admin/*" element={<Suspense fallback={<PageLoader />}><AdminPanel /></Suspense>} />
+          </Routes>
         </div>
       </Router>
     </HelmetProvider>
   );
 }
-
