@@ -9,8 +9,9 @@
       react(),
       Sitemap({
         hostname: 'https://blacklensphotography.com',
-        dynamicRoutes: ['/', '/about', '/services', '/portfolio', '/packages', '/contact'],
-        outDir: 'dist'
+        dynamicRoutes: ['/about', '/services', '/portfolio', '/packages', '/contact'],
+        outDir: 'dist',
+        generateRobotsTxt: false
       })
     ],
     resolve: {

@@ -87,11 +87,63 @@ export function ContactPage() {
     'Other',
   ];
 
+  // JSON-LD Structured Data
+  const jsonLdData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://blacklensphotography.com/contact/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blacklensphotography.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contact",
+            "item": "https://blacklensphotography.com/contact"
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Contact Us | Black Lens Studio</title>
-        <meta name="description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
+        <title>Contact Black Lens Photography Chennai | Book a Photographer in Tamil Nadu</title>
+        <meta name="description" content="Book Black Lens Photography Chennai for weddings, events & portraits. Studio in Thirunindravur. Call +91 98765 43210 or WhatsApp for instant quotes." />
+        <link rel="canonical" href="https://blacklensphotography.com/contact" />
+        
+        {/* Geo tags */}
+        <meta name="geo.region" content="IN-TN" />
+        <meta name="geo.placename" content="Chennai" />
+        <meta name="geo.position" content="13.120547;80.00863" />
+        <meta name="ICBM" content="13.120547, 80.00863" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://blacklensphotography.com/contact" />
+        <meta property="og:title" content="Contact Black Lens Photography Chennai | Book a Photographer" />
+        <meta property="og:description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:site_name" content="Black Lens Photography" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://blacklensphotography.com/contact" />
+        <meta property="twitter:title" content="Contact Black Lens Photography Chennai | Book a Photographer" />
+        <meta property="twitter:description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
+        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+
+        {/* JSON-LD Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLdData)}
+        </script>
       </Helmet>
 
       {/* Hero Section */}

@@ -139,11 +139,63 @@ export function PortfolioPage() {
       ? portfolioItems
       : portfolioItems.filter((item) => item.category === selectedCategory);
 
+  // JSON-LD Structured Data
+  const jsonLdData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://blacklensphotography.com/portfolio/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blacklensphotography.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Portfolio",
+            "item": "https://blacklensphotography.com/portfolio"
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Portfolio | Black Lens Studio</title>
-        <meta name="description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
+        <title>Wedding & Event Photography Portfolio | Black Lens Photography Chennai</title>
+        <meta name="description" content="Explore stunning wedding, portrait, fashion & product photography by Black Lens Photography Chennai. 1000+ events covered across Tamil Nadu since 2017." />
+        <link rel="canonical" href="https://blacklensphotography.com/portfolio" />
+        
+        {/* Geo tags */}
+        <meta name="geo.region" content="IN-TN" />
+        <meta name="geo.placename" content="Chennai" />
+        <meta name="geo.position" content="13.120547;80.00863" />
+        <meta name="ICBM" content="13.120547, 80.00863" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://blacklensphotography.com/portfolio" />
+        <meta property="og:title" content="Wedding & Event Photography Portfolio | Black Lens Photography Chennai" />
+        <meta property="og:description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:site_name" content="Black Lens Photography" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://blacklensphotography.com/portfolio" />
+        <meta property="twitter:title" content="Wedding & Event Photography Portfolio | Black Lens Photography Chennai" />
+        <meta property="twitter:description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
+        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+
+        {/* JSON-LD Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLdData)}
+        </script>
       </Helmet>
 
       {/* Hero Section */}

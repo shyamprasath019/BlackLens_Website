@@ -11,6 +11,7 @@ const PortfolioPage = lazy(() => import('./components/PortfolioPage').then(modul
 const PackagesPage = lazy(() => import('./components/PackagesPage').then(module => ({ default: module.PackagesPage })));
 const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ default: module.AboutPage })));
 const ContactPage = lazy(() => import('./components/ContactPage').then(module => ({ default: module.ContactPage })));
+const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 // Loading Fallback Component
 const PageLoader = () => (
@@ -55,8 +56,8 @@ export default function App() {
               <Route path="/packages" element={<PackagesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              {/* Fallback to home */}
-              <Route path="*" element={<HomePage />} />
+              {/* Fallback to 404 Page */}
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
             <Route path="/admin/*" element={<Suspense fallback={<PageLoader />}><AdminPanel /></Suspense>} />
           </Routes>

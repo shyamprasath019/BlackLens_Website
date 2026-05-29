@@ -104,11 +104,105 @@ export function ServicesPage() {
       .catch(console.error);
   }, []);
 
+  // JSON-LD Structured Data
+  const jsonLdData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://blacklensphotography.com/services/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blacklensphotography.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://blacklensphotography.com/services"
+          }
+        ]
+      },
+      {
+        "@type": "Service",
+        "name": "Wedding Photography & Cinematography",
+        "provider": {
+          "@type": "PhotographyBusiness",
+          "name": "Black Lens Photography",
+          "url": "https://blacklensphotography.com"
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Tamil Nadu"
+        },
+        "description": "Premium cinematic wedding photography and videography coverage across Chennai and Tamil Nadu."
+      },
+      {
+        "@type": "Service",
+        "name": "Portrait & Fashion Photography",
+        "provider": {
+          "@type": "PhotographyBusiness",
+          "name": "Black Lens Photography",
+          "url": "https://blacklensphotography.com"
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Tamil Nadu"
+        },
+        "description": "Professional studio portraits, maternity shoots, model portfolios, and lookbooks."
+      },
+      {
+        "@type": "Service",
+        "name": "Product & Commercial Photography",
+        "provider": {
+          "@type": "PhotographyBusiness",
+          "name": "Black Lens Photography",
+          "url": "https://blacklensphotography.com"
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Tamil Nadu"
+        },
+        "description": "E-commerce product shots, lifestyle shoots, catalog creation, and corporate team headshots."
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Our Services | Black Lens Studio</title>
-        <meta name="description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
+        <title>Photography & Videography Services in Chennai | Black Lens Photography Tamil Nadu</title>
+        <meta name="description" content="Professional wedding photography, cinematography, portraits, product shoots & fashion photography in Chennai. Serving Thirunindravur & all Tamil Nadu." />
+        <link rel="canonical" href="https://blacklensphotography.com/services" />
+        
+        {/* Geo tags */}
+        <meta name="geo.region" content="IN-TN" />
+        <meta name="geo.placename" content="Chennai" />
+        <meta name="geo.position" content="13.120547;80.00863" />
+        <meta name="ICBM" content="13.120547, 80.00863" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://blacklensphotography.com/services" />
+        <meta property="og:title" content="Photography & Videography Services in Chennai | Black Lens Photography" />
+        <meta property="og:description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:site_name" content="Black Lens Photography" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://blacklensphotography.com/services" />
+        <meta property="twitter:title" content="Photography & Videography Services in Chennai | Black Lens Photography" />
+        <meta property="twitter:description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
+        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+
+        {/* JSON-LD Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLdData)}
+        </script>
       </Helmet>
 
       {/* Hero Section */}

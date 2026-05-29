@@ -133,7 +133,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-[#1a1a1a] mt-16 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#9ca3af] text-sm text-center md:text-left">
-            © 2025 Black Lens Photography. All rights reserved.
+            © {new Date().getFullYear()} Black Lens Photography. All rights reserved.
           </p>
           <p className="text-[#9ca3af] text-sm text-center md:text-right">
             Wedding Photographer in Tamil Nadu | Photography Studio in Chennai

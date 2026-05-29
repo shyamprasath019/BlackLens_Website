@@ -90,14 +90,122 @@ export function HomePage() {
   }, []);
 
 
+  // JSON-LD Structured Data
+  const jsonLdData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "PhotographyBusiness",
+        "@id": "https://blacklensphotography.com/#business",
+        "name": "Black Lens Photography",
+        "alternateName": "Black Lens Photography Chennai",
+        "url": "https://blacklensphotography.com",
+        "telephone": "+919876543210",
+        "email": "info@blacklensphotography.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Thirunindravur",
+          "addressLocality": "Chennai",
+          "addressRegion": "Tamil Nadu",
+          "postalCode": "602024",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 13.120547,
+          "longitude": 80.00863
+        },
+        "image": "https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+        "priceRange": "₹₹",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Sunday",
+            "opens": "10:00",
+            "closes": "17:00"
+          }
+        ],
+        "areaServed": [
+          {"@type": "City", "name": "Chennai"},
+          {"@type": "State", "name": "Tamil Nadu"}
+        ],
+        "review": [
+          {
+            "@type": "Review",
+            "author": {
+              "@type": "Person",
+              "name": "Priya & Rahul"
+            },
+            "reviewBody": "Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.",
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "5"
+            }
+          },
+          {
+            "@type": "Review",
+            "author": {
+              "@type": "Person",
+              "name": "Ananya Sharma"
+            },
+            "reviewBody": "The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!",
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "5"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://blacklensphotography.com/#website",
+        "url": "https://blacklensphotography.com",
+        "name": "Black Lens Photography",
+        "publisher": {
+          "@id": "https://blacklensphotography.com/#business"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Black Lens Studio | Professional Photography Service in Chennai & Tamil Nadu</title>
-        <meta name="description" content="Capturing stories and creating timeless memories. Professional photography and videography services across Tamil Nadu specializing in weddings, portraits, and cinematic storytelling." />
-        <meta property="og:title" content="Black Lens Photography | Capturing Stories" />
-        <meta property="og:description" content="Professional photography and videography services across Tamil Nadu." />
+        <title>Black Lens Photography Chennai | Wedding & Event Photographer in Tamil Nadu</title>
+        <meta name="description" content="Black Lens Photography, Chennai's premier wedding & event photographer. 500+ happy clients, 1000+ events across Tamil Nadu. Book your shoot today!" />
+        <link rel="canonical" href="https://blacklensphotography.com/" />
+        
+        {/* Geo tags */}
+        <meta name="geo.region" content="IN-TN" />
+        <meta name="geo.placename" content="Chennai" />
+        <meta name="geo.position" content="13.120547;80.00863" />
+        <meta name="ICBM" content="13.120547, 80.00863" />
+
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://blacklensphotography.com/" />
+        <meta property="og:title" content="Black Lens Photography Chennai | Wedding & Event Photographer" />
+        <meta property="og:description" content="Capturing stories and creating timeless memories. Professional photography and videography services across Tamil Nadu specializing in weddings, portraits, and cinematic storytelling." />
+        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:site_name" content="Black Lens Photography" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://blacklensphotography.com/" />
+        <meta property="twitter:title" content="Black Lens Photography Chennai | Wedding & Event Photographer" />
+        <meta property="twitter:description" content="Capturing stories and creating timeless memories. Professional photography and videography services across Tamil Nadu." />
+        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+
+        {/* JSON-LD Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLdData)}
+        </script>
       </Helmet>
 
       {/* Hero Section */}
