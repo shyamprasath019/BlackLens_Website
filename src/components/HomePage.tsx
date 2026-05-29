@@ -93,7 +93,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Black Lens Photography | Professional Photographer in Chennai & Tamil Nadu</title>
+        <title>Black Lens Studio | Professional Photography Service in Chennai & Tamil Nadu</title>
         <meta name="description" content="Capturing stories and creating timeless memories. Professional photography and videography services across Tamil Nadu specializing in weddings, portraits, and cinematic storytelling." />
         <meta property="og:title" content="Black Lens Photography | Capturing Stories" />
         <meta property="og:description" content="Professional photography and videography services across Tamil Nadu." />

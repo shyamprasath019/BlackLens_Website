@@ -107,7 +107,7 @@ export function ServicesPage() {
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Our Services | Black Lens Photography</title>
+        <title>Our Services | Black Lens Studio</title>
         <meta name="description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
       </Helmet>
 

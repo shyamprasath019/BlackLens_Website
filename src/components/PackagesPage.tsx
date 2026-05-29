@@ -69,7 +69,7 @@ export function PackagesPage() {
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Packages & Pricing | Black Lens Photography</title>
+        <title>Packages & Pricing | Black Lens Studio</title>
         <meta name="description" content="View our photography and videography packages. We offer custom packages for weddings, events, and portraits." />
       </Helmet>
 

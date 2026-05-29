@@ -142,7 +142,7 @@ export function PortfolioPage() {
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Portfolio | Black Lens Photography</title>
+        <title>Portfolio | Black Lens Studio</title>
         <meta name="description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
       </Helmet>
 

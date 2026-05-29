@@ -61,7 +61,7 @@ export function AboutPage() {
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>About Us | Black Lens Photography</title>
+        <title>About Us | Black Lens Studio</title>
         <meta name="description" content="Learn about Black Lens Photography, our team, and our passion for capturing timeless moments." />
       </Helmet>
 

@@ -90,7 +90,7 @@ export function ContactPage() {
   return (
     <div className="min-h-screen pt-20">
       <Helmet>
-        <title>Contact Us | Black Lens Photography</title>
+        <title>Contact Us | Black Lens Studio</title>
         <meta name="description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
       </Helmet>
 
