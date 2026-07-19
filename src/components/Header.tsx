@@ -34,7 +34,6 @@ export function Header() {
     setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
   return (
     <>
       <motion.header
@@ -42,41 +41,41 @@ export function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+          isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-md shadow-lg py-2' : 'bg-transparent py-4'
         }`}
       >
-        <div className="container mx-auto px-6 md:px-8 lg:px-12">
-          <div className="flex items-center justify-between h-20">
+        <div className="container mx-auto px-6 md:px-8">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link
               to="/"
               className="flex items-center gap-3 cursor-pointer"
               onClick={closeMobileMenu}
             >
-              <div className="bg-[#d4af37] p-2 rounded-lg">
-                <Camera className="w-6 h-6 text-[#0a0a0a]" />
+              <div className="bg-[#d4af37] p-2 rounded-lg transition-transform hover:scale-105 duration-200">
+                <Camera className="w-5 h-5 text-[#0a0a0a]" />
               </div>
               <div>
-                <div className="text-white tracking-tight leading-tight font-medium">Black Lens</div>
-                <div className="text-[#d4af37] text-xs tracking-wider">PHOTOGRAPHY</div>
+                <div className="text-white tracking-tight leading-tight font-bold text-sm md:text-base">Black Lens</div>
+                <div className="text-[#d4af37] text-[10px] tracking-widest font-semibold">PHOTOGRAPHY</div>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-10">
+            <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`relative text-sm tracking-wide transition-colors ${
-                    isActive(link.path) ? 'text-[#d4af37]' : 'text-white hover:text-[#d4af37]'
+                  className={`relative text-xs uppercase tracking-widest font-semibold transition-colors duration-200 cursor-pointer ${
+                    isActive(link.path) ? 'text-[#d4af37]' : 'text-slate-300 hover:text-white'
                   }`}
                 >
                   {link.name}
                   {isActive(link.path) && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#d4af37]"
+                      className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-[#d4af37]"
                     />
                   )}
                 </Link>
@@ -86,7 +85,7 @@ export function Header() {
             {/* CTA Button */}
             <Link
               to="/contact"
-              className="hidden md:block bg-[#d4af37] text-[#0a0a0a] px-8 py-3 rounded-lg hover:bg-[#b8964f] transition-colors font-medium text-center"
+              className="hidden md:block bg-white text-black hover:bg-[#d4af37] hover:text-black px-6 py-2.5 rounded-lg transition-all duration-300 font-bold text-xs uppercase tracking-wider text-center cursor-pointer"
             >
               Book a Shoot
             </Link>
@@ -94,7 +93,7 @@ export function Header() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden text-white p-2"
+              className="md:hidden text-white p-2 cursor-pointer"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

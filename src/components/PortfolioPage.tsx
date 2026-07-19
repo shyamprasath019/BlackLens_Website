@@ -206,7 +206,7 @@ export function PortfolioPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-[#050505]">
       <Helmet>
         <title>Wedding & Event Photography Portfolio | Black Lens Photography Chennai</title>
         <meta name="description" content="Explore stunning wedding, portrait, fashion & product photography by Black Lens Photography Chennai. 1000+ events covered across Tamil Nadu since 2017." />
@@ -258,7 +258,7 @@ export function PortfolioPage() {
 
       {/* Filter Tabs */}
       {showCategories && (
-        <section className="py-6 bg-[#1a1a1a] sticky top-20 z-40 border-b border-[#2a2a2a]">
+        <section className="py-6 bg-[#121212] border-b border-white/10">
           <div className="container mx-auto px-6 md:px-8 lg:px-12">
             <div className="flex flex-wrap justify-center gap-3">
               {categories.map((category) => (
@@ -282,30 +282,37 @@ export function PortfolioPage() {
       )}
 
       {/* Portfolio Grid */}
-      <section className="py-16 bg-[#0a0a0a]">
+      <section className="py-16 bg-[#050505]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 768: 2, 1024: 3 }}>
-            <Masonry gutter="20px">
+            <Masonry gutter="24px">
               {filteredItems.map((item, index) => (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="relative cursor-pointer group overflow-hidden rounded-lg"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  className="relative cursor-pointer group overflow-hidden rounded-xl border border-white/5 bg-[#121212]"
                   onClick={() => setSelectedImageIndex(index)}
                 >
-                  <ImageWithFallback
-                    src={getOptimizedUrl(item.image)}
-                    alt={item.alt || 'Portfolio Item'}
-                    className="w-full h-auto"
-                  />
-                  <div className="absolute inset-0 bg-[#0a0a0a]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <p className="text-sm uppercase tracking-wider text-[#d4af37]">
+                  <div className="overflow-hidden">
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.4 }}
+                      src={getOptimizedUrl(item.image)}
+                      alt={item.alt || 'Portfolio Item'}
+                      className="w-full h-auto object-cover display-block"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                    <div>
+                      <p className="text-xs uppercase tracking-widest text-[#d4af37] font-semibold mb-1">
                         {categories.find((c) => c.id === item.category)?.label}
                       </p>
+                      <h3 className="text-white text-base font-bold tracking-tight">
+                        {item.alt || 'View Showcase'}
+                      </h3>
                     </div>
                   </div>
                 </motion.div>
@@ -322,42 +329,53 @@ export function PortfolioPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-lg flex items-center justify-center p-4 select-none"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-4 md:p-8 select-none"
             onClick={() => setSelectedImageIndex(null)}
           >
             {/* Close Button */}
             <button
-              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors z-50 p-2"
+              className="absolute top-6 right-6 text-slate-400 hover:text-[#d4af37] transition-colors z-50 p-3 bg-white/5 rounded-full hover:scale-105 duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
               onClick={() => setSelectedImageIndex(null)}
               aria-label="Close Lightbox"
             >
-              <X className="w-8 h-8" />
+              <X className="w-6 h-6" />
             </button>
 
             {/* Left Button */}
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] bg-black/40 p-3 rounded-full hover:bg-black/70 transition-all z-50"
+              className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/5 p-4 rounded-full hover:scale-105 duration-200 transition-all z-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
               onClick={handlePrev}
               aria-label="Previous Image"
             >
               <ChevronLeft className="w-8 h-8" />
             </button>
 
-            {/* Lightbox Image */}
-            <motion.img
-              key={selectedImageIndex}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              src={getOptimizedUrl(filteredItems[selectedImageIndex].image)}
-              alt={filteredItems[selectedImageIndex].alt || 'Portfolio image lightbox'}
-              className="max-w-full max-h-[85vh] md:max-h-[90vh] object-contain rounded-lg shadow-2xl z-40 pointer-events-none"
-            />
+            {/* Image Container with Title/Category details below */}
+            <div className="relative flex flex-col items-center max-w-full max-h-[85vh] md:max-h-[90vh]">
+              <motion.img
+                key={selectedImageIndex}
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                src={getOptimizedUrl(filteredItems[selectedImageIndex].image)}
+                alt={filteredItems[selectedImageIndex].alt || 'Portfolio image'}
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl z-40 border border-white/10"
+              />
+              
+              <div className="mt-4 text-center z-40">
+                <span className="text-xs uppercase tracking-widest text-[#d4af37] font-semibold">
+                  {categories.find((c) => c.id === filteredItems[selectedImageIndex].category)?.label}
+                </span>
+                <h3 className="text-white text-lg font-bold mt-1 max-w-xl">
+                  {filteredItems[selectedImageIndex].alt || 'Portfolio Showcase'}
+                </h3>
+              </div>
+            </div>
 
             {/* Right Button */}
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] bg-black/40 p-3 rounded-full hover:bg-black/70 transition-all z-50"
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/5 p-4 rounded-full hover:scale-105 duration-200 transition-all z-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
               onClick={handleNext}
               aria-label="Next Image"
             >
