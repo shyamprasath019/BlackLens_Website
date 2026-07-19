@@ -313,7 +313,7 @@ export function HomePage() {
                   { icon: Film, title: 'Cinematography', description: 'Cinematic videos and reels for social media' },
                   { icon: Users, title: 'Portrait & Fashion', description: 'Professional portraits and fashion shoots' },
                   { icon: Award, title: 'Commercial Shoots', description: 'Product photography and corporate headshots' },
-                ]
+                  ]
             ).map((service, index) => (
               <motion.div
                 key={service.title}
@@ -321,10 +321,11 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
+                whileHover={{ y: -8 }}
                 onClick={() => navigate('/services')}
-                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] hover:border-[#d4af37] transition-all cursor-pointer group"
+                className="premium-glass p-8 rounded-xl border border-white/5 hover:border-[#d4af37]/30 transition-all duration-300 cursor-pointer group shadow-2xl relative overflow-hidden"
               >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#d4af37]/5 to-transparent rounded-full blur-xl pointer-events-none" />
                 <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-[#d4af37]/20 transition-colors">
                   {service.icon ? (
                     <service.icon className="w-7 h-7 text-[#d4af37]" />
@@ -332,8 +333,8 @@ export function HomePage() {
                     <Camera className="w-7 h-7 text-[#d4af37]" />
                   )}
                 </div>
-                <h3 className="text-white mb-3">{service.title}</h3>
-                <p className="text-[#9ca3af] text-sm leading-relaxed">{service.description}</p>
+                <h3 className="text-white text-lg font-bold mb-3">{service.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{service.description}</p>
               </motion.div>
             ))}
           </div>

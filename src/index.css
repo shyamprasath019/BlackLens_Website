@@ -67,6 +67,30 @@ p {
   color: var(--color-gray-mid);
 }
 
+/* PREMIUM DEPTH AND TEXTURES */
+.premium-glow {
+  position: relative;
+}
+.premium-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(0,0,0,0) 70%);
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.premium-glass {
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px border rgba(255, 255, 255, 0.05);
+}
+
 /* SMOOTH SCROLL */
 html {
   scroll-behavior: smooth;
