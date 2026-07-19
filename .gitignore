@@ -29,3 +29,10 @@ Thumbs.db
 
 # Misc
 coverage/
+audit-reports/
+
+# Temporary and local upload assets
+public/Photos/
+public/inspect.html
+hardcoded_portfolio_utf8.txt
+scripts/generate_inspect.js
