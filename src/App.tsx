@@ -1,8 +1,19 @@
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+
+// Scroll to Top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 // Lazy load page components
 const HomePage = lazy(() => import('./components/HomePage').then(module => ({ default: module.HomePage })));
@@ -47,6 +58,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen bg-[#0a0a0a]">
           <Routes>
             <Route element={<MainLayout />}>
