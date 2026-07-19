@@ -278,7 +278,7 @@ export function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-[#1a1a1a] py-20">
+      <section className="bg-[#0c0c0c] py-20 relative overflow-hidden dark-grid-texture border-y border-white/5">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
             {(statsData.length > 0
@@ -296,10 +296,10 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center"
+                className="text-center relative premium-glow"
               >
-                <div className="text-[#d4af37] mb-3 text-4xl font-bold">{stat.value}</div>
-                <p className="text-[#9ca3af]">{stat.label}</p>
+                <div className="text-[#d4af37] mb-3 text-4xl font-bold tracking-tight">{stat.value}</div>
+                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -307,7 +307,7 @@ export function HomePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 bg-[#0a0a0a]">
+      <section className="py-24 bg-[#050505] relative overflow-hidden dark-grid-texture">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -316,7 +316,7 @@ export function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-white mb-6">Our Services</h2>
-            <p className="text-[#9ca3af] max-w-2xl mx-auto px-4">
+            <p className="text-slate-400 max-w-2xl mx-auto px-4">
               From weddings to corporate events, we offer comprehensive photography and videography services
             </p>
           </motion.div>
@@ -339,7 +339,7 @@ export function HomePage() {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
                 onClick={() => navigate('/services')}
-                className="premium-glass p-8 rounded-xl border border-white/5 hover:border-[#d4af37]/30 transition-all duration-300 cursor-pointer group shadow-2xl relative overflow-hidden"
+                className="premium-glass premium-card-border p-8 rounded-xl transition-all duration-300 cursor-pointer group shadow-2xl relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#d4af37]/5 to-transparent rounded-full blur-xl pointer-events-none" />
                 <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-[#d4af37]/20 transition-colors">
