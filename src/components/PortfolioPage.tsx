@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { useEffect } from 'react';
 import { sanityClient, urlFor } from '../lib/sanityClient';
 import { Helmet } from 'react-helmet-async';
 
 export function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const [showCategories, setShowCategories] = useState(true);
 
   const categories = [
     { id: 'all', label: 'All Work' },
@@ -93,7 +93,7 @@ export function PortfolioPage() {
     {
       id: 12,
       category: 'corporate',
-      image: 'https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBoZWFkc2hvdCUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NjYwODE5ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3VwbGUlMjBoZWFkc2hvdCUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NjYwODE5ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
       alt: 'Corporate headshot professional',
     },
     {
@@ -112,11 +112,22 @@ export function PortfolioPage() {
 
   const getOptimizedUrl = (image: any) => {
     if (!image) return '';
-    if (typeof image === 'string') return image; // fallback string URLs
-    return urlFor(image).auto('format').fit('max').width(800).url(); // optimize for portfolio grid
+    if (typeof image === 'string') return image;
+    return urlFor(image).auto('format').fit('max').width(800).url();
   };
 
   useEffect(() => {
+    // Fetch categories display toggle
+    sanityClient
+      .fetch(`*[_type == "siteSettings"][0]{ showPortfolioCategories }`)
+      .then((settings) => {
+        if (settings && typeof settings.showPortfolioCategories === 'boolean') {
+          setShowCategories(settings.showPortfolioCategories);
+        }
+      })
+      .catch(console.error);
+
+    // Fetch portfolio items
     sanityClient
       .fetch(
         `*[_type == "portfolioItem"]{
@@ -135,9 +146,39 @@ export function PortfolioPage() {
   }, []);
 
   const filteredItems =
-    selectedCategory === 'all'
+    !showCategories || selectedCategory === 'all'
       ? portfolioItems
       : portfolioItems.filter((item) => item.category === selectedCategory);
+
+  const handlePrev = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedImageIndex !== null) {
+      setSelectedImageIndex((prev) =>
+        prev !== null && prev > 0 ? prev - 1 : filteredItems.length - 1
+      );
+    }
+  };
+
+  const handleNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedImageIndex !== null) {
+      setSelectedImageIndex((prev) =>
+        prev !== null && prev < filteredItems.length - 1 ? prev + 1 : 0
+      );
+    }
+  };
+
+  // Keyboard navigation for Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImageIndex === null) return;
+      if (e.key === 'Escape') setSelectedImageIndex(null);
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'ArrowLeft') handlePrev();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImageIndex, filteredItems]);
 
   // JSON-LD Structured Data
   const jsonLdData = {
@@ -216,27 +257,29 @@ export function PortfolioPage() {
       </section>
 
       {/* Filter Tabs */}
-      <section className="py-6 bg-[#1a1a1a] sticky top-20 z-40 border-b border-[#2a2a2a]">
-        <div className="container mx-auto px-6 md:px-8 lg:px-12">
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-2.5 rounded-full transition-all text-sm ${
-                  selectedCategory === category.id
-                    ? 'bg-[#d4af37] text-[#0a0a0a]'
-                    : 'bg-[#0a0a0a] text-white border border-[#2a2a2a] hover:border-[#d4af37]'
-                }`}
-              >
-                {category.label}
-              </motion.button>
-            ))}
+      {showCategories && (
+        <section className="py-6 bg-[#1a1a1a] sticky top-20 z-40 border-b border-[#2a2a2a]">
+          <div className="container mx-auto px-6 md:px-8 lg:px-12">
+            <div className="flex flex-wrap justify-center gap-3">
+              {categories.map((category) => (
+                <motion.button
+                  key={category.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-6 py-2.5 rounded-full transition-all text-sm ${
+                    selectedCategory === category.id
+                      ? 'bg-[#d4af37] text-[#0a0a0a]'
+                      : 'bg-[#0a0a0a] text-white border border-[#2a2a2a] hover:border-[#d4af37]'
+                  }`}
+                >
+                  {category.label}
+                </motion.button>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Portfolio Grid */}
       <section className="py-16 bg-[#0a0a0a]">
@@ -251,7 +294,7 @@ export function PortfolioPage() {
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.02 }}
                   className="relative cursor-pointer group overflow-hidden rounded-lg"
-                  onClick={() => setLightboxImage(getOptimizedUrl(item.image))}
+                  onClick={() => setSelectedImageIndex(index)}
                 >
                   <ImageWithFallback
                     src={getOptimizedUrl(item.image)}
@@ -274,28 +317,52 @@ export function PortfolioPage() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {lightboxImage && (
+        {selectedImageIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-lg flex items-center justify-center p-4"
-            onClick={() => setLightboxImage(null)}
+            className="fixed inset-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-lg flex items-center justify-center p-4 select-none"
+            onClick={() => setSelectedImageIndex(null)}
           >
+            {/* Close Button */}
             <button
-              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors"
-              onClick={() => setLightboxImage(null)}
+              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors z-50 p-2"
+              onClick={() => setSelectedImageIndex(null)}
+              aria-label="Close Lightbox"
             >
               <X className="w-8 h-8" />
             </button>
+
+            {/* Left Button */}
+            <button
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] bg-black/40 p-3 rounded-full hover:bg-black/70 transition-all z-50"
+              onClick={handlePrev}
+              aria-label="Previous Image"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+
+            {/* Lightbox Image */}
             <motion.img
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              src={lightboxImage}
-              alt="Portfolio image lightbox"
-              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              key={selectedImageIndex}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              src={getOptimizedUrl(filteredItems[selectedImageIndex].image)}
+              alt={filteredItems[selectedImageIndex].alt || 'Portfolio image lightbox'}
+              className="max-w-full max-h-[85vh] md:max-h-[90vh] object-contain rounded-lg shadow-2xl z-40 pointer-events-none"
             />
+
+            {/* Right Button */}
+            <button
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] bg-black/40 p-3 rounded-full hover:bg-black/70 transition-all z-50"
+              onClick={handleNext}
+              aria-label="Next Image"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

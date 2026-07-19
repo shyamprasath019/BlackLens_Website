@@ -89,6 +89,34 @@ export function PackagesPage() {
         ]
       },
       {
+        "@type": "Product",
+        "@id": "https://blacklensphotography.com/packages/#photography-packages",
+        "name": "Black Lens Photography Packages",
+        "image": "https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA",
+        "description": "Professional photography and videography packages in Chennai for weddings, events, portraits, and fashion shoots.",
+        "brand": {
+          "@type": "Brand",
+          "name": "Black Lens Photography"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "INR",
+          "lowPrice": "15000",
+          "highPrice": "75000",
+          "offerCount": packages.length.toString(),
+          "offers": packages.map((pkg) => ({
+            "@type": "Offer",
+            "name": `${pkg.name} Package`,
+            "price": pkg.price.replace(/[^\d]/g, ''),
+            "priceCurrency": "INR",
+            "url": "https://blacklensphotography.com/packages",
+            "eligibleRegion": "IN",
+            "availability": "https://schema.org/InStock"
+          }))
+        }
+      },
+
+      {
         "@type": "FAQPage",
         "mainEntity": [
           {
