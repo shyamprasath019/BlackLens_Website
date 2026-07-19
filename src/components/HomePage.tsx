@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Camera, Film, Users, Award, ArrowRight, Star } from 'lucide-react';
+import { Camera, Film, Users, Award, ArrowRight, Star, Heart, Baby, Gift } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useEffect, useState } from 'react';
 import { sanityClient, urlFor } from '../lib/sanityClient';
@@ -67,7 +67,23 @@ export function HomePage() {
     // Fetch Services
     sanityClient
       .fetch(`*[_type == "service" && featured == true][0...4]{ title, description, image, features }`)
-      .then(data => { if (data && data.length > 0) setServicesData(data); })
+      .then(data => {
+        if (data && data.length > 0) {
+          const mappedData = data.map((item: any) => {
+            let Icon = Camera;
+            const titleLower = item.title.toLowerCase();
+            if (titleLower.includes('wedding') || titleLower.includes('event')) Icon = Heart;
+            if (titleLower.includes('maternity') || titleLower.includes('baby')) Icon = Baby;
+            if (titleLower.includes('birthday')) Icon = Gift;
+            if (titleLower.includes('product') || titleLower.includes('commercial')) Icon = Award;
+            if (titleLower.includes('fashion') || titleLower.includes('portrait')) Icon = Users;
+            if (titleLower.includes('corporate')) Icon = Users;
+            if (titleLower.includes('video') || titleLower.includes('cine') || titleLower.includes('film')) Icon = Film;
+            return { ...item, icon: Icon };
+          });
+          setServicesData(mappedData);
+        }
+      })
       .catch(console.error);
 
     // Fetch Stats
