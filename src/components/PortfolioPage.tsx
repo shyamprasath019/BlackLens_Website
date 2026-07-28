@@ -107,7 +107,14 @@ export function PortfolioPage() {
   const getOptimizedUrl = (image: any) => {
     if (!image) return '';
     if (typeof image === 'string') return image;
-    return urlFor(image).auto('format').fit('max').width(800).url();
+    if (image.asset) {
+      try {
+        return urlFor(image).auto('format').fit('max').width(800).url();
+      } catch (e) {
+        console.error('Error generating Sanity URL:', e);
+      }
+    }
+    return '';
   };
 
   useEffect(() => {

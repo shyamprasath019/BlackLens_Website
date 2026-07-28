@@ -31,18 +31,20 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     );
   }
 
+  const effectiveSrc = src || ERROR_IMG_SRC;
+
   return (
     <div className="relative overflow-hidden w-full h-full bg-[#1a1a1a] rounded-lg">
       {isLoading && (
-        <div className="absolute inset-0 bg-[#2a2a2a] animate-pulse flex items-center justify-center min-h-[250px]">
+        <div className="absolute inset-0 bg-[#2a2a2a] animate-pulse flex items-center justify-center min-h-[250px] z-10">
           <div className="w-8 h-8 border-2 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
       <img
-        src={src}
-        alt={alt}
+        src={effectiveSrc}
+        alt={alt || 'Black Lens Photography'}
         className={`${className ?? ''} transition-all duration-700 ease-out ${
-          isLoading ? 'opacity-0 scale-95 h-0' : 'opacity-100 scale-100 h-auto'
+          isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
         }`}
         style={style}
         {...rest}

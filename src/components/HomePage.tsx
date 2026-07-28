@@ -55,7 +55,18 @@ export function HomePage() {
   ]);
 
   const getOptimizedUrl = (item: any, width: number = 800) => {
-    if (item.image) return urlFor(item.image).auto('format').fit('max').width(width).url();
+    if (!item) return '';
+    if (typeof item === 'string') return item;
+    if (item.image) {
+      if (typeof item.image === 'string') return item.image;
+      if (item.image.asset) {
+        try {
+          return urlFor(item.image).auto('format').fit('max').width(width).url();
+        } catch (e) {
+          console.error('Error building Sanity URL:', e);
+        }
+      }
+    }
     if (item.imageUrl) return item.imageUrl;
     return '';
   };
@@ -95,10 +106,23 @@ export function HomePage() {
       .then(data => { if (data && data.length > 0) setStatsData(data); })
       .catch(console.error);
 
-    // Fetch Featured Portfolio
+    // Fetch Featured Portfolio: Query featured items first, fallback to latest portfolio items
     sanityClient
       .fetch(`*[_type == "portfolioItem" && featured == true][0...6]{ image, alt }`)
-      .then(data => { if (data && data.length > 0) setFeaturedPortfolio(data); })
+      .then(data => {
+        if (data && data.length > 0) {
+          setFeaturedPortfolio(data);
+        } else {
+          sanityClient
+            .fetch(`*[_type == "portfolioItem"] | order(_createdAt desc)[0...6]{ image, alt }`)
+            .then(latestData => {
+              if (latestData && latestData.length > 0) {
+                setFeaturedPortfolio(latestData);
+              }
+            })
+            .catch(console.error);
+        }
+      })
       .catch(console.error);
 
     // Fetch Testimonials
