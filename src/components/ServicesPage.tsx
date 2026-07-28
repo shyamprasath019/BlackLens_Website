@@ -257,6 +257,7 @@ export function ServicesPage() {
                   >
                     <ImageWithFallback
                       src={getOptimizedUrl(service.image)}
+                      fallbackSrc={typeof service.image === 'string' ? service.image : '/Photos/client/01.jpg'}
                       alt={`${service.title} - Black Lens Photography Chennai`}
                       className="w-full h-full object-cover"
                     />

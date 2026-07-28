@@ -439,6 +439,7 @@ export function HomePage() {
               >
                 <ImageWithFallback
                   src={getOptimizedUrl(item)}
+                  fallbackSrc={item.imageUrl || '/Photos/client/01.jpg'}
                   alt={item.alt || 'Black Lens Photography Portfolio'}
                   className="w-full h-full object-cover"
                 />
