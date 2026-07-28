@@ -250,6 +250,7 @@ export function PackagesPage() {
 
                   <Link
                     to="/contact"
+                    state={{ service: `${pkg.name} Package` }}
                     className={`block text-center w-full py-4 rounded-lg transition-colors font-medium ${
                       pkg.popular
                         ? 'bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f]'

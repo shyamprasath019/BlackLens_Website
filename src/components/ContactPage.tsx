@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin, Send, MessageSquare } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { sanityClient } from '../lib/sanityClient';
 
 export function ContactPage() {
+  const location = useLocation();
   const [settings, setSettings] = useState<{
     phone?: string;
     email?: string;
@@ -30,6 +32,12 @@ export function ContactPage() {
     message: '',
   });
 
+  useEffect(() => {
+    if (location.state?.service) {
+      setFormData((prev) => ({ ...prev, serviceType: location.state.service }));
+    }
+  }, [location.state]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -41,9 +49,7 @@ export function ContactPage() {
     });
   };
 
-  if (!import.meta.env.VITE_WEB3FORMS_KEY) {
-    console.warn("Web3Forms key missing");
-  }
+  const web3FormsKey = import.meta.env.VITE_WEB3FORMS_KEY || '9a094bba-6e46-43be-bc33-4d8c5677d1eb';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +58,7 @@ export function ContactPage() {
     setSubmitted(false);
 
     const payload = {
-      access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+      access_key: web3FormsKey,
       subject: "New Enquiry - Black Lens Photography",
       from_name: formData.name,
       name: formData.name,

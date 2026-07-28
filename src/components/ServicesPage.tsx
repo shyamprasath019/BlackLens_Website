@@ -287,6 +287,7 @@ export function ServicesPage() {
 
                   <Link
                     to="/contact"
+                    state={{ service: service.title }}
                     className="bg-[#d4af37] text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2 font-medium"
                   >
                     Enquire Now
