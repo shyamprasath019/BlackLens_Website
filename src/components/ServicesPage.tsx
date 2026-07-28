@@ -70,8 +70,15 @@ export function ServicesPage() {
 
   const getOptimizedUrl = (image: any) => {
     if (!image) return '';
-    if (typeof image === 'string') return image; // fallback string URLs
-    return urlFor(image).auto('format').fit('max').width(1000).url(); // optimize for half-width service blocks
+    if (typeof image === 'string') return image;
+    if (image.asset) {
+      try {
+        return urlFor(image).auto('format').fit('max').width(1000).url();
+      } catch (e) {
+        console.error('Error generating Sanity URL:', e);
+      }
+    }
+    return '';
   };
 
   useEffect(() => {
@@ -88,7 +95,8 @@ export function ServicesPage() {
         if (data && data.length > 0) {
           // Map icons back to data based on title
           const mappedData = data.map((item: any) => {
-            let Icon = Camera;
+            const defaultItem = services.find(s => s.title.toLowerCase() === item.title.toLowerCase());
+            let Icon = defaultItem?.icon || Camera;
             if (item.title.toLowerCase().includes('wedding') || item.title.toLowerCase().includes('event')) Icon = Heart;
             if (item.title.toLowerCase().includes('maternity') || item.title.toLowerCase().includes('baby')) Icon = Baby;
             if (item.title.toLowerCase().includes('birthday')) Icon = Gift;
@@ -96,7 +104,11 @@ export function ServicesPage() {
             if (item.title.toLowerCase().includes('fashion')) Icon = Shirt;
             if (item.title.toLowerCase().includes('corporate')) Icon = Briefcase;
             if (item.title.toLowerCase().includes('video') || item.title.toLowerCase().includes('cine')) Icon = Video;
-            return { ...item, icon: Icon };
+            return {
+              ...item,
+              icon: Icon,
+              image: (item.image && item.image.asset) ? item.image : (defaultItem?.image || '/Photos/client/01.jpg')
+            };
           });
           setServices(mappedData);
         }
