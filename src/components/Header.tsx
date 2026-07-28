@@ -49,16 +49,14 @@ export function Header() {
             {/* Logo */}
             <Link
               to="/"
-              className="flex items-center gap-3 cursor-pointer"
+              className="flex items-center cursor-pointer"
               onClick={closeMobileMenu}
             >
-              <div className="bg-[#d4af37] p-2 rounded-lg transition-transform hover:scale-105 duration-200">
-                <Camera className="w-5 h-5 text-[#0a0a0a]" />
-              </div>
-              <div>
-                <div className="text-white tracking-tight leading-tight font-bold text-sm md:text-base">Black Lens</div>
-                <div className="text-[#d4af37] text-[10px] tracking-widest font-semibold">PHOTOGRAPHY</div>
-              </div>
+              <img 
+                src="/logo.png" 
+                alt="Black Lens Photography" 
+                className="h-10 md:h-12 w-auto object-contain transition-transform hover:scale-105 duration-200" 
+              />
             </Link>
 
             {/* Desktop Navigation */}

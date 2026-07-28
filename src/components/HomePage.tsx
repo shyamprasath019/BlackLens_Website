@@ -38,9 +38,12 @@ export function HomePage() {
   ]);
 
   const [featuredPortfolio, setFeaturedPortfolio] = useState<{ imageUrl?: string; image?: any; alt?: string }[]>([
-    { imageUrl: 'https://images.unsplash.com/photo-1764380750858-b85ffa2ef37d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicmlkZSUyMHdlZGRpbmclMjBtb21lbnR8ZW58MXx8fHwxNzY2MDg4MTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080', alt: 'Wedding photography portfolio' },
-    { imageUrl: 'https://images.unsplash.com/photo-1532272278764-53cd1fe53f72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMHBob3RvZ3JhcGh5fGVufDF8fHx8MTc2NjAyMDM4NHww&ixlib=rb-4.1.0&q=80&w=1080', alt: 'Portrait photography portfolio' },
-    { imageUrl: 'https://images.unsplash.com/photo-1758613654186-6ce234bf94ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwcGhvdG9ncmFwaHklMjBzdHVkaW98ZW58MXx8fHwxNzY2MDE3Mjk4fDA&ixlib=rb-4.1.0&q=80&w=1080', alt: 'Fashion photography portfolio' },
+    { imageUrl: '/Photos/client/gv_01.jpg', alt: 'Black Lens High Fashion Shoot' },
+    { imageUrl: '/Photos/client/01.jpg', alt: 'Black Lens Wedding & Event Photography' },
+    { imageUrl: '/Photos/client/gv_03.jpg', alt: 'Black Lens Studio Fashion Portrait' },
+    { imageUrl: '/Photos/client/03.jpg', alt: 'Black Lens Portraiture & Personal Shoot' },
+    { imageUrl: '/Photos/client/gv_04.jpg', alt: 'Black Lens Model Portfolio Shoot' },
+    { imageUrl: '/Photos/client/05.jpg', alt: 'Black Lens Creative Studio Photography' },
   ]);
 
   const [testimonialsData, setTestimonialsData] = useState<

@@ -47,7 +47,9 @@ function getCategory(filename) {
 
   if (base.startsWith('CHATGPT')) return null; // skip AI-generated image
 
-  const num = parseInt(base.replace(/[^0-9]/g, ''), 10);
+  if (base.includes('GV')) return 'fashion';
+  if (base.startsWith('01') || base.startsWith('02')) return 'weddings';
+  if (base.startsWith('03') || base.startsWith('04') || base.startsWith('05')) return 'portraits';
 
   if (base.startsWith('0C3A')) {
     const n = parseInt(base.replace('0C3A', '').replace(/\..+$/, ''), 10);
@@ -68,14 +70,30 @@ function getCategory(filename) {
   return 'portraits'; // fallback
 }
 
+function getAllPhotoFiles(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllPhotoFiles(fullPath));
+    } else if (/\.(jpg|jpeg|png)$/i.test(file)) {
+      results.push(fullPath);
+    }
+  });
+  return results;
+}
+
 async function uploadAndCreate() {
-  const files = fs.readdirSync(PHOTOS_DIR).filter(f => /\.(jpg|jpeg|png)$/i.test(f));
-  console.log(`Found ${files.length} images to process.\n`);
+  const filePaths = getAllPhotoFiles(PHOTOS_DIR);
+  console.log(`Found ${filePaths.length} images to process.\n`);
 
   let created = 0;
   let skipped = 0;
 
-  for (const filename of files) {
+  for (const filePath of filePaths) {
+    const filename = path.basename(filePath);
     const category = getCategory(filename);
     if (!category) {
       console.log(`  SKIP  ${filename} (no category)`);

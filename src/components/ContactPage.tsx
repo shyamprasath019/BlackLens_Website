@@ -1,9 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin, Send, MessageSquare } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { sanityClient } from '../lib/sanityClient';
 
 export function ContactPage() {
+  const [settings, setSettings] = useState<{
+    phone?: string;
+    email?: string;
+    address?: string;
+    businessHours?: string;
+    whatsapp?: string;
+    instagram?: string;
+    facebook?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, whatsapp, instagram, facebook }`)
+      .then(setSettings)
+      .catch(console.error);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -181,10 +199,8 @@ export function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white mb-2">Our Location</h4>
-                    <p className="text-[#9ca3af] leading-relaxed">
-                      Black Lens Photography Studio<br />
-                      Thirunindravur, Chennai<br />
-                      Tamil Nadu - 602024, India
+                    <p className="text-[#9ca3af] leading-relaxed whitespace-pre-line">
+                      {settings?.address || 'No: 23, Gomathi Puram, 1st Main Road, Thiruninravur, Chennai, Tamil Nadu'}
                     </p>
                   </div>
                 </div>
@@ -195,12 +211,18 @@ export function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white mb-2">Call Us</h4>
-                    <a href="tel:+919876543210" className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1">
-                      +91 98765 43210
-                    </a>
-                    <a href="tel:+919123456780" className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block">
-                      +91 91234 56780
-                    </a>
+                    {(settings?.phone ? settings.phone.split(',') : ['9361177140', '7092221429']).map((pNum, i) => {
+                      const cleanNum = pNum.trim();
+                      return (
+                        <a
+                          key={i}
+                          href={`tel:${cleanNum.replace(/[^0-9+]/g, '')}`}
+                          className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1"
+                        >
+                          {cleanNum}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -210,13 +232,11 @@ export function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white mb-2">Email Us</h4>
-                    <a href="mailto:info@blacklensphotography.com" 
-                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1">
-                      info@blacklensphotography.com
-                    </a>
-                    <a href="mailto:bookings@blacklensphotography.com" 
-                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block">
-                      bookings@blacklensphotography.com
+                    <a
+                      href={`mailto:${settings?.email || 'info@blacklensphotography.com'}`}
+                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1"
+                    >
+                      {settings?.email || 'info@blacklensphotography.com'}
                     </a>
                   </div>
                 </div>
@@ -227,9 +247,19 @@ export function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white mb-2">WhatsApp</h4>
-                    <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"
-                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1">
-                      +91 98765 43210
+                    <a
+                      href={
+                        settings?.whatsapp
+                          ? settings.whatsapp.startsWith('http')
+                            ? settings.whatsapp
+                            : `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}`
+                          : 'https://wa.me/919361177140'
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1"
+                    >
+                      {settings?.whatsapp || '+91 93611 77140'}
                     </a>
                     <p className="text-[#9ca3af] text-sm">Quick response on WhatsApp</p>
                   </div>
@@ -240,14 +270,9 @@ export function ContactPage() {
               <div className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a]">
                 <h4 className="text-white mb-6">Business Hours</h4>
                 <div className="space-y-3 text-[#9ca3af]">
-                  <div className="flex justify-between items-center">
-                    <span>Monday - Saturday</span>
-                    <span className="text-white">9:00 AM - 7:00 PM</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Sunday</span>
-                    <span className="text-white">10:00 AM - 5:00 PM</span>
-                  </div>
+                  <p className="text-white font-medium">
+                    {settings?.businessHours || 'Monday - Saturday: 9:00 AM - 7:00 PM | Sunday: 10:00 AM - 5:00 PM'}
+                  </p>
                   <p className="text-sm mt-6 text-[#d4af37]">
                     * Available 24/7 for event coverage bookings
                   </p>

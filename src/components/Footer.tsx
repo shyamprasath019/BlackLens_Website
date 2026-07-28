@@ -33,10 +33,20 @@ export function Footer() {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ instagram, facebook, whatsapp }`)
+      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, instagram, facebook, whatsapp }`)
       .then(setSettings)
       .catch(console.error);
   }, []);
+
+  const phoneNumbers = settings?.phone
+    ? settings.phone.split(',').map((p) => p.trim())
+    : ['+91 9361177140', '+91 7092221429'];
+
+  const whatsappUrl = settings?.whatsapp
+    ? settings.whatsapp.startsWith('http')
+      ? settings.whatsapp
+      : `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}`
+    : 'https://wa.me/919361177140';
 
   return (
     <footer className="bg-[#0a0a0a] border-t border-[#1a1a1a] mt-20">
@@ -44,30 +54,31 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Section */}
           <div>
-            <Link to="/" className="flex items-center gap-3 mb-6">
-              <div className="bg-[#d4af37] p-2 rounded-lg">
-                <Camera className="w-6 h-6 text-[#0a0a0a]" />
-              </div>
-              <div>
-                <div className="text-white tracking-tight leading-tight font-medium">Black Lens</div>
-                <div className="text-[#d4af37] text-xs tracking-wider">PHOTOGRAPHY</div>
-              </div>
+            <Link to="/" className="flex items-center mb-6">
+              <img 
+                src="/logo.png" 
+                alt="Black Lens Photography" 
+                className="h-12 md:h-14 w-auto object-contain" 
+              />
             </Link>
             <p className="text-[#9ca3af] text-sm mb-6 leading-relaxed">
               Professional Photography & Videography Services in Chennai and across Tamil Nadu. 
               Capturing stories, creating timeless memories.
             </p>
             <div className="flex gap-4">
-              <a href={settings?.instagram || "https://instagram.com"} target="_blank" rel="noopener noreferrer" 
-                className="text-[#9ca3af] hover:text-[#d4af37] transition-colors">
+              <a href={settings?.instagram || "https://www.instagram.com/blacklens_studio_/"} target="_blank" rel="noopener noreferrer" 
+                className="text-[#9ca3af] hover:text-[#d4af37] transition-colors"
+                aria-label="Instagram">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href={settings?.whatsapp || "https://wa.me/91"} target="_blank" rel="noopener noreferrer"
-                className="text-[#9ca3af] hover:text-[#d4af37] transition-colors">
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+                className="text-[#9ca3af] hover:text-[#d4af37] transition-colors"
+                aria-label="WhatsApp">
                 <MessageCircle className="w-5 h-5" />
               </a>
               <a href={settings?.facebook || "https://facebook.com"} target="_blank" rel="noopener noreferrer"
-                className="text-[#9ca3af] hover:text-[#d4af37] transition-colors">
+                className="text-[#9ca3af] hover:text-[#d4af37] transition-colors"
+                aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
             </div>
@@ -109,21 +120,29 @@ export function Footer() {
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-1" />
-                <p className="text-[#9ca3af] text-sm leading-relaxed">
-                  Thirunindravur, Chennai,<br />Tamil Nadu, India
+                <p className="text-[#9ca3af] text-sm leading-relaxed whitespace-pre-line">
+                  {settings?.address || 'No: 23, Gomathi Puram, 1st Main Road, Thiruninravur, Chennai, Tamil Nadu'}
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-[#d4af37]" />
-                <a href="tel:+919876543210" className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors">
-                  +91 98765 43210
-                </a>
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-1" />
+                <div className="flex flex-col gap-1">
+                  {phoneNumbers.map((phoneNum, idx) => (
+                    <a
+                      key={idx}
+                      href={`tel:${phoneNum.replace(/[^0-9+]/g, '')}`}
+                      className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors"
+                    >
+                      {phoneNum}
+                    </a>
+                  ))}
+                </div>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-[#d4af37]" />
-                <a href="mailto:info@blacklensphotography.com" 
+                <Mail className="w-5 h-5 text-[#d4af37] flex-shrink-0" />
+                <a href={`mailto:${settings?.email || "info@blacklensphotography.com"}`} 
                   className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors">
-                  info@blacklens.com
+                  {settings?.email || "info@blacklensphotography.com"}
                 </a>
               </div>
             </div>

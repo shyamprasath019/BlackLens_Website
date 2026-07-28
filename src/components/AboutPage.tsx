@@ -121,7 +121,7 @@ export function AboutPage() {
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
-            src="https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+            src="/Photos/client/gv_02.jpg"
             alt="Black Lens Photography studio equipment and professional camera setup in Chennai"
             className="w-full h-full object-cover"
           />
@@ -180,7 +180,7 @@ export function AboutPage() {
               className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden"
             >
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+                src="/Photos/client/02.jpg"
                 alt="Award-winning wedding photography in Chennai by Black Lens Photography"
                 className="w-full h-full object-cover"
               />

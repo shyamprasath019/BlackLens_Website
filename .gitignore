@@ -35,4 +35,8 @@ audit-reports/
 public/Photos/
 public/inspect.html
 hardcoded_portfolio_utf8.txt
-scripts/generate_inspect.js
+scripts/generate_inspect.js
+files/
+.agents/
+
+
