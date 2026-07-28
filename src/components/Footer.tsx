@@ -154,6 +154,9 @@ export function Footer() {
           <p className="text-[#9ca3af] text-sm text-center md:text-left">
             © {new Date().getFullYear()} Black Lens Photography. All rights reserved.
           </p>
+          <p className="text-[#9ca3af] text-sm text-center">
+            Crafted by <a href="https://klyph.in" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#d4af37] transition-colors underline decoration-[#d4af37]/40 underline-offset-4">Klyph Studios</a>
+          </p>
           <p className="text-[#9ca3af] text-sm text-center md:text-right">
             Wedding Photographer in Tamil Nadu | Photography Studio in Chennai
           </p>
