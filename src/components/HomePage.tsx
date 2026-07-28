@@ -110,15 +110,19 @@ export function HomePage() {
     sanityClient
       .fetch(`*[_type == "portfolioItem" && featured == true][0...6]{ image, alt }`)
       .then(data => {
-        if (data && data.length > 0) {
-          setFeaturedPortfolio(data);
+        const withImages = (data || []).filter((item: any) => item.image && item.image.asset);
+        if (withImages.length > 0) {
+          setFeaturedPortfolio(withImages);
         } else {
+          // Fallback: latest portfolioItems that have images
           sanityClient
-            .fetch(`*[_type == "portfolioItem"] | order(_createdAt desc)[0...6]{ image, alt }`)
+            .fetch(`*[_type == "portfolioItem" && defined(image.asset)] | order(_createdAt desc)[0...6]{ image, alt }`)
             .then(latestData => {
-              if (latestData && latestData.length > 0) {
-                setFeaturedPortfolio(latestData);
+              const latestWithImages = (latestData || []).filter((item: any) => item.image && item.image.asset);
+              if (latestWithImages.length > 0) {
+                setFeaturedPortfolio(latestWithImages);
               }
+              // else: keep local /Photos/client/ defaults
             })
             .catch(console.error);
         }

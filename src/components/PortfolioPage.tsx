@@ -140,7 +140,14 @@ export function PortfolioPage() {
       )
       .then((data) => {
         if (data && data.length > 0) {
-          setPortfolioItems(data);
+          // Only use Sanity data if items actually have uploaded images
+          const withImages = data.filter(
+            (item: any) => item.image && item.image.asset
+          );
+          if (withImages.length > 0) {
+            setPortfolioItems(withImages);
+          }
+          // else: keep the local-file defaults already in state
         }
       })
       .catch(console.error);
