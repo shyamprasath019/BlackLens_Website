@@ -38,12 +38,12 @@ export function HomePage() {
   ]);
 
   const [featuredPortfolio, setFeaturedPortfolio] = useState<{ imageUrl?: string; image?: any; alt?: string }[]>([
-    { imageUrl: '/Photos/client/gv_01.jpg', alt: 'Black Lens High Fashion Shoot' },
-    { imageUrl: '/Photos/client/01.jpg', alt: 'Black Lens Wedding & Event Photography' },
-    { imageUrl: '/Photos/client/gv_03.jpg', alt: 'Black Lens Studio Fashion Portrait' },
-    { imageUrl: '/Photos/client/03.jpg', alt: 'Black Lens Portraiture & Personal Shoot' },
-    { imageUrl: '/Photos/client/gv_04.jpg', alt: 'Black Lens Model Portfolio Shoot' },
-    { imageUrl: '/Photos/client/05.jpg', alt: 'Black Lens Creative Studio Photography' },
+    { imageUrl: '/Photos/fashion/gv_01.jpg', alt: 'Black Lens High Fashion Shoot' },
+    { imageUrl: '/Photos/weddings/01.jpg', alt: 'Black Lens Wedding & Event Photography' },
+    { imageUrl: '/Photos/fashion/gv_03.jpg', alt: 'Black Lens Studio Fashion Portrait' },
+    { imageUrl: '/Photos/portraits/03.jpg', alt: 'Black Lens Portraiture & Personal Shoot' },
+    { imageUrl: '/Photos/fashion/gv_04.jpg', alt: 'Black Lens Model Portfolio Shoot' },
+    { imageUrl: '/Photos/portraits/05.jpg', alt: 'Black Lens Creative Studio Photography' },
   ]);
 
   const [testimonialsData, setTestimonialsData] = useState<
@@ -439,7 +439,7 @@ export function HomePage() {
               >
                 <ImageWithFallback
                   src={getOptimizedUrl(item)}
-                  fallbackSrc={item.imageUrl || '/Photos/client/01.jpg'}
+                  fallbackSrc={item.imageUrl || '/Photos/weddings/01.jpg'}
                   alt={item.alt || 'Black Lens Photography Portfolio'}
                   className="w-full h-full object-cover"
                 />

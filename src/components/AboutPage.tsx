@@ -121,7 +121,8 @@ export function AboutPage() {
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
-            src="/Photos/client/gv_02.jpg"
+            src="/Photos/fashion/gv_02.jpg"
+            fallbackSrc="/Photos/fashion/gv_02.jpg"
             alt="Black Lens Photography studio equipment and professional camera setup in Chennai"
             className="w-full h-full object-cover"
           />
@@ -180,7 +181,8 @@ export function AboutPage() {
               className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden"
             >
               <ImageWithFallback
-                src="/Photos/client/02.jpg"
+                src="/Photos/weddings/02.jpg"
+                fallbackSrc="/Photos/weddings/02.jpg"
                 alt="Award-winning wedding photography in Chennai by Black Lens Photography"
                 className="w-full h-full object-cover"
               />
