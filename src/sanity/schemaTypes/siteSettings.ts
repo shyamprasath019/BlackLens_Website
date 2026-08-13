@@ -22,6 +22,19 @@ export default defineType({
       type: 'boolean',
       initialValue: true,
     }),
+    defineField({
+      name: 'mapEmbedUrl',
+      title: 'Google Maps Embed URL',
+      type: 'text',
+      description: 'The src URL from Google Maps Embed iframe code (e.g. https://www.google.com/maps/embed?pb=...)',
+    }),
+    defineField({
+      name: 'locationsCovered',
+      title: 'Locations / Cities Covered',
+      type: 'array',
+      description: 'List of cities or regions covered for photography shoots (e.g. Chennai, Coimbatore, Madurai...)',
+      of: [{ type: 'string' }],
+    }),
   ],
 });
 

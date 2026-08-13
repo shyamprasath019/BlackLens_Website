@@ -15,6 +15,8 @@ export function ContactPage() {
     whatsapp?: string;
     instagram?: string;
     facebook?: string;
+    mapEmbedUrl?: string;
+    locationsCovered?: string[];
   } | null>(null);
 
   const [serviceTypes, setServiceTypes] = useState<string[]>([
@@ -108,7 +110,7 @@ export function ContactPage() {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, whatsapp, instagram, facebook }`)
+      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, whatsapp, instagram, facebook, mapEmbedUrl, locationsCovered }`)
       .then(setSettings)
       .catch(console.error);
 
@@ -453,7 +455,7 @@ export function ContactPage() {
             className="rounded-lg overflow-hidden border border-[#2a2a2a] h-96"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62187.43425885893!2d80.00863037910154!3d13.120547500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261f0b13f9f61%3A0xebde6b4d6c39e47f!2sThirunindravur%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1639999999999!5m2!1sen!2sin"
+              src={settings?.mapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62187.43425885893!2d80.00863037910154!3d13.120547500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261f0b13f9f61%3A0xebde6b4d6c39e47f!2sThirunindravur%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1639999999999!5m2!1sen!2sin"}
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -480,20 +482,23 @@ export function ContactPage() {
               Major cities we frequently cover:
             </p>
             <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-              {[
-                'Chennai',
-                'Coimbatore',
-                'Madurai',
-                'Trichy',
-                'Salem',
-                'Tirunelveli',
-                'Erode',
-                'Vellore',
-                'Thoothukudi',
-                'Thanjavur',
-                'Kanchipuram',
-                'Pondicherry',
-              ].map((city) => (
+              {(settings?.locationsCovered && settings.locationsCovered.length > 0
+                ? settings.locationsCovered
+                : [
+                    'Chennai',
+                    'Coimbatore',
+                    'Madurai',
+                    'Trichy',
+                    'Salem',
+                    'Tirunelveli',
+                    'Erode',
+                    'Vellore',
+                    'Thoothukudi',
+                    'Thanjavur',
+                    'Kanchipuram',
+                    'Pondicherry',
+                  ]
+              ).map((city) => (
                 <span key={city} className="bg-[#1a1a1a] text-[#e5e5e5] px-6 py-3 rounded-full border border-[#2a2a2a]">
                   {city}
                 </span>
