@@ -17,12 +17,20 @@ export function ContactPage() {
     facebook?: string;
   } | null>(null);
 
-  useEffect(() => {
-    sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, whatsapp, instagram, facebook }`)
-      .then(setSettings)
-      .catch(console.error);
-  }, []);
+  const [serviceTypes, setServiceTypes] = useState<string[]>([
+    'Wedding Photography',
+    'Pre-Wedding Shoot',
+    'Event Photography',
+    'Photo Studio',
+    'Family & Maternity',
+    'Birthday & Celebrations',
+    'Food & Culinary Photography',
+    'Product Photography',
+    'Fashion Photography',
+    'Corporate Headshots',
+    'Cinematography & Reels',
+    'Other',
+  ]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -98,18 +106,23 @@ export function ContactPage() {
     }
   };
 
+  useEffect(() => {
+    sanityClient
+      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, whatsapp, instagram, facebook }`)
+      .then(setSettings)
+      .catch(console.error);
 
-  const serviceTypes = [
-    'Wedding Photography',
-    'Pre-Wedding Shoot',
-    'Event Photography',
-    'Portrait Photography',
-    'Fashion Photography',
-    'Product Photography',
-    'Corporate Headshots',
-    'Cinematography',
-    'Other',
-  ];
+    sanityClient
+      .fetch(`*[_type == "service"] | order(order asc, _createdAt asc){ title }`)
+      .then((data) => {
+        if (data && data.length > 0) {
+          const titles = data.map((s: any) => s.title).filter(Boolean);
+          const combined = Array.from(new Set([...titles, 'Pre-Wedding Shoot', 'Other']));
+          setServiceTypes(combined);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   // JSON-LD Structured Data
   const jsonLdData = {
