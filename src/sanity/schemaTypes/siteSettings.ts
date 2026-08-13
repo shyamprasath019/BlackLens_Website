@@ -8,11 +8,13 @@ export default defineType({
     defineField({
       name: 'primaryColor',
       title: 'Primary Brand Color',
-      type: 'color',
-      description: 'The main accent color used across the entire website (buttons, highlights, borders). Default: Gold #D4AF37. Changes take effect on next page load.',
-      options: {
-        disableAlpha: true,
-      },
+      type: 'string',
+      description: 'Hex color code for the site accent color (e.g. #D4AF37 for gold, #C9866A for rose gold, #E8A0B4 for pink). Changes take effect on next page load.',
+      placeholder: '#D4AF37',
+      validation: (Rule) =>
+        Rule.regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/).warning(
+          'Must be a valid hex color (e.g. #D4AF37)'
+        ),
     }),
     defineField({ name: 'phone', title: 'Phone', type: 'string' }),
     defineField({ name: 'email', title: 'Email', type: 'string' }),

@@ -59,8 +59,8 @@ export default function App() {
   useEffect(() => {
     sanityClient
       .fetch(`*[_type == "siteSettings"][0]{ primaryColor }`)
-      .then((data: { primaryColor?: { hex?: string } }) => {
-        const hex = data?.primaryColor?.hex;
+      .then((data: { primaryColor?: string }) => {
+        const hex = data?.primaryColor;
         if (hex) {
           document.documentElement.style.setProperty('--color-gold', hex);
           document.documentElement.style.setProperty('--color-gold-muted', hex + 'cc');
