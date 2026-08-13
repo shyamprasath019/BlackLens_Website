@@ -66,14 +66,14 @@ export function Header() {
                   key={link.path}
                   to={link.path}
                   className={`relative text-xs uppercase tracking-widest font-semibold transition-colors duration-200 cursor-pointer ${
-                    isActive(link.path) ? 'text-[#d4af37]' : 'text-slate-300 hover:text-white'
+                    isActive(link.path) ? 'text-gold' : 'text-slate-300 hover:text-white'
                   }`}
                 >
                   {link.name}
                   {isActive(link.path) && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-[#d4af37]"
+                      className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-gold"
                     />
                   )}
                 </Link>
@@ -83,7 +83,7 @@ export function Header() {
             {/* CTA Button */}
             <Link
               to="/contact"
-              className="hidden md:block bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f] hover:text-white shadow-md hover:shadow-[#d4af37]/20 px-6 py-2.5 rounded-lg transition-all duration-300 font-bold text-xs uppercase tracking-wider text-center cursor-pointer"
+              className="hidden md:block bg-gold text-[#0a0a0a] hover:bg-goldMuted hover:text-white shadow-md hover:shadow-gold/20 px-6 py-2.5 rounded-lg transition-all duration-300 font-bold text-xs uppercase tracking-wider text-center cursor-pointer"
             >
               Book a Shoot
             </Link>
@@ -122,7 +122,7 @@ export function Header() {
                     to={link.path}
                     onClick={closeMobileMenu}
                     className={`text-2xl font-medium ${
-                      isActive(link.path) ? 'text-[#d4af37]' : 'text-white'
+                      isActive(link.path) ? 'text-gold' : 'text-white'
                     }`}
                   >
                     {link.name}
@@ -138,7 +138,7 @@ export function Header() {
                 <Link
                   to="/contact"
                   onClick={closeMobileMenu}
-                  className="bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f] hover:text-white px-10 py-4 rounded-lg mt-6 block text-center font-bold transition-all duration-300"
+                  className="bg-gold text-[#0a0a0a] hover:bg-goldMuted hover:text-white px-10 py-4 rounded-lg mt-6 block text-center font-bold transition-all duration-300"
                 >
                   Book a Shoot
                 </Link>

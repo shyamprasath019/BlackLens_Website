@@ -276,8 +276,8 @@ export function PortfolioPage() {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`px-6 py-2.5 rounded-full transition-all text-sm ${
                     selectedCategory === category.id
-                      ? 'bg-[#d4af37] text-[#0a0a0a]'
-                      : 'bg-[#0a0a0a] text-white border border-[#2a2a2a] hover:border-[#d4af37]'
+                      ? 'bg-gold text-[#0a0a0a]'
+                      : 'bg-[#0a0a0a] text-white border border-[#2a2a2a] hover:border-gold'
                   }`}
                 >
                   {category.label}
@@ -314,7 +314,7 @@ export function PortfolioPage() {
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-[#d4af37] font-semibold mb-1">
+                      <p className="text-xs uppercase tracking-widest text-gold font-semibold mb-1">
                         {categories.find((c) => c.id === item.category)?.label}
                       </p>
                       <h3 className="text-white text-base font-bold tracking-tight">
@@ -341,7 +341,7 @@ export function PortfolioPage() {
           >
             {/* Close Button */}
             <button
-              className="absolute top-6 right-6 text-slate-400 hover:text-[#d4af37] transition-colors z-50 p-3 bg-white/5 rounded-full hover:scale-105 duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+              className="absolute top-6 right-6 text-slate-400 hover:text-gold transition-colors z-50 p-3 bg-white/5 rounded-full hover:scale-105 duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
               onClick={() => setSelectedImageIndex(null)}
               aria-label="Close Lightbox"
             >
@@ -350,7 +350,7 @@ export function PortfolioPage() {
 
             {/* Left Button */}
             <button
-              className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/5 p-4 rounded-full hover:scale-105 duration-200 transition-all z-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+              className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/5 p-4 rounded-full hover:scale-105 duration-200 transition-all z-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
               onClick={handlePrev}
               aria-label="Previous Image"
             >
@@ -371,7 +371,7 @@ export function PortfolioPage() {
               />
               
               <div className="mt-4 text-center z-40">
-                <span className="text-xs uppercase tracking-widest text-[#d4af37] font-semibold">
+                <span className="text-xs uppercase tracking-widest text-gold font-semibold">
                   {categories.find((c) => c.id === filteredItems[selectedImageIndex].category)?.label}
                 </span>
                 <h3 className="text-white text-lg font-bold mt-1 max-w-xl">
@@ -382,7 +382,7 @@ export function PortfolioPage() {
 
             {/* Right Button */}
             <button
-              className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/5 p-4 rounded-full hover:scale-105 duration-200 transition-all z-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+              className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white bg-white/5 p-4 rounded-full hover:scale-105 duration-200 transition-all z-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold"
               onClick={handleNext}
               aria-label="Next Image"
             >

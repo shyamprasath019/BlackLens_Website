@@ -253,8 +253,8 @@ export function AboutPage() {
               viewport={{ once: true }}
               className="bg-[#0a0a0a] p-10 rounded-lg border border-[#2a2a2a]"
             >
-              <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6">
-                <Eye className="w-8 h-8 text-[#d4af37]" />
+              <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6">
+                <Eye className="w-8 h-8 text-gold" />
               </div>
               <h3 className="text-white mb-6">Our Vision</h3>
               <p className="text-[#e5e5e5] leading-relaxed">
@@ -269,8 +269,8 @@ export function AboutPage() {
               transition={{ delay: 0.1 }}
               className="bg-[#0a0a0a] p-10 rounded-lg border border-[#2a2a2a]"
             >
-              <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6">
-                <Target className="w-8 h-8 text-[#d4af37]" />
+              <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6">
+                <Target className="w-8 h-8 text-gold" />
               </div>
               <h3 className="text-white mb-6">Our Mission</h3>
               <p className="text-[#e5e5e5] leading-relaxed">
@@ -304,10 +304,10 @@ export function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-[#d4af37] transition-all"
+                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-gold transition-all"
               >
-                <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6">
-                  <value.icon className="w-7 h-7 text-[#d4af37]" />
+                <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6">
+                  <value.icon className="w-7 h-7 text-gold" />
                 </div>
                 <h4 className="text-white mb-3">{value.title}</h4>
                 <p className="text-[#9ca3af] text-sm leading-relaxed">{value.description}</p>
@@ -339,7 +339,7 @@ export function AboutPage() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-[#d4af37] mb-3">{achievement.number}</div>
+                <div className="text-gold mb-3">{achievement.number}</div>
                 <p className="text-[#9ca3af]">{achievement.label}</p>
               </motion.div>
             ))}
@@ -370,10 +370,10 @@ export function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-[#d4af37] transition-all overflow-hidden"
+                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-gold transition-all overflow-hidden"
               >
                 {member.image ? (
-                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-2 border-[#d4af37]">
+                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-2 border-gold">
                     <ImageWithFallback
                       src={getOptimizedUrl(member.image, '')}
                       fallbackSrc="/Photos/portraits/03.jpg"
@@ -382,12 +382,12 @@ export function AboutPage() {
                     />
                   </div>
                 ) : (
-                  <div className="w-20 h-20 bg-[#d4af37]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Camera className="w-10 h-10 text-[#d4af37]" />
+                  <div className="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Camera className="w-10 h-10 text-gold" />
                   </div>
                 )}
                 <h4 className="text-white mb-2">{member.name}</h4>
-                <p className="text-[#d4af37] text-sm mb-2">{member.role}</p>
+                <p className="text-gold text-sm mb-2">{member.role}</p>
                 {member.experience && (
                   <p className="text-[#9ca3af] text-sm">{member.experience}</p>
                 )}
@@ -466,7 +466,7 @@ export function AboutPage() {
             </p>
             <Link
               to="/contact"
-              className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors font-medium inline-block"
+              className="bg-gold text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-goldMuted transition-colors font-medium inline-block"
             >
               Contact Us Today
             </Link>

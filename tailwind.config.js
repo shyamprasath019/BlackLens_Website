@@ -10,8 +10,8 @@ module.exports = {
         /* Brand colors */
         darkbg: "#0a0a0a",
         charcoal: "#1a1a1a",
-        gold: "#d4af37",
-        goldMuted: "#b8964f",
+        gold: "var(--color-gold)",
+        goldMuted: "var(--color-gold-muted)",
 
         /* Text */
         grayLight: "#e5e5e5",

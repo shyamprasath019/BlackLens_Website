@@ -13,8 +13,8 @@ export function NotFoundPage() {
       </Helmet>
 
       {/* Decorative background gradients */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#d4af37]/5 rounded-full filter blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#b8964f]/5 rounded-full filter blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/5 rounded-full filter blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-goldMuted/5 rounded-full filter blur-[100px] pointer-events-none"></div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -22,8 +22,8 @@ export function NotFoundPage() {
         transition={{ duration: 0.8 }}
         className="text-center z-10 max-w-lg"
       >
-        <div className="bg-[#d4af37]/10 p-6 rounded-full inline-block mb-8 border border-[#d4af37]/20">
-          <Camera className="w-16 h-16 text-[#d4af37]" />
+        <div className="bg-gold/10 p-6 rounded-full inline-block mb-8 border border-gold/20">
+          <Camera className="w-16 h-16 text-gold" />
         </div>
 
         <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-tight">404</h1>
@@ -36,7 +36,7 @@ export function NotFoundPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             to="/"
-            className="bg-[#d4af37] text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-[#b8964f] transition-all flex items-center justify-center gap-2 font-medium shadow-lg shadow-[#d4af37]/10"
+            className="bg-gold text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-goldMuted transition-all flex items-center justify-center gap-2 font-medium shadow-lg shadow-gold/10"
           >
             <ArrowLeft className="w-5 h-5" />
             Back to Home

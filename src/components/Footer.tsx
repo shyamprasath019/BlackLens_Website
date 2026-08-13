@@ -81,23 +81,23 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3 mb-5">
               <a href={settings?.instagram || "https://www.instagram.com/blacklens_studio_/"} target="_blank" rel="noopener noreferrer" 
-                className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-[#d4af37] hover:bg-[#2a2a2a] transition-all"
+                className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-gold hover:bg-[#2a2a2a] transition-all"
                 aria-label="Instagram">
                 <Instagram className="w-4 h-4" />
               </a>
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
-                className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-[#d4af37] hover:bg-[#2a2a2a] transition-all"
+                className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-gold hover:bg-[#2a2a2a] transition-all"
                 aria-label="WhatsApp">
                 <MessageCircle className="w-4 h-4" />
               </a>
               <a href={settings?.facebook || "https://facebook.com"} target="_blank" rel="noopener noreferrer"
-                className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-[#d4af37] hover:bg-[#2a2a2a] transition-all"
+                className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-gold hover:bg-[#2a2a2a] transition-all"
                 aria-label="Facebook">
                 <Facebook className="w-4 h-4" />
               </a>
               {settings?.youtube && (
                 <a href={settings.youtube} target="_blank" rel="noopener noreferrer"
-                  className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-[#d4af37] hover:bg-[#2a2a2a] transition-all"
+                  className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-gold hover:bg-[#2a2a2a] transition-all"
                   aria-label="YouTube">
                   <Youtube className="w-4 h-4" />
                 </a>
@@ -107,7 +107,7 @@ export function Footer() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/30 px-3.5 py-2 rounded-lg text-xs font-medium hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all"
+              className="inline-flex items-center gap-2 bg-gold/10 text-gold border border-gold/30 px-3.5 py-2 rounded-lg text-xs font-medium hover:bg-gold hover:text-[#0a0a0a] transition-all"
             >
               <MessageCircle className="w-3.5 h-3.5" />
               Chat on WhatsApp
@@ -123,7 +123,7 @@ export function Footer() {
                   <Link
                     to={link.path}
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors"
+                    className="text-[#9ca3af] text-sm hover:text-gold transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -141,7 +141,7 @@ export function Footer() {
                   <Link
                     to="/services"
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors block truncate"
+                    className="text-[#9ca3af] text-sm hover:text-gold transition-colors block truncate"
                   >
                     {service}
                   </Link>
@@ -155,26 +155,26 @@ export function Footer() {
             <Link 
               to="/contact" 
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-white font-semibold text-base mb-5 inline-flex items-center gap-2 group hover:text-[#d4af37] transition-colors"
+              className="text-white font-semibold text-base mb-5 inline-flex items-center gap-2 group hover:text-gold transition-colors"
             >
               Contact Us
-              <ArrowRight className="w-4 h-4 text-[#d4af37] group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-gold group-hover:translate-x-1 transition-transform" />
             </Link>
             <div className="space-y-3.5">
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-[#d4af37] flex-shrink-0 mt-1" />
+                <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-1" />
                 <p className="text-[#9ca3af] text-sm leading-relaxed whitespace-pre-line">
                   {settings?.address || 'No: 23, Gomathi Puram, 1st Main Road, Thiruninravur, Chennai, Tamil Nadu'}
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <Phone className="w-4 h-4 text-[#d4af37] flex-shrink-0 mt-1" />
+                <Phone className="w-4 h-4 text-gold flex-shrink-0 mt-1" />
                 <div className="flex flex-col gap-1">
                   {phoneNumbers.map((phoneNum, idx) => (
                     <a
                       key={idx}
                       href={`tel:${phoneNum.replace(/[^0-9+]/g, '')}`}
-                      className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors"
+                      className="text-[#9ca3af] text-sm hover:text-gold transition-colors"
                     >
                       {phoneNum}
                     </a>
@@ -182,9 +182,9 @@ export function Footer() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#d4af37] flex-shrink-0" />
+                <Mail className="w-4 h-4 text-gold flex-shrink-0" />
                 <a href={`mailto:${settings?.email || "info@blacklensphotography.com"}`} 
-                  className="text-[#9ca3af] text-sm hover:text-[#d4af37] transition-colors truncate">
+                  className="text-[#9ca3af] text-sm hover:text-gold transition-colors truncate">
                   {settings?.email || "info@blacklensphotography.com"}
                 </a>
               </div>
@@ -198,7 +198,7 @@ export function Footer() {
             © {new Date().getFullYear()} Black Lens Photography. All rights reserved.
           </p>
           <p className="text-[#9ca3af] text-xs text-center">
-            Crafted by <a href="https://klyph.in" target="_blank" rel="noopener noreferrer" className="text-white hover:text-[#d4af37] transition-colors underline decoration-[#d4af37]/40 underline-offset-4">Klyph Studios</a>
+            Crafted by <a href="https://klyph.in" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gold transition-colors underline decoration-gold/40 underline-offset-4">Klyph Studios</a>
           </p>
           <p className="text-[#9ca3af] text-xs text-center md:text-right">
             Wedding Photographer in Tamil Nadu | Photography Studio in Chennai

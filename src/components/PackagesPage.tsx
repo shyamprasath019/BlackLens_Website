@@ -236,11 +236,11 @@ export function PackagesPage() {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
                 className={`relative bg-[#1a1a1a] rounded-lg overflow-hidden border-2 ${
-                  pkg.popular ? 'border-[#d4af37]' : 'border-[#2a2a2a]'
+                  pkg.popular ? 'border-gold' : 'border-[#2a2a2a]'
                 }`}
               >
                 {pkg.popular && (
-                  <div className="absolute top-0 right-0 bg-[#d4af37] text-[#0a0a0a] px-4 py-1.5 text-sm flex items-center gap-1">
+                  <div className="absolute top-0 right-0 bg-gold text-[#0a0a0a] px-4 py-1.5 text-sm flex items-center gap-1">
                     <Star className="w-4 h-4 inline" />
                     Most Popular
                   </div>
@@ -251,14 +251,14 @@ export function PackagesPage() {
                   <p className="text-[#9ca3af] text-sm mb-6 leading-relaxed">{pkg.description}</p>
                   
                   <div className="mb-8">
-                    <div className="text-[#d4af37] mb-2">{pkg.price}</div>
+                    <div className="text-gold mb-2">{pkg.price}</div>
                     <p className="text-[#9ca3af] text-sm">{pkg.duration}</p>
                   </div>
 
                   <ul className="space-y-4 mb-10">
                     {pkg.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3 text-[#e5e5e5]">
-                        <Check className="w-5 h-5 text-[#d4af37] flex-shrink-0 mt-0.5" />
+                        <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                         <span className="text-sm leading-relaxed">{feature}</span>
                       </li>
                     ))}
@@ -269,7 +269,7 @@ export function PackagesPage() {
                     state={{ service: `${pkg.name} Package` }}
                     className={`block text-center w-full py-4 rounded-lg transition-colors font-medium ${
                       pkg.popular
-                        ? 'bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f]'
+                        ? 'bg-gold text-[#0a0a0a] hover:bg-goldMuted'
                         : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-[#0a0a0a]'
                     }`}
                   >
@@ -305,10 +305,10 @@ export function PackagesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] hover:border-[#d4af37] transition-all"
+                className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] hover:border-gold transition-all"
               >
                 <h4 className="text-white mb-3">{service.name}</h4>
-                <p className="text-[#d4af37]">{service.price}</p>
+                <p className="text-gold">{service.price}</p>
               </motion.div>
             ))}
           </div>
@@ -318,7 +318,7 @@ export function PackagesPage() {
       {/* Custom Quote Section */}
       <section className="py-24 bg-[#0a0a0a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-[#d4af37]/10 to-[#b8964f]/10 border border-[#d4af37] rounded-lg p-12 md:p-16 text-center">
+          <div className="max-w-4xl mx-auto bg-gradient-to-r from-gold/10 to-goldMuted/10 border border-gold rounded-lg p-12 md:p-16 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -331,7 +331,7 @@ export function PackagesPage() {
               </p>
               <Link
                 to="/contact"
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2 font-medium"
+                className="bg-gold text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-goldMuted transition-colors inline-flex items-center gap-2 font-medium"
               >
                 Request Custom Quote
                 <ArrowRight className="w-5 h-5" />

@@ -215,8 +215,8 @@ export function ContactPage() {
 
               <div className="space-y-8 mb-12">
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#d4af37]/10 p-4 rounded-lg">
-                    <MapPin className="w-6 h-6 text-[#d4af37]" />
+                  <div className="bg-gold/10 p-4 rounded-lg">
+                    <MapPin className="w-6 h-6 text-gold" />
                   </div>
                   <div>
                     <h4 className="text-white mb-2">Our Location</h4>
@@ -227,8 +227,8 @@ export function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#d4af37]/10 p-4 rounded-lg">
-                    <Phone className="w-6 h-6 text-[#d4af37]" />
+                  <div className="bg-gold/10 p-4 rounded-lg">
+                    <Phone className="w-6 h-6 text-gold" />
                   </div>
                   <div>
                     <h4 className="text-white mb-2">Call Us</h4>
@@ -238,7 +238,7 @@ export function ContactPage() {
                         <a
                           key={i}
                           href={`tel:${cleanNum.replace(/[^0-9+]/g, '')}`}
-                          className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1"
+                          className="text-[#9ca3af] hover:text-gold transition-colors block mb-1"
                         >
                           {cleanNum}
                         </a>
@@ -248,14 +248,14 @@ export function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#d4af37]/10 p-4 rounded-lg">
-                    <Mail className="w-6 h-6 text-[#d4af37]" />
+                  <div className="bg-gold/10 p-4 rounded-lg">
+                    <Mail className="w-6 h-6 text-gold" />
                   </div>
                   <div>
                     <h4 className="text-white mb-2">Email Us</h4>
                     <a
                       href={`mailto:${settings?.email || 'info@blacklensphotography.com'}`}
-                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1"
+                      className="text-[#9ca3af] hover:text-gold transition-colors block mb-1"
                     >
                       {settings?.email || 'info@blacklensphotography.com'}
                     </a>
@@ -263,8 +263,8 @@ export function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#d4af37]/10 p-4 rounded-lg">
-                    <MessageSquare className="w-6 h-6 text-[#d4af37]" />
+                  <div className="bg-gold/10 p-4 rounded-lg">
+                    <MessageSquare className="w-6 h-6 text-gold" />
                   </div>
                   <div>
                     <h4 className="text-white mb-2">WhatsApp</h4>
@@ -278,7 +278,7 @@ export function ContactPage() {
                       }
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#9ca3af] hover:text-[#d4af37] transition-colors block mb-1"
+                      className="text-[#9ca3af] hover:text-gold transition-colors block mb-1"
                     >
                       {settings?.whatsapp || '+91 93611 77140'}
                     </a>
@@ -294,7 +294,7 @@ export function ContactPage() {
                   <p className="text-white font-medium">
                     {settings?.businessHours || 'Monday - Saturday: 9:00 AM - 7:00 PM | Sunday: 10:00 AM - 5:00 PM'}
                   </p>
-                  <p className="text-sm mt-6 text-[#d4af37]">
+                  <p className="text-sm mt-6 text-gold">
                     * Available 24/7 for event coverage bookings
                   </p>
                 </div>
@@ -314,7 +314,7 @@ export function ContactPage() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#d4af37]/20 border border-[#d4af37] text-white p-4 rounded-lg mb-8"
+                    className="bg-gold/20 border border-gold text-white p-4 rounded-lg mb-8"
                   >
                     Thank you! We'll get back to you within 24 hours.
                   </motion.div>
@@ -338,7 +338,7 @@ export function ContactPage() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors"
+                      className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-gold transition-colors"
                       placeholder="Enter your name"
                     />
                   </div>
@@ -355,7 +355,7 @@ export function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors"
+                        className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-gold transition-colors"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -371,7 +371,7 @@ export function ContactPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors"
+                        className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-gold transition-colors"
                         placeholder="+91 XXXXX XXXXX"
                       />
                     </div>
@@ -387,7 +387,7 @@ export function ContactPage() {
                       value={formData.serviceType}
                       onChange={handleChange}
                       required
-                      className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors"
+                      className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-gold transition-colors"
                     >
                       <option value="">Select a service</option>
                       {serviceTypes.map((service) => (
@@ -409,7 +409,7 @@ export function ContactPage() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors resize-none"
+                      className="w-full bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg px-5 py-4 text-white focus:outline-none focus:border-gold transition-colors resize-none"
                       placeholder="Tell us about your photography needs..."
                     />
                   </div>
@@ -421,8 +421,8 @@ export function ContactPage() {
                     whileTap={!loading ? { scale: 0.98 } : undefined}
                     className={`w-full px-6 py-4 rounded-lg flex items-center justify-center gap-2 transition-colors
                       ${loading 
-                        ? "bg-[#b8964f] cursor-not-allowed" 
-                        : "bg-[#d4af37] hover:bg-[#b8964f]"
+                        ? "bg-goldMuted cursor-not-allowed" 
+                        : "bg-gold hover:bg-goldMuted"
                       } text-[#0a0a0a]`}
                   >
                     <Send className="w-5 h-5" />

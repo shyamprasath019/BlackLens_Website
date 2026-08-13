@@ -337,7 +337,7 @@ export function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
               <Link
                 to="/contact"
-                className="bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f] hover:text-white px-10 py-4 rounded-lg shadow-lg hover:shadow-[#d4af37]/20 transition-all duration-300 flex items-center justify-center gap-2 font-bold"
+                className="bg-gold text-[#0a0a0a] hover:bg-goldMuted hover:text-white px-10 py-4 rounded-lg shadow-lg hover:shadow-gold/20 transition-all duration-300 flex items-center justify-center gap-2 font-bold"
               >
                 {homeContent?.heroCTA ?? "Book a Shoot"}
                 <ArrowRight className="w-5 h-5" />
@@ -376,7 +376,7 @@ export function HomePage() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center relative premium-glow"
               >
-                <div className="text-[#d4af37] mb-3 text-4xl font-bold tracking-tight">{stat.value}</div>
+                <div className="text-gold mb-3 text-4xl font-bold tracking-tight">{stat.value}</div>
                 <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
               </motion.div>
             ))}
@@ -419,12 +419,12 @@ export function HomePage() {
                 onClick={() => navigate('/services')}
                 className="premium-glass premium-card-border p-8 rounded-xl transition-all duration-300 cursor-pointer group shadow-2xl relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#d4af37]/5 to-transparent rounded-full blur-xl pointer-events-none" />
-                <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-[#d4af37]/20 transition-colors">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gold/5 to-transparent rounded-full blur-xl pointer-events-none" />
+                <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-gold/20 transition-colors">
                   {service.icon ? (
-                    <service.icon className="w-7 h-7 text-[#d4af37]" />
+                    <service.icon className="w-7 h-7 text-gold" />
                   ) : (
-                    <Camera className="w-7 h-7 text-[#d4af37]" />
+                    <Camera className="w-7 h-7 text-gold" />
                   )}
                 </div>
                 <h3 className="text-white text-lg font-bold mb-3">{service.title}</h3>
@@ -441,7 +441,7 @@ export function HomePage() {
           >
             <Link
               to="/services"
-              className="text-[#d4af37] hover:text-[#b8964f] transition-colors inline-flex items-center gap-2 font-medium"
+              className="text-gold hover:text-goldMuted transition-colors inline-flex items-center gap-2 font-medium"
             >
               View All Services
               <ArrowRight className="w-4 h-4" />
@@ -503,7 +503,7 @@ export function HomePage() {
           >
             <Link
               to="/portfolio"
-              className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors font-medium"
+              className="bg-gold text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-goldMuted transition-colors font-medium"
             >
               Explore Full Portfolio
             </Link>
@@ -554,11 +554,11 @@ export function HomePage() {
               ].map((testimonial, index) => (
                 <div
                   key={`${testimonial.name}-${index}`}
-                  className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] w-80 md:w-96 flex-shrink-0 hover:border-[#d4af37] transition-colors"
+                  className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] w-80 md:w-96 flex-shrink-0 hover:border-gold transition-colors"
                 >
                   <div className="flex gap-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-[#d4af37] text-[#d4af37]" />
+                      <Star key={i} className="w-5 h-5 fill-gold text-gold" />
                     ))}
                   </div>
                   <p className="text-[#e5e5e5] mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
@@ -589,7 +589,7 @@ export function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
               <Link
                 to="/contact"
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors font-medium text-center"
+                className="bg-gold text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-goldMuted transition-colors font-medium text-center"
               >
                 Book Your Shoot
               </Link>

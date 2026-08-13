@@ -61,7 +61,7 @@ export function ImageWithFallback(props: ImageWithFallbackProps) {
     <div className="relative overflow-hidden w-full h-full bg-[#121212] rounded-lg">
       {isLoading && (
         <div className="absolute inset-0 bg-[#1a1a1a] animate-pulse flex items-center justify-center z-10 min-h-[200px]">
-          <div className="w-6 h-6 border-2 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
       <img

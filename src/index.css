@@ -8,8 +8,10 @@
 :root {
   --color-dark-bg: #050505;
   --color-charcoal: #121212;
-  --color-gold: #d4af37;
-  --color-gold-muted: #b8964f;
+  --color-gold-rgb: 212 175 55;
+  --color-gold: rgb(var(--color-gold-rgb));
+  --color-gold-muted-rgb: 184 150 79;
+  --color-gold-muted: rgb(var(--color-gold-muted-rgb));
   --color-white: #ffffff;
   --color-gray-light: #f1f5f9;
   --color-gray-mid: #94a3b8;

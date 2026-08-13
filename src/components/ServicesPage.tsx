@@ -315,8 +315,8 @@ export function ServicesPage() {
 
                 {/* Content */}
                 <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="bg-[#d4af37]/10 p-4 rounded-lg inline-block mb-6">
-                    <service.icon className="w-8 h-8 text-[#d4af37]" />
+                  <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6">
+                    <service.icon className="w-8 h-8 text-gold" />
                   </div>
                   <h2 className="text-white mb-6">{service.title}</h2>
                   <p className="text-[#e5e5e5] mb-8 leading-relaxed">{service.description}</p>
@@ -326,7 +326,7 @@ export function ServicesPage() {
                     <ul className="space-y-3">
                       {service.features && service.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-3 text-[#9ca3af]">
-                          <div className="w-1.5 h-1.5 bg-[#d4af37] rounded-full mt-2.5 flex-shrink-0"></div>
+                          <div className="w-1.5 h-1.5 bg-gold rounded-full mt-2.5 flex-shrink-0"></div>
                           <span className="leading-relaxed">{feature}</span>
                         </li>
                       ))}
@@ -336,7 +336,7 @@ export function ServicesPage() {
                   <Link
                     to="/contact"
                     state={{ service: service.title }}
-                    className="bg-[#d4af37] text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-[#b8964f] transition-colors inline-flex items-center gap-2 font-medium"
+                    className="bg-gold text-[#0a0a0a] px-8 py-4 rounded-lg hover:bg-goldMuted transition-colors inline-flex items-center gap-2 font-medium"
                   >
                     Enquire Now
                     <ArrowRight className="w-5 h-5" />
@@ -401,7 +401,7 @@ export function ServicesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
               <Link
                 to="/contact"
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors font-medium text-center"
+                className="bg-gold text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-goldMuted transition-colors font-medium text-center"
               >
                 Contact Us
               </Link>

@@ -25,14 +25,14 @@ export function TermsPage() {
         >
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-[#d4af37] text-sm hover:underline mb-6"
+            className="inline-flex items-center gap-2 text-gold text-sm hover:underline mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </Link>
           <div className="flex items-center gap-4 mb-4">
-            <div className="bg-[#d4af37]/10 p-3 rounded-xl border border-[#d4af37]/20">
-              <Scale className="w-8 h-8 text-[#d4af37]" />
+            <div className="bg-gold/10 p-3 rounded-xl border border-gold/20">
+              <Scale className="w-8 h-8 text-gold" />
             </div>
             <h1 className="text-3xl md:text-5xl font-bold text-white">Terms of Service</h1>
           </div>
@@ -50,7 +50,7 @@ export function TermsPage() {
         >
           <section className="space-y-3">
             <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-[#d4af37]" />
+              <Calendar className="w-5 h-5 text-gold" />
               1. Shoot Bookings & Advance Payment
             </h2>
             <p className="text-[#9ca3af]">
@@ -60,7 +60,7 @@ export function TermsPage() {
 
           <section className="space-y-3">
             <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-              <FileCheck className="w-5 h-5 text-[#d4af37]" />
+              <FileCheck className="w-5 h-5 text-gold" />
               2. Payment Schedule & Deliverables
             </h2>
             <p className="text-[#9ca3af]">

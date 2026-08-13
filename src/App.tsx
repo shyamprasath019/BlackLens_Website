@@ -30,7 +30,7 @@ const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(m => ({
 // Loading fallback
 const PageLoader = () => (
   <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-    <div className="w-12 h-12 border-4 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
+    <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
 
@@ -54,6 +54,21 @@ const MainLayout = () => (
   </div>
 );
 
+function hexToRgb(hex: string): string | null {
+  const cleaned = hex.replace(/^#/, '');
+  const fullHex = cleaned.length === 3
+    ? cleaned.split('').map(char => char + char).join('')
+    : cleaned;
+  
+  if (fullHex.length !== 6) return null;
+  
+  const r = parseInt(fullHex.substring(0, 2), 16);
+  const g = parseInt(fullHex.substring(2, 4), 16);
+  const b = parseInt(fullHex.substring(4, 6), 16);
+  
+  return `${r} ${g} ${b}`;
+}
+
 export default function App() {
   // Inject CMS primary brand color as CSS variable on every page load
   useEffect(() => {
@@ -62,8 +77,11 @@ export default function App() {
       .then((data: { primaryColor?: string }) => {
         const hex = data?.primaryColor;
         if (hex) {
-          document.documentElement.style.setProperty('--color-gold', hex);
-          document.documentElement.style.setProperty('--color-gold-muted', hex + 'cc');
+          const rgb = hexToRgb(hex);
+          if (rgb) {
+            document.documentElement.style.setProperty('--color-gold-rgb', rgb);
+            document.documentElement.style.setProperty('--color-gold-muted-rgb', rgb);
+          }
         }
       })
       .catch(() => {
