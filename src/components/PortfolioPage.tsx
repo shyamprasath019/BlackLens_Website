@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 import { sanityClient, urlFor } from '../lib/sanityClient';
 import { Helmet } from 'react-helmet-async';
 

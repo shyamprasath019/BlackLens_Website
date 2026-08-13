@@ -1,4 +1,4 @@
-import { Camera, Phone, Mail, MapPin, Instagram, Youtube, Facebook, MessageCircle, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, Youtube, Facebook, MessageCircle, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { sanityClient } from '../lib/sanityClient';
 import { Link } from 'react-router-dom';
