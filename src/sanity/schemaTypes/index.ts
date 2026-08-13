@@ -5,6 +5,9 @@ import packageSchema from './package';
 import portfolioItem from './portfolioItem';
 import testimonial from './testimonial';
 import stat from './stat';
+import addOnService from './addOnService';
+import aboutPage from './aboutPage';
+import teamMember from './teamMember';
 
 export const schemaTypes = [
   siteSettings,
@@ -14,4 +17,7 @@ export const schemaTypes = [
   portfolioItem,
   testimonial,
   stat,
+  addOnService,
+  aboutPage,
+  teamMember,
 ];

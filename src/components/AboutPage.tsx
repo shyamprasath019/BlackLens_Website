@@ -3,8 +3,75 @@ import { Camera, Heart, Award, Users, Target, Eye } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useEffect, useState } from 'react';
+import { sanityClient, urlFor } from '../lib/sanityClient';
 
 export function AboutPage() {
+  const [aboutContent, setAboutContent] = useState<{
+    heroTitle?: string;
+    heroSubtitle?: string;
+    heroImage?: any;
+    storyTitle?: string;
+    storyParagraphs?: string[];
+    storyImage?: any;
+    visionText?: string;
+    missionText?: string;
+  } | null>(null);
+
+  const [teamData, setTeamData] = useState<
+    { name: string; role: string; experience?: string; image?: any }[]
+  >([
+    {
+      name: 'Rajesh Kumar',
+      role: 'Lead Photographer',
+      experience: '10+ years',
+    },
+    {
+      name: 'Priya Sharma',
+      role: 'Senior Videographer',
+      experience: '8+ years',
+    },
+    {
+      name: 'Anand Venkat',
+      role: 'Fashion Photographer',
+      experience: '6+ years',
+    },
+    {
+      name: 'Divya Reddy',
+      role: 'Portrait Specialist',
+      experience: '5+ years',
+    },
+  ]);
+
+  const getOptimizedUrl = (image: any, fallback: string) => {
+    if (!image) return fallback;
+    if (typeof image === 'string') return image;
+    if (image.asset) {
+      try {
+        return urlFor(image).auto('format').fit('max').width(1000).url();
+      } catch (e) {
+        console.error('Error generating Sanity URL:', e);
+      }
+    }
+    return fallback;
+  };
+
+  useEffect(() => {
+    sanityClient
+      .fetch(`*[_type == "aboutPage"][0]{ heroTitle, heroSubtitle, heroImage, storyTitle, storyParagraphs, storyImage, visionText, missionText }`)
+      .then((data) => {
+        if (data) setAboutContent(data);
+      })
+      .catch(console.error);
+
+    sanityClient
+      .fetch(`*[_type == "teamMember"] | order(order asc, _createdAt asc){ name, role, experience, image }`)
+      .then((data) => {
+        if (data && data.length > 0) setTeamData(data);
+      })
+      .catch(console.error);
+  }, []);
+
   const values = [
     {
       icon: Heart,
@@ -25,29 +92,6 @@ export function AboutPage() {
       icon: Camera,
       title: 'Innovation',
       description: 'Using cutting-edge techniques and equipment for stunning results.',
-    },
-  ];
-
-  const team = [
-    {
-      name: 'Rajesh Kumar',
-      role: 'Lead Photographer',
-      experience: '10+ years',
-    },
-    {
-      name: 'Priya Sharma',
-      role: 'Senior Videographer',
-      experience: '8+ years',
-    },
-    {
-      name: 'Anand Venkat',
-      role: 'Fashion Photographer',
-      experience: '6+ years',
-    },
-    {
-      name: 'Divya Reddy',
-      role: 'Portrait Specialist',
-      experience: '5+ years',
     },
   ];
 
@@ -121,7 +165,7 @@ export function AboutPage() {
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithFallback
-            src="/Photos/fashion/gv_02.jpg"
+            src={getOptimizedUrl(aboutContent?.heroImage, "/Photos/fashion/gv_02.jpg")}
             fallbackSrc="/Photos/fashion/gv_02.jpg"
             alt="Black Lens Photography studio equipment and professional camera setup in Chennai"
             className="w-full h-full object-cover"
@@ -135,9 +179,9 @@ export function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-white mb-8">About Black Lens Photography</h1>
+            <h1 className="text-white mb-8">{aboutContent?.heroTitle || 'About Black Lens Photography'}</h1>
             <p className="text-[#e5e5e5] text-xl max-w-3xl mx-auto px-4">
-              Crafting visual stories with passion, precision, and artistry since 2017
+              {aboutContent?.heroSubtitle || 'Crafting visual stories with passion, precision, and artistry since 2017'}
             </p>
           </motion.div>
         </div>
@@ -153,23 +197,31 @@ export function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-white mb-8">Our Story</h2>
+              <h2 className="text-white mb-8">{aboutContent?.storyTitle || 'Our Story'}</h2>
               <div className="space-y-6 text-[#e5e5e5]">
-                <p className="leading-relaxed">
-                  Black Lens Photography was born from a simple passion - to capture the raw emotion, 
-                  beauty, and authenticity of life's most precious moments. What started as a dream in 
-                  2017 has grown into one of Chennai's most trusted photography studios.
-                </p>
-                <p className="leading-relaxed">
-                  Based in Thirunindravur, we've had the privilege of covering over 1000 events across 
-                  Tamil Nadu. From intimate family portraits to grand wedding celebrations, each project 
-                  receives our unwavering commitment to excellence.
-                </p>
-                <p className="leading-relaxed">
-                  Our team brings together diverse expertise in wedding photography, fashion shoots, 
-                  product photography, and cinematography. We believe in pushing creative boundaries 
-                  while maintaining the timeless elegance that makes memories last forever.
-                </p>
+                {aboutContent?.storyParagraphs && aboutContent.storyParagraphs.length > 0 ? (
+                  aboutContent.storyParagraphs.map((para, i) => (
+                    <p key={i} className="leading-relaxed">{para}</p>
+                  ))
+                ) : (
+                  <>
+                    <p className="leading-relaxed">
+                      Black Lens Photography was born from a simple passion - to capture the raw emotion, 
+                      beauty, and authenticity of life's most precious moments. What started as a dream in 
+                      2017 has grown into one of Chennai's most trusted photography studios.
+                    </p>
+                    <p className="leading-relaxed">
+                      Based in Thirunindravur, we've had the privilege of covering over 1000 events across 
+                      Tamil Nadu. From intimate family portraits to grand wedding celebrations, each project 
+                      receives our unwavering commitment to excellence.
+                    </p>
+                    <p className="leading-relaxed">
+                      Our team brings together diverse expertise in wedding photography, fashion shoots, 
+                      product photography, and cinematography. We believe in pushing creative boundaries 
+                      while maintaining the timeless elegance that makes memories last forever.
+                    </p>
+                  </>
+                )}
               </div>
             </motion.div>
 
@@ -181,7 +233,7 @@ export function AboutPage() {
               className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden"
             >
               <ImageWithFallback
-                src="/Photos/weddings/02.jpg"
+                src={getOptimizedUrl(aboutContent?.storyImage, "/Photos/weddings/02.jpg")}
                 fallbackSrc="/Photos/weddings/02.jpg"
                 alt="Award-winning wedding photography in Chennai by Black Lens Photography"
                 className="w-full h-full object-cover"
@@ -206,8 +258,7 @@ export function AboutPage() {
               </div>
               <h3 className="text-white mb-6">Our Vision</h3>
               <p className="text-[#e5e5e5] leading-relaxed">
-                To be recognized as Tamil Nadu's premier photography studio, known for transforming 
-                ordinary moments into extraordinary visual narratives that stand the test of time.
+                {aboutContent?.visionText || "To be recognized as Tamil Nadu's premier photography studio, known for transforming ordinary moments into extraordinary visual narratives that stand the test of time."}
               </p>
             </motion.div>
 
@@ -223,9 +274,7 @@ export function AboutPage() {
               </div>
               <h3 className="text-white mb-6">Our Mission</h3>
               <p className="text-[#e5e5e5] leading-relaxed">
-                To deliver exceptional photography and videography services that capture authentic emotions, 
-                exceed client expectations, and create lasting memories through artistic excellence and 
-                professional dedication.
+                {aboutContent?.missionText || "To deliver exceptional photography and videography services that capture authentic emotions, exceed client expectations, and create lasting memories through artistic excellence and professional dedication."}
               </p>
             </motion.div>
           </div>
@@ -314,21 +363,34 @@ export function AboutPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {team.map((member, index) => (
+            {teamData.map((member, index) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-[#d4af37] transition-all"
+                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-[#d4af37] transition-all overflow-hidden"
               >
-                <div className="w-20 h-20 bg-[#d4af37]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Camera className="w-10 h-10 text-[#d4af37]" />
-                </div>
+                {member.image ? (
+                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-2 border-[#d4af37]">
+                    <ImageWithFallback
+                      src={getOptimizedUrl(member.image, '')}
+                      fallbackSrc="/Photos/portraits/03.jpg"
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-20 h-20 bg-[#d4af37]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Camera className="w-10 h-10 text-[#d4af37]" />
+                  </div>
+                )}
                 <h4 className="text-white mb-2">{member.name}</h4>
                 <p className="text-[#d4af37] text-sm mb-2">{member.role}</p>
-                <p className="text-[#9ca3af] text-sm">{member.experience}</p>
+                {member.experience && (
+                  <p className="text-[#9ca3af] text-sm">{member.experience}</p>
+                )}
               </motion.div>
             ))}
           </div>

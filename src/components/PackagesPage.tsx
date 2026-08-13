@@ -35,6 +35,19 @@ export function PackagesPage() {
     },
   ]);
 
+  const [additionalServices, setAdditionalServices] = useState<
+    { name: string; price: string }[]
+  >([
+    { name: 'Pre-Wedding Shoot', price: '₹12,000' },
+    { name: 'Maternity Shoot', price: '₹8,000' },
+    { name: 'Baby Shoot', price: '₹6,000' },
+    { name: 'Birthday Coverage', price: '₹10,000' },
+    { name: 'Product Photography (per item)', price: '₹500' },
+    { name: 'Corporate Event Coverage', price: '₹20,000' },
+    { name: 'Fashion Portfolio', price: '₹15,000' },
+    { name: 'Drone Coverage (add-on)', price: '₹8,000' },
+  ]);
+
   useEffect(() => {
     sanityClient
       .fetch(
@@ -53,18 +66,21 @@ export function PackagesPage() {
         }
       })
       .catch(console.error);
-  }, []);
 
-  const additionalServices = [
-    { name: 'Pre-Wedding Shoot', price: '₹12,000' },
-    { name: 'Maternity Shoot', price: '₹8,000' },
-    { name: 'Baby Shoot', price: '₹6,000' },
-    { name: 'Birthday Coverage', price: '₹10,000' },
-    { name: 'Product Photography (per item)', price: '₹500' },
-    { name: 'Corporate Event Coverage', price: '₹20,000' },
-    { name: 'Fashion Portfolio', price: '₹15,000' },
-    { name: 'Drone Coverage (add-on)', price: '₹8,000' },
-  ];
+    sanityClient
+      .fetch(
+        `*[_type == "addOnService"] | order(order asc, _createdAt asc) {
+          name,
+          price
+        }`
+      )
+      .then((data) => {
+        if (data && data.length > 0) {
+          setAdditionalServices(data);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   // JSON-LD Structured Data
   const jsonLdData = {
