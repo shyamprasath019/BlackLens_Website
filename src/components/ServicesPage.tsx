@@ -1,10 +1,57 @@
-import { Camera, Heart, Baby, Gift, Briefcase, ShoppingBag, Shirt, Video, ArrowRight } from 'lucide-react';
+import { Camera, Heart, Baby, Gift, Briefcase, ShoppingBag, Shirt, Video, ArrowRight, Utensils, Film, Users, Award, Star } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useEffect, useState } from 'react';
 import { sanityClient, urlFor } from '../lib/sanityClient';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+
+const ICON_MAP: Record<string, any> = {
+  camera: Camera,
+  utensils: Utensils,
+  food: Utensils,
+  heart: Heart,
+  wedding: Heart,
+  event: Heart,
+  film: Film,
+  cine: Film,
+  users: Users,
+  portrait: Users,
+  'shopping-bag': ShoppingBag,
+  product: ShoppingBag,
+  shirt: Shirt,
+  fashion: Shirt,
+  briefcase: Briefcase,
+  corporate: Briefcase,
+  baby: Baby,
+  maternity: Baby,
+  gift: Gift,
+  birthday: Gift,
+  award: Award,
+  commercial: Award,
+  video: Video,
+  star: Star,
+};
+
+const getServiceIcon = (iconKey?: string, title?: string) => {
+  if (iconKey && ICON_MAP[iconKey.toLowerCase()]) {
+    return ICON_MAP[iconKey.toLowerCase()];
+  }
+  if (title) {
+    const t = title.toLowerCase();
+    if (t.includes('food') || t.includes('culinary') || t.includes('restaurant')) return Utensils;
+    if (t.includes('wedding') || t.includes('event')) return Heart;
+    if (t.includes('maternity') || t.includes('baby')) return Baby;
+    if (t.includes('birthday')) return Gift;
+    if (t.includes('product')) return ShoppingBag;
+    if (t.includes('commercial')) return Award;
+    if (t.includes('fashion')) return Shirt;
+    if (t.includes('portrait')) return Users;
+    if (t.includes('corporate')) return Briefcase;
+    if (t.includes('video') || t.includes('cine') || t.includes('film')) return Film;
+  }
+  return Camera;
+};
 
 export function ServicesPage() {
   const [services, setServices] = useState<
@@ -84,26 +131,20 @@ export function ServicesPage() {
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "service"]{
+        `*[_type == "service"] | order(order asc, _createdAt asc){
           title,
           description,
           features,
-          image
+          image,
+          icon,
+          order
         }`
       )
       .then((data) => {
         if (data && data.length > 0) {
-          // Map icons back to data based on title
           const mappedData = data.map((item: any) => {
             const defaultItem = services.find(s => s.title.toLowerCase() === item.title.toLowerCase());
-            let Icon = defaultItem?.icon || Camera;
-            if (item.title.toLowerCase().includes('wedding') || item.title.toLowerCase().includes('event')) Icon = Heart;
-            if (item.title.toLowerCase().includes('maternity') || item.title.toLowerCase().includes('baby')) Icon = Baby;
-            if (item.title.toLowerCase().includes('birthday')) Icon = Gift;
-            if (item.title.toLowerCase().includes('product')) Icon = ShoppingBag;
-            if (item.title.toLowerCase().includes('fashion')) Icon = Shirt;
-            if (item.title.toLowerCase().includes('corporate')) Icon = Briefcase;
-            if (item.title.toLowerCase().includes('video') || item.title.toLowerCase().includes('cine')) Icon = Video;
+            const Icon = getServiceIcon(item.icon, item.title);
             return {
               ...item,
               icon: Icon,
