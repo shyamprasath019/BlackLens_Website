@@ -5,6 +5,15 @@ export default defineType({
   title: 'Site Settings',
   type: 'document',
   fields: [
+    defineField({
+      name: 'primaryColor',
+      title: 'Primary Brand Color',
+      type: 'color',
+      description: 'The main accent color used across the entire website (buttons, highlights, borders). Default: Gold #D4AF37. Changes take effect on next page load.',
+      options: {
+        disableAlpha: true,
+      },
+    }),
     defineField({ name: 'phone', title: 'Phone', type: 'string' }),
     defineField({ name: 'email', title: 'Email', type: 'string' }),
     defineField({ name: 'address', title: 'Address', type: 'text' }),

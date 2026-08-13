@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Suspense, lazy, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { sanityClient } from './lib/sanityClient';
 
 // Scroll to Top on route change
 function ScrollToTop() {
@@ -57,6 +58,23 @@ const MainLayout = () => (
 );
 
 export default function App() {
+  // Inject CMS-defined primary brand color as CSS variable
+  useEffect(() => {
+    sanityClient
+      .fetch(`*[_type == "siteSettings"][0]{ primaryColor }`)
+      .then((data: { primaryColor?: { hex?: string } }) => {
+        const hex = data?.primaryColor?.hex;
+        if (hex) {
+          document.documentElement.style.setProperty('--color-gold', hex);
+          // Also derive a slightly muted variant for hover states
+          document.documentElement.style.setProperty('--color-gold-muted', hex + 'cc');
+        }
+      })
+      .catch(() => {
+        // Fallback: keep default gold from index.css
+      });
+  }, []);
+
   return (
     <HelmetProvider>
       <Router>
