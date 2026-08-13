@@ -67,7 +67,7 @@ export function Footer() {
       <div className="container mx-auto px-6 md:px-8 lg:px-12 py-12 md:py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-10">
           {/* Brand Section */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <Link to="/" className="flex items-center mb-5">
               <img 
                 src="/logo.png" 
@@ -75,11 +75,11 @@ export function Footer() {
                 className="h-10 md:h-12 w-auto object-contain" 
               />
             </Link>
-            <p className="text-[#9ca3af] text-sm mb-5 leading-relaxed max-w-sm">
+            <p className="text-[#9ca3af] text-sm mb-5 leading-relaxed">
               Professional Photography & Videography Services in Chennai and across Tamil Nadu. 
               Capturing stories, creating timeless memories.
             </p>
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-3 mb-5">
               <a href={settings?.instagram || "https://www.instagram.com/blacklens_studio_/"} target="_blank" rel="noopener noreferrer" 
                 className="bg-[#1a1a1a] p-2.5 rounded-lg text-[#9ca3af] hover:text-[#d4af37] hover:bg-[#2a2a2a] transition-all"
                 aria-label="Instagram">
@@ -107,10 +107,10 @@ export function Footer() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/30 px-4 py-2 rounded-lg text-xs font-medium hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all"
+              className="inline-flex items-center gap-2 bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/30 px-3.5 py-2 rounded-lg text-xs font-medium hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              Chat with us on WhatsApp
+              Chat on WhatsApp
             </a>
           </div>
 
@@ -132,10 +132,10 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
-          <div className="lg:col-span-3">
+          {/* Services (2-Column Layout) */}
+          <div className="lg:col-span-4">
             <h4 className="text-white font-semibold text-base mb-5">Our Services</h4>
-            <ul className="grid grid-cols-1 gap-2.5">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5">
               {services.map((service) => (
                 <li key={service}>
                   <Link
