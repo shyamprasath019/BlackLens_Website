@@ -66,10 +66,17 @@ export function ServicesPage() {
     },
     {
       icon: Heart,
-      title: 'Event Photography',
-      description: 'Capturing your special celebrations with artistic precision. From weddings to anniversaries, we tell your story.',
-      features: ['Weddings', 'Pre-Wedding Shoots', 'Engagement Ceremonies', 'Anniversary Celebrations'],
+      title: 'Wedding Photography',
+      description: 'Timeless wedding stories captured with emotion, elegance, and cinematic artistry. From pre-wedding rituals to grand receptions.',
+      features: ['Pre-Wedding Shoots', 'Candid Wedding Photography', 'Bridal Portraits', 'Cinematic Wedding Films'],
       image: '/Photos/weddings/01.jpg',
+    },
+    {
+      icon: Gift,
+      title: 'Event Photography',
+      description: 'Comprehensive coverage for corporate galas, milestone celebrations, housewarmings, and cultural gatherings.',
+      features: ['Corporate Events', 'Milestone Parties', 'Engagement Ceremonies', 'Cultural & Social Gatherings'],
+      image: '/Photos/client/01.jpg',
     },
     {
       icon: Baby,
