@@ -15,6 +15,7 @@ export default defineType({
     }),
     defineField({ name: 'instagram', title: 'Instagram URL', type: 'url' }),
     defineField({ name: 'facebook', title: 'Facebook URL', type: 'url' }),
+    defineField({ name: 'youtube', title: 'YouTube URL', type: 'url' }),
     defineField({ name: 'whatsapp', title: 'WhatsApp Number', type: 'string' }),
     defineField({
       name: 'showPortfolioCategories',

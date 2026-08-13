@@ -83,7 +83,7 @@ export function Header() {
             {/* CTA Button */}
             <Link
               to="/contact"
-              className="hidden md:block bg-white text-black hover:bg-[#d4af37] hover:text-black px-6 py-2.5 rounded-lg transition-all duration-300 font-bold text-xs uppercase tracking-wider text-center cursor-pointer"
+              className="hidden md:block bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f] hover:text-white shadow-md hover:shadow-[#d4af37]/20 px-6 py-2.5 rounded-lg transition-all duration-300 font-bold text-xs uppercase tracking-wider text-center cursor-pointer"
             >
               Book a Shoot
             </Link>
@@ -138,7 +138,7 @@ export function Header() {
                 <Link
                   to="/contact"
                   onClick={closeMobileMenu}
-                  className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg mt-6 block text-center font-medium"
+                  className="bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f] hover:text-white px-10 py-4 rounded-lg mt-6 block text-center font-bold transition-all duration-300"
                 >
                   Book a Shoot
                 </Link>

@@ -328,7 +328,7 @@ export function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
               <Link
                 to="/contact"
-                className="bg-[#d4af37] text-[#0a0a0a] px-10 py-4 rounded-lg hover:bg-[#b8964f] transition-colors flex items-center justify-center gap-2 font-medium"
+                className="bg-[#d4af37] text-[#0a0a0a] hover:bg-[#b8964f] hover:text-white px-10 py-4 rounded-lg shadow-lg hover:shadow-[#d4af37]/20 transition-all duration-300 flex items-center justify-center gap-2 font-bold"
               >
                 {homeContent?.heroCTA ?? "Book a Shoot"}
                 <ArrowRight className="w-5 h-5" />
