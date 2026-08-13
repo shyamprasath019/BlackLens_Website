@@ -1,4 +1,4 @@
-import { Camera, Phone, Mail, MapPin, Instagram, Youtube, Facebook, MessageCircle } from 'lucide-react';
+import { Camera, Phone, Mail, MapPin, Instagram, Youtube, Facebook, MessageCircle, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { sanityClient } from '../lib/sanityClient';
 import { Link } from 'react-router-dom';
@@ -18,11 +18,11 @@ export function Footer() {
 
   const quickLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services' },
     { name: 'Portfolio', path: '/portfolio' },
     { name: 'Packages', path: '/packages' },
     { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Privacy Policy', path: '/privacy-policy' },
+    { name: 'Terms of Service', path: '/terms' },
   ];
 
   const [settings, setSettings] = useState<{
@@ -152,7 +152,14 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="lg:col-span-3">
-            <h4 className="text-white font-semibold text-base mb-5">Contact Us</h4>
+            <Link 
+              to="/contact" 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="text-white font-semibold text-base mb-5 inline-flex items-center gap-2 group hover:text-[#d4af37] transition-colors"
+            >
+              Contact Us
+              <ArrowRight className="w-4 h-4 text-[#d4af37] group-hover:translate-x-1 transition-transform" />
+            </Link>
             <div className="space-y-3.5">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#d4af37] flex-shrink-0 mt-1" />

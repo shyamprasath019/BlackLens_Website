@@ -181,5 +181,60 @@ portfolio.forEach(item => {
   }));
 });
 
+// 6. About Page Settings
+ndjsonLines.push(JSON.stringify({
+  _id: 'aboutPage_settings',
+  _type: 'aboutPage',
+  heroTitle: 'About Black Lens Photography',
+  heroSubtitle: 'Crafting visual stories with passion, precision, and artistry since 2017',
+  storyTitle: 'Our Story',
+  storyParagraphs: [
+    "Black Lens Photography was born from a simple passion - to capture the raw emotion, beauty, and authenticity of life's most precious moments. What started as a dream in 2017 has grown into one of Chennai's most trusted photography studios.",
+    "Based in Thirunindravur, we've had the privilege of covering over 1000 events across Tamil Nadu. From intimate family portraits to grand wedding celebrations, each project receives our unwavering commitment to excellence.",
+    "Our team brings together diverse expertise in wedding photography, fashion shoots, product photography, and cinematography. We believe in pushing creative boundaries while maintaining the timeless elegance that makes memories last forever."
+  ],
+  visionText: "To be recognized as Tamil Nadu's premier photography studio, known for transforming ordinary moments into extraordinary visual narratives that stand the test of time.",
+  missionText: "To deliver exceptional photography and videography services that capture authentic emotions, exceed client expectations, and create lasting memories through artistic excellence and professional dedication."
+}));
+
+// 7. Team Members
+const teamMembers = [
+  { name: 'Rajesh Kumar', role: 'Lead Photographer', experience: '10+ years', order: 1 },
+  { name: 'Priya Sharma', role: 'Senior Videographer', experience: '8+ years', order: 2 },
+  { name: 'Anand Venkat', role: 'Fashion Photographer', experience: '6+ years', order: 3 },
+  { name: 'Divya Reddy', role: 'Portrait Specialist', experience: '5+ years', order: 4 },
+];
+teamMembers.forEach((member, index) => {
+  ndjsonLines.push(JSON.stringify({
+    _id: `team_static_${index + 1}`,
+    _type: 'teamMember',
+    name: member.name,
+    role: member.role,
+    experience: member.experience,
+    order: member.order
+  }));
+});
+
+// 8. Add-on Services
+const addOnServices = [
+  { name: 'Pre-Wedding Shoot', price: '₹12,000', order: 1 },
+  { name: 'Maternity Shoot', price: '₹8,000', order: 2 },
+  { name: 'Baby Shoot', price: '₹6,000', order: 3 },
+  { name: 'Birthday Coverage', price: '₹10,000', order: 4 },
+  { name: 'Product Photography (per item)', price: '₹500', order: 5 },
+  { name: 'Corporate Event Coverage', price: '₹20,000', order: 6 },
+  { name: 'Fashion Portfolio', price: '₹15,000', order: 7 },
+  { name: 'Drone Coverage (add-on)', price: '₹8,000', order: 8 },
+];
+addOnServices.forEach((addon, index) => {
+  ndjsonLines.push(JSON.stringify({
+    _id: `addon_static_${index + 1}`,
+    _type: 'addOnService',
+    name: addon.name,
+    price: addon.price,
+    order: addon.order
+  }));
+});
+
 fs.writeFileSync('sanity_import.ndjson', ndjsonLines.join('\n'), 'utf8');
 console.log('Successfully generated sanity_import.ndjson');

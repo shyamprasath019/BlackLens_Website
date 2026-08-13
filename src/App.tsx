@@ -22,6 +22,8 @@ const PortfolioPage = lazy(() => import('./components/PortfolioPage').then(modul
 const PackagesPage = lazy(() => import('./components/PackagesPage').then(module => ({ default: module.PackagesPage })));
 const AboutPage = lazy(() => import('./components/AboutPage').then(module => ({ default: module.AboutPage })));
 const ContactPage = lazy(() => import('./components/ContactPage').then(module => ({ default: module.ContactPage })));
+const PrivacyPolicyPage = lazy(() => import('./components/PrivacyPolicyPage').then(module => ({ default: module.PrivacyPolicyPage })));
+const TermsPage = lazy(() => import('./components/TermsPage').then(module => ({ default: module.TermsPage })));
 const NotFoundPage = lazy(() => import('./components/NotFoundPage').then(module => ({ default: module.NotFoundPage })));
 
 // Loading Fallback Component
@@ -68,6 +70,8 @@ export default function App() {
               <Route path="/packages" element={<PackagesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
               {/* Fallback to 404 Page */}
               <Route path="*" element={<NotFoundPage />} />
             </Route>

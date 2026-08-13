@@ -16,5 +16,11 @@ export default defineType({
       title: 'Hero CTA Text',
       type: 'string',
     }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Background Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
   ],
 });

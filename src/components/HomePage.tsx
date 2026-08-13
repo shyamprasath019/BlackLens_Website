@@ -59,6 +59,7 @@ export function HomePage() {
     heroTitle: string;
     heroSubtitle: string;
     heroCTA: string;
+    heroImage?: any;
   } | null>(null);
 
   const [servicesData, setServicesData] = useState<
@@ -104,6 +105,13 @@ export function HomePage() {
   const getOptimizedUrl = (item: any, width: number = 800) => {
     if (!item) return '';
     if (typeof item === 'string') return item;
+    if (item.asset) {
+      try {
+        return urlFor(item).auto('format').fit('max').width(width).url();
+      } catch (e) {
+        console.error('Error building Sanity URL:', e);
+      }
+    }
     if (item.image) {
       if (typeof item.image === 'string') return item.image;
       if (item.image.asset) {
@@ -121,7 +129,7 @@ export function HomePage() {
   useEffect(() => {
     // Fetch Home Page Settings
     sanityClient
-      .fetch(`*[_type == "homePage"][0]{ heroTitle, heroSubtitle, heroCTA }`)
+      .fetch(`*[_type == "homePage"][0]{ heroTitle, heroSubtitle, heroCTA, heroImage }`)
       .then(data => { if (data) setHomeContent(data); })
       .catch(console.error);
 
@@ -298,7 +306,8 @@ export function HomePage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <ImageWithFallback
-            src="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+            src={getOptimizedUrl(homeContent?.heroImage, 1920) || "https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080"}
+            fallbackSrc="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080"
             alt="Cinematic wedding photography by Black Lens Photography Chennai"
             className="w-full h-full object-cover"
           />
