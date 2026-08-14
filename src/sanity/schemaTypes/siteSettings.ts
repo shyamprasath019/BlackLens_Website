@@ -35,6 +35,13 @@ export default defineType({
       initialValue: true,
     }),
     defineField({
+      name: 'showTeamSection',
+      title: 'Show Team Section',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Toggle to turn on and off the Meet Our Team section on the About Page.',
+    }),
+    defineField({
       name: 'mapEmbedUrl',
       title: 'Google Maps Embed URL',
       type: 'text',

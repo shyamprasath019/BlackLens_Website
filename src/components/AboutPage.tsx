@@ -43,6 +43,8 @@ export function AboutPage() {
     },
   ]);
 
+  const [showTeam, setShowTeam] = useState<boolean>(true);
+
   const getOptimizedUrl = (image: any, fallback: string) => {
     if (!image) return fallback;
     if (typeof image === 'string') return image;
@@ -68,6 +70,15 @@ export function AboutPage() {
       .fetch(`*[_type == "teamMember"] | order(order asc, _createdAt asc){ name, role, experience, image }`)
       .then((data) => {
         if (data && data.length > 0) setTeamData(data);
+      })
+      .catch(console.error);
+
+    sanityClient
+      .fetch(`*[_type == "siteSettings"][0]{ showTeamSection }`)
+      .then((data) => {
+        if (data && typeof data.showTeamSection === 'boolean') {
+          setShowTeam(data.showTeamSection);
+        }
       })
       .catch(console.error);
   }, []);
@@ -348,54 +359,56 @@ export function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 bg-[#0a0a0a]">
-        <div className="container mx-auto px-6 md:px-8 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-white mb-6">Meet Our Team</h2>
-            <p className="text-[#9ca3af] max-w-2xl mx-auto px-4">
-              Talented professionals dedicated to capturing your special moments
-            </p>
-          </motion.div>
+      {showTeam && (
+        <section className="py-24 bg-[#0a0a0a]">
+          <div className="container mx-auto px-6 md:px-8 lg:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-white mb-6">Meet Our Team</h2>
+              <p className="text-[#9ca3af] max-w-2xl mx-auto px-4">
+                Talented professionals dedicated to capturing your special moments
+              </p>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {teamData.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-gold transition-all overflow-hidden"
-              >
-                {member.image ? (
-                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-2 border-gold">
-                    <ImageWithFallback
-                      src={getOptimizedUrl(member.image, '')}
-                      fallbackSrc="/Photos/portraits/03.jpg"
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Camera className="w-10 h-10 text-gold" />
-                  </div>
-                )}
-                <h4 className="text-white mb-2">{member.name}</h4>
-                <p className="text-gold text-sm mb-2">{member.role}</p>
-                {member.experience && (
-                  <p className="text-[#9ca3af] text-sm">{member.experience}</p>
-                )}
-              </motion.div>
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+              {teamData.map((member, index) => (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a] text-center hover:border-gold transition-all overflow-hidden"
+                >
+                  {member.image ? (
+                    <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-2 border-gold">
+                      <ImageWithFallback
+                        src={getOptimizedUrl(member.image, '')}
+                        fallbackSrc="/Photos/portraits/03.jpg"
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Camera className="w-10 h-10 text-gold" />
+                    </div>
+                  )}
+                  <h4 className="text-white mb-2">{member.name}</h4>
+                  <p className="text-gold text-sm mb-2">{member.role}</p>
+                  {member.experience && (
+                    <p className="text-[#9ca3af] text-sm">{member.experience}</p>
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Why Choose Us */}
       <section className="py-24 bg-[#1a1a1a]">

@@ -46,6 +46,17 @@ All reported problems in the project have been fixed. The project compiles succe
 
 ---
 
+## Part 3: Implementing Team Section Toggle on About Page
+
+### The Fix
+1. **CMS Schema Toggle**: Added `showTeamSection` (boolean toggle field) to [siteSettings.ts](file:///d:/Data/Project/BlackLens_Website/src/sanity/schemaTypes/siteSettings.ts) under Sanity schema configurations.
+2. **Dynamic UI Rendering**:
+   - Added a `showTeam` state variable inside [AboutPage.tsx](file:///d:/Data/Project/BlackLens_Website/src/components/AboutPage.tsx).
+   - Injected fetching logic in the `useEffect` hook to retrieve `showTeamSection` status from Sanity CMS `siteSettings`.
+   - Wrapped the entire "Meet Our Team" section in a conditional block `{showTeam && (...)}`.
+
+---
+
 ## Verification Results
 
 ### 1. TypeScript Compiler Check
@@ -56,5 +67,5 @@ Ran `npm run build` which successfully compiled the assets into the `dist/` dire
 ```bash
 vite v6.3.5 building for production...
 ✓ 4365 modules transformed.
-✓ built in 1m 8s
+✓ built in 2m 8s
 ```
