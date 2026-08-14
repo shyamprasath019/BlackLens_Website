@@ -57,6 +57,16 @@ All reported problems in the project have been fixed. The project compiles succe
 
 ---
 
+## Part 4: Dynamic Portfolio Category Filtering
+
+### The Fix
+1. **Dynamic Schema**: Changed the `category` field in [portfolioItem.ts](file:///d:/Data/Project/BlackLens_Website/src/sanity/schemaTypes/portfolioItem.ts) to a `reference` pointing to `service`. This allows any new service added to automatically be chosen as a portfolio category inside Sanity Studio.
+2. **Coalesced Fetch**: In [PortfolioPage.tsx](file:///d:/Data/Project/BlackLens_Website/src/components/PortfolioPage.tsx), modified the query to `"category": coalesce(category->title, category)`. This resolves references to their service titles for new items, while gracefully falling back to raw strings for legacy items.
+3. **Dynamic Filters**: Fetched all active services inside the `useEffect` hook in `PortfolioPage.tsx` and dynamically appended them to the filter buttons list.
+4. **Slug Comparison**: Introduced a `slugify` helper to compare categories, ensuring consistent matching between normalized tags and referenced titles (e.g. comparing `'Maternity Shoot'` as `'maternity-shoot'`).
+
+---
+
 ## Verification Results
 
 ### 1. TypeScript Compiler Check
@@ -67,5 +77,5 @@ Ran `npm run build` which successfully compiled the assets into the `dist/` dire
 ```bash
 vite v6.3.5 building for production...
 ✓ 4365 modules transformed.
-✓ built in 2m 8s
+✓ built in 1m 1s
 ```

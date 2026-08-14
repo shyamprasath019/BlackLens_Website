@@ -5,12 +5,20 @@ import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { sanityClient, urlFor } from '../lib/sanityClient';
 import { Helmet } from 'react-helmet-async';
 
+const slugify = (text: string) => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+};
+
 export function PortfolioPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showCategories, setShowCategories] = useState(true);
 
-  const categories = [
+  const [categories, setCategories] = useState<{ id: string; label: string }[]>([
     { id: 'all', label: 'All Work' },
     { id: 'weddings', label: 'Weddings' },
     { id: 'portraits', label: 'Portraits' },
@@ -18,7 +26,7 @@ export function PortfolioPage() {
     { id: 'product', label: 'Product' },
     { id: 'corporate', label: 'Corporate' },
     { id: 'cinematography', label: 'Cinematography' },
-  ];
+  ]);
 
   const [portfolioItems, setPortfolioItems] = useState<
     { id: string | number; category: string; image: any; alt?: string }[]
@@ -132,7 +140,7 @@ export function PortfolioPage() {
       .fetch(
         `*[_type == "portfolioItem"]{
           "id": _id,
-          category,
+          "category": coalesce(category->title, category),
           image,
           alt
         }`
@@ -150,12 +158,35 @@ export function PortfolioPage() {
         }
       })
       .catch(console.error);
+
+    // Fetch all services to build the portfolio filter categories dynamically
+    sanityClient
+      .fetch(`*[_type == "service"]{ title }`)
+      .then((services: { title: string }[]) => {
+        if (services && services.length > 0) {
+          const dynamicCategories = services.map((s) => ({
+            id: slugify(s.title),
+            label: s.title,
+          }));
+
+          setCategories((prev) => {
+            const combined = [...prev];
+            dynamicCategories.forEach((dc) => {
+              if (!combined.some((c) => slugify(c.id) === dc.id)) {
+                combined.push(dc);
+              }
+            });
+            return combined;
+          });
+        }
+      })
+      .catch(console.error);
   }, []);
 
   const filteredItems =
     !showCategories || selectedCategory === 'all'
       ? portfolioItems
-      : portfolioItems.filter((item) => item.category === selectedCategory);
+      : portfolioItems.filter((item) => slugify(item.category) === slugify(selectedCategory));
 
   const handlePrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();

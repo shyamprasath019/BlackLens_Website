@@ -12,18 +12,10 @@ export default defineType({
     }),
     defineField({
       name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Weddings', value: 'weddings' },
-          { title: 'Portraits', value: 'portraits' },
-          { title: 'Fashion', value: 'fashion' },
-          { title: 'Product', value: 'product' },
-          { title: 'Corporate', value: 'corporate' },
-          { title: 'Cinematography', value: 'cinematography' },
-        ],
-      },
+      title: 'Category (Service)',
+      type: 'reference',
+      to: [{ type: 'service' }],
+      description: 'Select the service category this portfolio item belongs to.',
     }),
     defineField({
       name: 'image',
