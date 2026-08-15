@@ -43,9 +43,9 @@ export default defineType({
     }),
     defineField({
       name: 'mapEmbedUrl',
-      title: 'Google Maps Embed URL',
+      title: 'Google Maps Embed URL / IFrame Code',
       type: 'text',
-      description: 'The src URL from Google Maps Embed iframe code (e.g. https://www.google.com/maps/embed?pb=...)',
+      description: 'You can paste the entire Google Maps iframe embed code block, or just the URL from its src attribute (e.g., https://www.google.com/maps/embed?pb=...).',
     }),
     defineField({
       name: 'locationsCovered',

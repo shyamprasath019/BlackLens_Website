@@ -5,6 +5,19 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { sanityClient } from '../lib/sanityClient';
 
+// Helper to extract the src URL from a full iframe tag if pasted
+function extractMapSrc(urlOrIframe?: string): string {
+  if (!urlOrIframe) return '';
+  const trimmed = urlOrIframe.trim();
+  if (trimmed.startsWith('<') && trimmed.includes('src=')) {
+    const match = trimmed.match(/src=["']([^"']+)["']/);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+  return trimmed;
+}
+
 export function ContactPage() {
   const location = useLocation();
   const [settings, setSettings] = useState<{
@@ -455,7 +468,7 @@ export function ContactPage() {
             className="rounded-lg overflow-hidden border border-[#2a2a2a] h-96"
           >
             <iframe
-              src={settings?.mapEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62187.43425885893!2d80.00863037910154!3d13.120547500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261f0b13f9f61%3A0xebde6b4d6c39e47f!2sThirunindravur%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1639999999999!5m2!1sen!2sin"}
+              src={extractMapSrc(settings?.mapEmbedUrl) || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62187.43425885893!2d80.00863037910154!3d13.120547500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261f0b13f9f61%3A0xebde6b4d6c39e47f!2sThirunindravur%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1639999999999!5m2!1sen!2sin"}
               width="100%"
               height="100%"
               style={{ border: 0 }}
