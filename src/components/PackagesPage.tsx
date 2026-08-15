@@ -8,45 +8,11 @@ import { Helmet } from 'react-helmet-async';
 export function PackagesPage() {
   const [packages, setPackages] = useState<
     { name: string; price: string; description: string; features: string[]; popular: boolean; duration?: string }[]
-  >([
-    {
-      name: 'Basic',
-      price: '₹15,000',
-      duration: 'Starting from',
-      description: 'Perfect for small events and intimate gatherings',
-      features: ['4 hours coverage', '200+ edited photos', 'Online gallery', 'Basic editing', '2 photographers', '15-day delivery'],
-      popular: false,
-    },
-    {
-      name: 'Premium',
-      price: '₹35,000',
-      duration: 'Starting from',
-      description: 'Most popular choice for weddings and major events',
-      features: ['8 hours coverage', '500+ edited photos', 'Online gallery + USB', 'Premium editing', '3 photographers + 1 videographer', 'Cinematic video highlights', 'Premium album', '10-day delivery'],
-      popular: true,
-    },
-    {
-      name: 'Luxury',
-      price: '₹75,000',
-      duration: 'Starting from',
-      description: 'Complete coverage with premium deliverables',
-      features: ['Full day coverage', '1000+ edited photos', 'Online gallery + USB + Cloud', 'Luxury editing & retouching', '4 photographers + 2 videographers', 'Cinematic wedding film', 'Same-day edit video', 'Luxury photobook album', 'Pre-wedding shoot included', 'Drone coverage', '7-day delivery'],
-      popular: false,
-    },
-  ]);
+  >([]);
 
   const [additionalServices, setAdditionalServices] = useState<
     { name: string; price: string }[]
-  >([
-    { name: 'Pre-Wedding Shoot', price: '₹12,000' },
-    { name: 'Maternity Shoot', price: '₹8,000' },
-    { name: 'Baby Shoot', price: '₹6,000' },
-    { name: 'Birthday Coverage', price: '₹10,000' },
-    { name: 'Product Photography (per item)', price: '₹500' },
-    { name: 'Corporate Event Coverage', price: '₹20,000' },
-    { name: 'Fashion Portfolio', price: '₹15,000' },
-    { name: 'Drone Coverage (add-on)', price: '₹8,000' },
-  ]);
+  >([]);
 
   useEffect(() => {
     sanityClient
@@ -108,7 +74,7 @@ export function PackagesPage() {
         "@type": "Product",
         "@id": "https://blacklensphotography.com/packages/#photography-packages",
         "name": "Black Lens Photography Packages",
-        "image": "https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA",
+        "image": "/Photos/weddings/01.jpg",
         "description": "Professional photography and videography packages in Chennai for weddings, events, portraits, and fashion shoots.",
         "brand": {
           "@type": "Brand",
@@ -190,7 +156,7 @@ export function PackagesPage() {
         <meta property="og:url" content="https://blacklensphotography.com/packages" />
         <meta property="og:title" content="Photography Packages & Pricing in Chennai | Black Lens Photography" />
         <meta property="og:description" content="View our photography and videography packages. We offer custom packages for weddings, events, and portraits." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:image" content="/Photos/weddings/01.jpg" />
         <meta property="og:site_name" content="Black Lens Photography" />
 
         {/* Twitter */}
@@ -198,7 +164,7 @@ export function PackagesPage() {
         <meta property="twitter:url" content="https://blacklensphotography.com/packages" />
         <meta property="twitter:title" content="Photography Packages & Pricing in Chennai | Black Lens Photography" />
         <meta property="twitter:description" content="View our photography and videography packages. We offer custom packages for weddings, events, and portraits." />
-        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="twitter:image" content="/Photos/weddings/01.jpg" />
 
         {/* JSON-LD Schema */}
         <script type="application/ld+json">
@@ -227,57 +193,72 @@ export function PackagesPage() {
       <section className="py-24 bg-[#0a0a0a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {packages.map((pkg, index) => (
-              <motion.div
-                key={pkg.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className={`relative bg-[#1a1a1a] rounded-lg overflow-hidden border-2 ${
-                  pkg.popular ? 'border-gold' : 'border-[#2a2a2a]'
-                }`}
-              >
-                {pkg.popular && (
-                  <div className="absolute top-0 right-0 bg-gold text-[#0a0a0a] px-4 py-1.5 text-sm flex items-center gap-1">
-                    <Star className="w-4 h-4 inline" />
-                    Most Popular
+            {packages.length === 0 ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-[#1a1a1a] rounded-lg p-10 border border-[#2a2a2a] animate-pulse space-y-6">
+                  <div className="bg-[#2a2a2a] h-8 w-1/3 rounded"></div>
+                  <div className="bg-[#2a2a2a] h-12 w-full rounded"></div>
+                  <div className="bg-[#2a2a2a] h-10 w-1/2 rounded"></div>
+                  <div className="space-y-3">
+                    <div className="bg-[#2a2a2a] h-6 w-full rounded"></div>
+                    <div className="bg-[#2a2a2a] h-6 w-full rounded"></div>
+                    <div className="bg-[#2a2a2a] h-6 w-full rounded"></div>
                   </div>
-                )}
-
-                <div className="p-10">
-                  <h3 className="text-white mb-3">{pkg.name}</h3>
-                  <p className="text-[#9ca3af] text-sm mb-6 leading-relaxed">{pkg.description}</p>
-                  
-                  <div className="mb-8">
-                    <div className="text-gold mb-2">{pkg.price}</div>
-                    <p className="text-[#9ca3af] text-sm">{pkg.duration}</p>
-                  </div>
-
-                  <ul className="space-y-4 mb-10">
-                    {pkg.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-[#e5e5e5]">
-                        <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                        <span className="text-sm leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    to="/contact"
-                    state={{ service: `${pkg.name} Package` }}
-                    className={`block text-center w-full py-4 rounded-lg transition-colors font-medium ${
-                      pkg.popular
-                        ? 'bg-gold text-[#0a0a0a] hover:bg-goldMuted'
-                        : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-[#0a0a0a]'
-                    }`}
-                  >
-                    Book This Package
-                  </Link>
                 </div>
-              </motion.div>
-            ))}
+              ))
+            ) : (
+              packages.map((pkg, index) => (
+                <motion.div
+                  key={pkg.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  className={`relative bg-[#1a1a1a] rounded-lg overflow-hidden border-2 ${
+                    pkg.popular ? 'border-gold' : 'border-[#2a2a2a]'
+                  }`}
+                >
+                  {pkg.popular && (
+                    <div className="absolute top-0 right-0 bg-gold text-[#0a0a0a] px-4 py-1.5 text-sm flex items-center gap-1">
+                      <Star className="w-4 h-4 inline" />
+                      Most Popular
+                    </div>
+                  )}
+
+                  <div className="p-10">
+                    <h3 className="text-white mb-3">{pkg.name}</h3>
+                    <p className="text-[#9ca3af] text-sm mb-6 leading-relaxed">{pkg.description}</p>
+                    
+                    <div className="mb-8">
+                      <div className="text-gold mb-2">{pkg.price}</div>
+                      <p className="text-[#9ca3af] text-sm">{pkg.duration}</p>
+                    </div>
+
+                    <ul className="space-y-4 mb-10">
+                      {pkg.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3 text-[#e5e5e5]">
+                          <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                          <span className="text-sm leading-relaxed">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Link
+                      to="/contact"
+                      state={{ service: `${pkg.name} Package` }}
+                      className={`block text-center w-full py-4 rounded-lg transition-colors font-medium ${
+                        pkg.popular
+                          ? 'bg-gold text-[#0a0a0a] hover:bg-goldMuted'
+                          : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-[#0a0a0a]'
+                      }`}
+                    >
+                      Book This Package
+                    </Link>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </section>

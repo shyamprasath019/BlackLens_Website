@@ -182,7 +182,7 @@ export function ContactPage() {
         <meta property="og:url" content="https://blacklensphotography.com/contact" />
         <meta property="og:title" content="Contact Black Lens Photography Chennai | Book a Photographer" />
         <meta property="og:description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:image" content="/Photos/weddings/01.jpg" />
         <meta property="og:site_name" content="Black Lens Photography" />
 
         {/* Twitter */}
@@ -190,7 +190,7 @@ export function ContactPage() {
         <meta property="twitter:url" content="https://blacklensphotography.com/contact" />
         <meta property="twitter:title" content="Contact Black Lens Photography Chennai | Book a Photographer" />
         <meta property="twitter:description" content="Get in touch with Black Lens Photography for bookings, inquiries, and custom packages." />
-        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="twitter:image" content="/Photos/weddings/01.jpg" />
 
         {/* JSON-LD Schema */}
         <script type="application/ld+json">

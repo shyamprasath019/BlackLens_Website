@@ -56,78 +56,14 @@ const getServiceIcon = (iconKey?: string, title?: string) => {
 export function ServicesPage() {
   const [services, setServices] = useState<
     { icon: any; title: string; description: string; features: string[]; image: any }[]
-  >([
-    {
-      icon: Camera,
-      title: 'Photo Studio',
-      description: 'Professional studio setups with state-of-the-art lighting and backdrops for perfect shots every time.',
-      features: ['Studio Portraits', 'Family Photos', 'Professional Headshots', 'Creative Concepts'],
-      image: '/Photos/portraits/03.jpg',
-    },
-    {
-      icon: Heart,
-      title: 'Wedding Photography',
-      description: 'Timeless wedding stories captured with emotion, elegance, and cinematic artistry. From pre-wedding rituals to grand receptions.',
-      features: ['Pre-Wedding Shoots', 'Candid Wedding Photography', 'Bridal Portraits', 'Cinematic Wedding Films'],
-      image: '/Photos/weddings/01.jpg',
-    },
-    {
-      icon: Gift,
-      title: 'Event Photography',
-      description: 'Comprehensive coverage for corporate galas, milestone celebrations, housewarmings, and cultural gatherings.',
-      features: ['Corporate Events', 'Milestone Parties', 'Engagement Ceremonies', 'Cultural & Social Gatherings'],
-      image: '/Photos/client/01.jpg',
-    },
-    {
-      icon: Baby,
-      title: 'Family & Maternity',
-      description: 'Beautiful memories of growing families. Pregnancy shoots, newborn photography, and children portraits.',
-      features: ['Maternity Shoots', 'Newborn Photography', 'Baby Milestones', 'Family Portraits'],
-      image: '/Photos/portraits/04.jpg',
-    },
-    {
-      icon: Gift,
-      title: 'Birthday & Celebrations',
-      description: 'Make every birthday memorable with our creative photography coverage and candid moments.',
-      features: ['Birthday Parties', 'Theme Celebrations', 'Candid Moments', 'Decoration Coverage'],
-      image: '/Photos/portraits/05.jpg',
-    },
-    {
-      icon: ShoppingBag,
-      title: 'Product Photography',
-      description: 'Showcase your products with high-quality, professional images perfect for e-commerce and marketing.',
-      features: ['E-commerce Photos', 'Catalog Shoots', 'Lifestyle Product Shots', 'Creative Styling'],
-      image: '/Photos/product/product_idli.jpg',
-    },
-    {
-      icon: Shirt,
-      title: 'Fashion Photography',
-      description: 'Editorial and commercial fashion shoots that bring style and elegance to life through our lens.',
-      features: ['Editorial Shoots', 'Portfolio Building', 'Lookbook Creation', 'Model Photography'],
-      image: '/Photos/fashion/gv_01.jpg',
-    },
-    {
-      icon: Briefcase,
-      title: 'Corporate Headshots',
-      description: 'Professional corporate photography for business profiles, LinkedIn, and company websites.',
-      features: ['Executive Portraits', 'Team Photos', 'LinkedIn Headshots', 'Company Events'],
-      image: 'https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBoZWFkc2hvdCUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NjYwODE5ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    },
-    {
-      icon: Video,
-      title: 'Cinematography & Reels',
-      description: 'Cinematic videos, Instagram reels, and social media content that tells your story in motion.',
-      features: ['Wedding Films', 'Instagram Reels', 'YouTube Shorts', 'Commercial Videos'],
-      image: 'https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    },
-  ]);
+  >([]);
 
   const getOptimizedUrl = (image: any) => {
     if (!image) return '';
     if (typeof image === 'string') return image;
     if (image.asset) {
       try {
-        return urlFor(image).auto('format').fit('max').width(1000).url();
+        return urlFor(image).auto('format').quality(80).fit('max').width(1000).url();
       } catch (e) {
         console.error('Error generating Sanity URL:', e);
       }
@@ -249,7 +185,7 @@ export function ServicesPage() {
         <meta property="og:url" content="https://blacklensphotography.com/services" />
         <meta property="og:title" content="Photography & Videography Services in Chennai | Black Lens Photography" />
         <meta property="og:description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:image" content="/Photos/weddings/01.jpg" />
         <meta property="og:site_name" content="Black Lens Photography" />
 
         {/* Twitter */}
@@ -257,7 +193,7 @@ export function ServicesPage() {
         <meta property="twitter:url" content="https://blacklensphotography.com/services" />
         <meta property="twitter:title" content="Photography & Videography Services in Chennai | Black Lens Photography" />
         <meta property="twitter:description" content="Explore our comprehensive photography and videography services including weddings, corporate events, portraits, and more." />
-        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="twitter:image" content="/Photos/weddings/01.jpg" />
 
         {/* JSON-LD Schema */}
         <script type="application/ld+json">
@@ -286,52 +222,71 @@ export function ServicesPage() {
       <section className="py-24 bg-[#0a0a0a]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <div className="space-y-24">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Image */}
-                <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden"
-                  >
-                    <ImageWithFallback
-                      src={getOptimizedUrl(service.image)}
-                      fallbackSrc={typeof service.image === 'string' ? service.image : '/Photos/client/01.jpg'}
-                      alt={`${service.title} - Black Lens Photography Chennai`}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent"></div>
-                  </motion.div>
+            {services.length === 0 ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-pulse">
+                  <div className={`bg-[#121212] h-96 lg:h-[500px] rounded-lg ${i % 2 === 1 ? 'lg:order-2' : ''}`}></div>
+                  <div className={`space-y-6 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <div className="bg-gold/5 h-16 w-16 rounded-lg"></div>
+                    <div className="bg-[#121212] h-10 w-2/3 rounded"></div>
+                    <div className="bg-[#121212] h-24 w-full rounded"></div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-[#121212] h-8 w-full rounded"></div>
+                      <div className="bg-[#121212] h-8 w-full rounded"></div>
+                      <div className="bg-[#121212] h-8 w-full rounded"></div>
+                      <div className="bg-[#121212] h-8 w-full rounded"></div>
+                    </div>
+                  </div>
                 </div>
+              ))
+            ) : (
+              services.map((service, index) => (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                  }`}
+                >
+                  {/* Image */}
+                  <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="relative h-96 lg:h-[500px] rounded-lg overflow-hidden"
+                    >
+                      <ImageWithFallback
+                        src={getOptimizedUrl(service.image)}
+                        fallbackSrc="/Photos/weddings/01.jpg"
+                        alt={`${service.title} - Black Lens Photography Chennai`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent"></div>
+                    </motion.div>
+                  </div>
 
-                {/* Content */}
-                <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6">
-                    <service.icon className="w-8 h-8 text-gold" />
-                  </div>
-                  <h2 className="text-white mb-6">{service.title}</h2>
-                  <p className="text-[#e5e5e5] mb-8 leading-relaxed">{service.description}</p>
-                  
-                  <div className="mb-8">
-                    <h4 className="text-white mb-4">What's Included:</h4>
-                    <ul className="space-y-3">
-                      {service.features && service.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3 text-[#9ca3af]">
-                          <div className="w-1.5 h-1.5 bg-gold rounded-full mt-2.5 flex-shrink-0"></div>
-                          <span className="leading-relaxed">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {/* Content */}
+                  <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6">
+                      <service.icon className="w-8 h-8 text-gold" />
+                    </div>
+                    <h2 className="text-white mb-6">{service.title}</h2>
+                    <p className="text-[#9ca3af] text-lg mb-8 leading-relaxed">
+                      {service.description}
+                    </p>
+                    <div className="mb-8">
+                      <h4 className="text-white mb-4">What's Included:</h4>
+                      <ul className="space-y-3">
+                        {service.features && service.features.map((feature) => (
+                          <li key={feature} className="flex items-start gap-3 text-[#9ca3af]">
+                            <div className="w-1.5 h-1.5 bg-gold rounded-full mt-2.5 flex-shrink-0"></div>
+                            <span className="leading-relaxed">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
                   <Link
                     to="/contact"
@@ -343,7 +298,7 @@ export function ServicesPage() {
                   </Link>
                 </div>
               </motion.div>
-            ))}
+            )))}
           </div>
         </div>
       </section>

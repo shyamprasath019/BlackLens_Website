@@ -30,93 +30,14 @@ export function PortfolioPage() {
 
   const [portfolioItems, setPortfolioItems] = useState<
     { id: string | number; category: string; image: any; alt?: string }[]
-  >([
-    {
-      id: 'client_01',
-      category: 'weddings',
-      image: '/Photos/weddings/01.jpg',
-      alt: 'Black Lens Wedding & Event Photography',
-    },
-    {
-      id: 'client_02',
-      category: 'weddings',
-      image: '/Photos/weddings/02.jpg',
-      alt: 'Black Lens Bridal & Celebration Moments',
-    },
-    {
-      id: 'client_03',
-      category: 'portraits',
-      image: '/Photos/portraits/03.jpg',
-      alt: 'Black Lens Expressive Portrait Photography',
-    },
-    {
-      id: 'client_04',
-      category: 'portraits',
-      image: '/Photos/portraits/04.jpg',
-      alt: 'Black Lens Couple Portrait Shoot',
-    },
-    {
-      id: 'client_05',
-      category: 'portraits',
-      image: '/Photos/portraits/05.jpg',
-      alt: 'Black Lens Creative Studio Portrait',
-    },
-    {
-      id: 'client_gv01',
-      category: 'fashion',
-      image: '/Photos/fashion/gv_01.jpg',
-      alt: 'Black Lens Editorial Fashion Shoot',
-    },
-    {
-      id: 'client_gv02',
-      category: 'fashion',
-      image: '/Photos/fashion/gv_02.jpg',
-      alt: 'Black Lens High Fashion Studio Portrait',
-    },
-    {
-      id: 'client_gv03',
-      category: 'fashion',
-      image: '/Photos/fashion/gv_03.jpg',
-      alt: 'Black Lens Moody Lighting Fashion Photography',
-    },
-    {
-      id: 'client_gv04',
-      category: 'fashion',
-      image: '/Photos/fashion/gv_04.jpg',
-      alt: 'Black Lens Model Portfolio Shoot',
-    },
-    {
-      id: 'client_gv05',
-      category: 'fashion',
-      image: '/Photos/fashion/gv_05.jpg',
-      alt: 'Black Lens Premium Fashion & Glamour',
-    },
-    {
-      id: 11,
-      category: 'product',
-      image: 'https://images.unsplash.com/photo-1611930021698-a55ec4d5fe6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9kdWN0JTIwcGhvdG9ncmFwaHklMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NjA0MzI4Mnww&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Product photography minimalist',
-    },
-    {
-      id: 12,
-      category: 'corporate',
-      image: 'https://images.unsplash.com/photo-1762522927402-f390672558d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3VwbGUlMjBoZWFkc2hvdCUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NjYwODE5ODJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Corporate headshot professional',
-    },
-    {
-      id: 13,
-      category: 'cinematography',
-      image: 'https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      alt: 'Cinematography camera equipment',
-    },
-  ]);
+  >([]);
 
   const getOptimizedUrl = (image: any) => {
     if (!image) return '';
     if (typeof image === 'string') return image;
     if (image.asset) {
       try {
-        return urlFor(image).auto('format').fit('max').width(800).url();
+        return urlFor(image).auto('format').quality(80).fit('max').width(800).url();
       } catch (e) {
         console.error('Error generating Sanity URL:', e);
       }
@@ -172,8 +93,16 @@ export function PortfolioPage() {
           setCategories((prev) => {
             const combined = [...prev];
             dynamicCategories.forEach((dc) => {
-              if (!combined.some((c) => slugify(c.id) === dc.id)) {
-                combined.push(dc);
+              const mappedId = dc.id === 'wedding-photography' ? 'weddings'
+                             : dc.id === 'photo-studio' ? 'portraits'
+                             : dc.id === 'fashion-photography' ? 'fashion'
+                             : (dc.id === 'product-photography' || dc.id === 'food-culinary-photography') ? 'product'
+                             : dc.id === 'corporate-headshots' ? 'corporate'
+                             : dc.id === 'cinematography-reels' ? 'cinematography'
+                             : dc.id;
+
+              if (!combined.some((c) => slugify(c.id) === slugify(mappedId))) {
+                combined.push({ id: mappedId, label: dc.label });
               }
             });
             return combined;
@@ -183,10 +112,38 @@ export function PortfolioPage() {
       .catch(console.error);
   }, []);
 
+  const matchCategory = (itemCategory: string, selectedTab: string) => {
+    const itemSlug = slugify(itemCategory);
+    const tabSlug = slugify(selectedTab);
+    
+    if (tabSlug === 'all') return true;
+    
+    if (tabSlug === 'weddings') {
+      return itemSlug === 'wedding-photography' || itemSlug === 'weddings' || itemSlug === 'wedding';
+    }
+    if (tabSlug === 'portraits') {
+      return itemSlug === 'photo-studio' || itemSlug === 'portraits' || itemSlug === 'portrait';
+    }
+    if (tabSlug === 'fashion') {
+      return itemSlug === 'fashion-photography' || itemSlug === 'fashion';
+    }
+    if (tabSlug === 'product') {
+      return itemSlug === 'product-photography' || itemSlug === 'product' || itemSlug === 'food-culinary-photography' || itemSlug === 'food-&-culinary-photography';
+    }
+    if (tabSlug === 'corporate') {
+      return itemSlug === 'corporate-headshots' || itemSlug === 'corporate';
+    }
+    if (tabSlug === 'cinematography') {
+      return itemSlug === 'cinematography-reels' || itemSlug === 'cinematography' || itemSlug === 'cinematography-&-reels';
+    }
+    
+    return itemSlug === tabSlug;
+  };
+
   const filteredItems =
     !showCategories || selectedCategory === 'all'
       ? portfolioItems
-      : portfolioItems.filter((item) => slugify(item.category) === slugify(selectedCategory));
+      : portfolioItems.filter((item) => matchCategory(item.category, selectedCategory));
 
   const handlePrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -261,7 +218,7 @@ export function PortfolioPage() {
         <meta property="og:url" content="https://blacklensphotography.com/portfolio" />
         <meta property="og:title" content="Wedding & Event Photography Portfolio | Black Lens Photography Chennai" />
         <meta property="og:description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:image" content="/Photos/weddings/01.jpg" />
         <meta property="og:site_name" content="Black Lens Photography" />
 
         {/* Twitter */}
@@ -269,7 +226,7 @@ export function PortfolioPage() {
         <meta property="twitter:url" content="https://blacklensphotography.com/portfolio" />
         <meta property="twitter:title" content="Wedding & Event Photography Portfolio | Black Lens Photography Chennai" />
         <meta property="twitter:description" content="View our portfolio of stunning wedding, portrait, fashion, product, and corporate photography." />
-        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="twitter:image" content="/Photos/weddings/01.jpg" />
 
         {/* JSON-LD Schema */}
         <script type="application/ld+json">
@@ -322,41 +279,49 @@ export function PortfolioPage() {
       {/* Portfolio Grid */}
       <section className="py-16 bg-[#050505]">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
-          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 768: 2, 1024: 3 }}>
-            <Masonry gutter="24px">
-              {filteredItems.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="relative cursor-pointer group overflow-hidden rounded-xl border border-white/5 bg-[#121212]"
-                  onClick={() => setSelectedImageIndex(index)}
-                >
-                  <div className="overflow-hidden">
-                    <motion.img
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.4 }}
-                      src={getOptimizedUrl(item.image)}
-                      alt={item.alt || 'Portfolio Item'}
-                      className="w-full h-auto object-cover display-block"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
-                    <div>
-                      <p className="text-xs uppercase tracking-widest text-gold font-semibold mb-1">
-                        {categories.find((c) => c.id === item.category)?.label}
-                      </p>
-                      <h3 className="text-white text-base font-bold tracking-tight">
-                        {item.alt || 'View Showcase'}
-                      </h3>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </Masonry>
-          </ResponsiveMasonry>
+            {filteredItems.length === 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="bg-[#121212] rounded-xl" style={{ height: i % 2 === 0 ? '300px' : '450px' }}></div>
+                ))}
+              </div>
+            ) : (
+              <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 768: 2, 1024: 3 }}>
+                <Masonry gutter="24px">
+                  {filteredItems.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.05 }}
+                      className="relative cursor-pointer group overflow-hidden rounded-xl border border-white/5 bg-[#121212]"
+                      onClick={() => setSelectedImageIndex(index)}
+                    >
+                      <div className="overflow-hidden">
+                        <motion.img
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ duration: 0.4 }}
+                          src={getOptimizedUrl(item.image)}
+                          alt={item.alt || 'Portfolio Item'}
+                          className="w-full h-auto object-cover display-block"
+                        />
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                        <div>
+                          <p className="text-xs uppercase tracking-widest text-gold font-semibold mb-1">
+                            {categories.find((c) => c.id === item.category || c.label.toLowerCase() === item.category?.toLowerCase())?.label || item.category}
+                          </p>
+                          <h3 className="text-white text-base font-bold tracking-tight">
+                            {item.alt || 'View Showcase'}
+                          </h3>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </Masonry>
+              </ResponsiveMasonry>
+            )}
         </div>
       </section>
 

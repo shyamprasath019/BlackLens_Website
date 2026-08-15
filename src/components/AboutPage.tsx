@@ -47,10 +47,10 @@ export function AboutPage() {
 
   const getOptimizedUrl = (image: any, fallback: string) => {
     if (!image) return fallback;
-    if (typeof image === 'string') return image;
+    if (typeof image === 'string') return fallback;
     if (image.asset) {
       try {
-        return urlFor(image).auto('format').fit('max').width(1000).url();
+        return urlFor(image).auto('format').quality(80).fit('max').width(1000).url();
       } catch (e) {
         console.error('Error generating Sanity URL:', e);
       }
@@ -156,7 +156,7 @@ export function AboutPage() {
         <meta property="og:url" content="https://blacklensphotography.com/about" />
         <meta property="og:title" content="About Black Lens Photography | Best Photography Studio in Chennai" />
         <meta property="og:description" content="Learn about Black Lens Photography, our team, and our passion for capturing timeless moments since 2017." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:image" content="/Photos/weddings/01.jpg" />
         <meta property="og:site_name" content="Black Lens Photography" />
 
         {/* Twitter */}
@@ -164,7 +164,7 @@ export function AboutPage() {
         <meta property="twitter:url" content="https://blacklensphotography.com/about" />
         <meta property="twitter:title" content="About Black Lens Photography | Best Photography Studio in Chennai" />
         <meta property="twitter:description" content="Learn about Black Lens Photography, our team, and our passion for capturing timeless moments since 2017." />
-        <meta property="twitter:image" content="https://images.unsplash.com/photo-1758851088217-df00ca346e24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0b2dyYXBoeSUyMGNhbWVyYSUyMGVxdWlwbWVudHxlbnwxfHx8fDE3NjYwODgxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="twitter:image" content="/Photos/weddings/01.jpg" />
 
         {/* JSON-LD Schema */}
         <script type="application/ld+json">

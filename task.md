@@ -1,0 +1,13 @@
+- [x] Database & CMS Data Cleanup
+    - [x] Create `scripts/update_database.js`
+    - [x] Run `scripts/update_database.js` to update Sanity services & portfolio items
+- [x] Frontend Updates & Image Optimization
+    - [x] Update `src/components/HomePage.tsx`
+    - [x] Update `src/components/PortfolioPage.tsx`
+    - [x] Update `src/components/ServicesPage.tsx`
+    - [x] Update `src/components/AboutPage.tsx`
+- [x] Seeding Code Reorganization
+    - [x] Update `scripts/generateNdjson.js`
+    - [x] Regenerate `hardcode and seed/sanity_import.ndjson`
+- [x] Verification
+    - [x] Verify local website compiles and runs cleanly

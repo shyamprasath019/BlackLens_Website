@@ -71,43 +71,22 @@ export function HomePage() {
       features?: string[];
       icon?: any;
     }[]
-  >([
-    { icon: Camera, title: 'Event Photography', description: 'Weddings, birthdays, celebrations captured beautifully' },
-    { icon: Film, title: 'Cinematography', description: 'Cinematic videos and reels for social media' },
-    { icon: Users, title: 'Portrait & Fashion', description: 'Professional portraits and fashion shoots' },
-    { icon: Award, title: 'Commercial Shoots', description: 'Product photography and corporate headshots' },
-  ]);
+  >([]);
 
-  const [statsData, setStatsData] = useState<{ label: string; value: string }[]>([
-    { value: '500+', label: 'Happy Clients' },
-    { value: '1000+', label: 'Events Covered' },
-    { value: '8+', label: 'Years Experience' },
-    { value: '50K+', label: 'Photos Captured' },
-  ]);
+  const [statsData, setStatsData] = useState<{ label: string; value: string }[]>([]);
 
-  const [featuredPortfolio, setFeaturedPortfolio] = useState<{ imageUrl?: string; image?: any; alt?: string }[]>([
-    { imageUrl: '/Photos/fashion/gv_01.jpg', alt: 'Black Lens High Fashion Shoot' },
-    { imageUrl: '/Photos/weddings/01.jpg', alt: 'Black Lens Wedding & Event Photography' },
-    { imageUrl: '/Photos/fashion/gv_03.jpg', alt: 'Black Lens Studio Fashion Portrait' },
-    { imageUrl: '/Photos/portraits/03.jpg', alt: 'Black Lens Portraiture & Personal Shoot' },
-    { imageUrl: '/Photos/fashion/gv_04.jpg', alt: 'Black Lens Model Portfolio Shoot' },
-    { imageUrl: '/Photos/portraits/05.jpg', alt: 'Black Lens Creative Studio Photography' },
-  ]);
+  const [featuredPortfolio, setFeaturedPortfolio] = useState<{ imageUrl?: string; image?: any; alt?: string }[]>([]);
 
   const [testimonialsData, setTestimonialsData] = useState<
     { name: string; quote: string; rating: number; service: string }[]
-  >([
-    { name: 'Priya & Rahul', quote: 'Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.', rating: 5, service: 'Wedding Photography' },
-    { name: 'Ananya Sharma', quote: 'The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!', rating: 5, service: 'Pre-Wedding Shoot' },
-    { name: 'Tech Innovations Pvt Ltd', quote: 'Outstanding product photography that elevated our brand. Highly professional team!', rating: 5, service: 'Product Photography' },
-  ]);
+  >([]);
 
   const getOptimizedUrl = (item: any, width: number = 800) => {
     if (!item) return '';
     if (typeof item === 'string') return item;
     if (item.asset) {
       try {
-        return urlFor(item).auto('format').fit('max').width(width).url();
+        return urlFor(item).auto('format').quality(80).fit('max').width(width).url();
       } catch (e) {
         console.error('Error building Sanity URL:', e);
       }
@@ -116,7 +95,7 @@ export function HomePage() {
       if (typeof item.image === 'string') return item.image;
       if (item.image.asset) {
         try {
-          return urlFor(item.image).auto('format').fit('max').width(width).url();
+          return urlFor(item.image).auto('format').quality(80).fit('max').width(width).url();
         } catch (e) {
           console.error('Error building Sanity URL:', e);
         }
@@ -208,7 +187,7 @@ export function HomePage() {
           "latitude": 13.120547,
           "longitude": 80.00863
         },
-        "image": "https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+        "image": "/Photos/weddings/01.jpg",
         "priceRange": "₹₹",
         "openingHoursSpecification": [
           {
@@ -285,7 +264,7 @@ export function HomePage() {
         <meta property="og:url" content="https://blacklensphotography.com/" />
         <meta property="og:title" content="Black Lens Photography Chennai | Wedding & Event Photographer" />
         <meta property="og:description" content="Capturing stories and creating timeless memories. Professional photography and videography services across Tamil Nadu specializing in weddings, portraits, and cinematic storytelling." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="og:image" content="/Photos/weddings/01.jpg" />
         <meta property="og:site_name" content="Black Lens Photography" />
 
         {/* Twitter */}
@@ -293,7 +272,7 @@ export function HomePage() {
         <meta property="twitter:url" content="https://blacklensphotography.com/" />
         <meta property="twitter:title" content="Black Lens Photography Chennai | Wedding & Event Photographer" />
         <meta property="twitter:description" content="Capturing stories and creating timeless memories. Professional photography and videography services across Tamil Nadu." />
-        <meta property="twitter:image" content="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080" />
+        <meta property="twitter:image" content="/Photos/weddings/01.jpg" />
 
         {/* JSON-LD Schema */}
         <script type="application/ld+json">
@@ -306,10 +285,12 @@ export function HomePage() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <ImageWithFallback
-            src={getOptimizedUrl(homeContent?.heroImage, 1920) || "https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080"}
-            fallbackSrc="https://images.unsplash.com/photo-1697335638916-ecddb1af171f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWF0aWMlMjB3ZWRkaW5nJTIwcGhvdG9ncmFwaHl8ZW58MXx8fHwxNzY2MDE0NzIyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+            src={getOptimizedUrl(homeContent?.heroImage, 1920) || "/Photos/weddings/01.jpg"}
+            fallbackSrc="/Photos/weddings/01.jpg"
             alt="Cinematic wedding photography by Black Lens Photography Chennai"
             className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]"></div>
         </div>
@@ -359,27 +340,28 @@ export function HomePage() {
       <section className="bg-[#0c0c0c] py-20 relative overflow-hidden dark-grid-texture border-y border-white/5">
         <div className="container mx-auto px-6 md:px-8 lg:px-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-            {(statsData.length > 0
-              ? statsData
-              : [
-                  { value: '500+', label: 'Happy Clients' },
-                  { value: '1000+', label: 'Events Covered' },
-                  { value: '8+', label: 'Years Experience' },
-                  { value: '50K+', label: 'Photos Captured' },
-                ]
-            ).map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center relative premium-glow"
-              >
-                <div className="text-gold mb-3 text-4xl font-bold tracking-tight">{stat.value}</div>
-                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
-              </motion.div>
-            ))}
+            {statsData.length === 0 ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="text-center animate-pulse">
+                  <div className="bg-[#1a1a1a] h-10 w-20 mx-auto rounded mb-3"></div>
+                  <div className="bg-[#1a1a1a] h-6 w-32 mx-auto rounded"></div>
+                </div>
+              ))
+            ) : (
+              statsData.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center relative premium-glow"
+                >
+                  <div className="text-gold mb-3 text-4xl font-bold tracking-tight">{stat.value}</div>
+                  <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider">{stat.label}</p>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -400,37 +382,39 @@ export function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {(servicesData.length > 0
-              ? servicesData
-              : [
-                  { icon: Camera, title: 'Event Photography', description: 'Weddings, birthdays, celebrations captured beautifully' },
-                  { icon: Film, title: 'Cinematography', description: 'Cinematic videos and reels for social media' },
-                  { icon: Users, title: 'Portrait & Fashion', description: 'Professional portraits and fashion shoots' },
-                  { icon: Award, title: 'Commercial Shoots', description: 'Product photography and corporate headshots' },
-                  ]
-            ).map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-                onClick={() => navigate('/services')}
-                className="premium-glass premium-card-border p-8 rounded-xl transition-all duration-300 cursor-pointer group shadow-2xl relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gold/5 to-transparent rounded-full blur-xl pointer-events-none" />
-                <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-gold/20 transition-colors">
-                  {service.icon ? (
-                    <service.icon className="w-7 h-7 text-gold" />
-                  ) : (
-                    <Camera className="w-7 h-7 text-gold" />
-                  )}
+            {servicesData.length === 0 ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="bg-[#1a1a1a] p-8 rounded-xl animate-pulse space-y-4">
+                  <div className="bg-[#2a2a2a] h-14 w-14 rounded-lg"></div>
+                  <div className="bg-[#2a2a2a] h-6 w-2/3 rounded"></div>
+                  <div className="bg-[#2a2a2a] h-12 w-full rounded"></div>
                 </div>
-                <h3 className="text-white text-lg font-bold mb-3">{service.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{service.description}</p>
-              </motion.div>
-            ))}
+              ))
+            ) : (
+              servicesData.map((service, index) => (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -8 }}
+                  onClick={() => navigate('/services')}
+                  className="premium-glass premium-card-border p-8 rounded-xl transition-all duration-300 cursor-pointer group shadow-2xl relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gold/5 to-transparent rounded-full blur-xl pointer-events-none" />
+                  <div className="bg-gold/10 p-4 rounded-lg inline-block mb-6 group-hover:bg-gold/20 transition-colors">
+                    {service.icon ? (
+                      <service.icon className="w-7 h-7 text-gold" />
+                    ) : (
+                      <Camera className="w-7 h-7 text-gold" />
+                    )}
+                  </div>
+                  <h3 className="text-white text-lg font-bold mb-3">{service.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{service.description}</p>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <motion.div
@@ -466,33 +450,36 @@ export function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(featuredPortfolio.length > 0
-              ? featuredPortfolio
-              : [
-                  { imageUrl: 'https://images.unsplash.com/photo-1764380750858-b85ffa2ef37d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicmlkZSUyMHdlZGRpbmclMjBtb21lbnR8ZW58MXx8fHwxNzY2MDg4MTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080', alt: 'Wedding photography portfolio' },
-                  { imageUrl: 'https://images.unsplash.com/photo-1532272278764-53cd1fe53f72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMHBob3RvZ3JhcGh5fGVufDF8fHx8MTc2NjAyMDM4NHww&ixlib=rb-4.1.0&q=80&w=1080', alt: 'Portrait photography portfolio' },
-                  { imageUrl: 'https://images.unsplash.com/photo-1758613654186-6ce234bf94ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwcGhvdG9ncmFwaHklMjBzdHVkaW98ZW58MXx8fHwxNzY2MDE3Mjk4fDA&ixlib=rb-4.1.0&q=80&w=1080', alt: 'Fashion photography portfolio' },
-                ]
-            ).map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="relative h-80 md:h-96 rounded-lg overflow-hidden cursor-pointer group"
-                onClick={() => navigate('/portfolio')}
-              >
-                <ImageWithFallback
-                  src={getOptimizedUrl(item)}
-                  fallbackSrc={item.imageUrl || '/Photos/weddings/01.jpg'}
-                  alt={item.alt || 'Black Lens Photography Portfolio'}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </motion.div>
-            ))}
+            {featuredPortfolio.length === 0 ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-80 md:h-96 rounded-lg bg-[#121212] animate-pulse"></div>
+              ))
+            ) : (
+              featuredPortfolio.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="relative h-80 md:h-96 rounded-lg overflow-hidden cursor-pointer group"
+                  onClick={() => navigate('/portfolio')}
+                >
+                  <ImageWithFallback
+                    src={getOptimizedUrl(item)}
+                    fallbackSrc="/Photos/weddings/01.jpg"
+                    alt={item.alt || "Black Lens Photography Portfolio Item"}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white border border-white/40 px-6 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
+                      View Project
+                    </span>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <motion.div
@@ -531,44 +518,40 @@ export function HomePage() {
             <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-[#1a1a1a] to-transparent z-10"></div>
             <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-[#1a1a1a] to-transparent z-10"></div>
             
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
-              className="flex gap-6 w-max"
-            >
-              {[
-                ...(testimonialsData.length > 0
-                  ? testimonialsData
-                  : [
-                      { name: 'Priya & Rahul', quote: 'Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.', rating: 5, service: 'Wedding Photography' },
-                      { name: 'Ananya Sharma', quote: 'The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!', rating: 5, service: 'Pre-Wedding Shoot' },
-                      { name: 'Tech Innovations Pvt Ltd', quote: 'Outstanding product photography that elevated our brand. Highly professional team!', rating: 5, service: 'Product Photography' },
-                    ]),
-                ...(testimonialsData.length > 0
-                  ? testimonialsData
-                  : [
-                      { name: 'Priya & Rahul', quote: 'Black Lens Photography made our wedding day unforgettable. Every moment was captured with such artistry and emotion.', rating: 5, service: 'Wedding Photography' },
-                      { name: 'Ananya Sharma', quote: 'The pre-wedding shoot was beyond our expectations. Professional, creative, and so much fun!', rating: 5, service: 'Pre-Wedding Shoot' },
-                      { name: 'Tech Innovations Pvt Ltd', quote: 'Outstanding product photography that elevated our brand. Highly professional team!', rating: 5, service: 'Product Photography' },
-                    ])
-              ].map((testimonial, index) => (
-                <div
-                  key={`${testimonial.name}-${index}`}
-                  className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] w-80 md:w-96 flex-shrink-0 hover:border-gold transition-colors"
-                >
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-gold text-gold" />
-                    ))}
+            {testimonialsData.length === 0 ? (
+              <div className="flex gap-6 justify-center w-full animate-pulse">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] w-80 md:w-96 h-48 flex-shrink-0"></div>
+                ))}
+              </div>
+            ) : (
+              <motion.div
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+                className="flex gap-6 w-max"
+              >
+                {[
+                  ...testimonialsData,
+                  ...testimonialsData
+                ].map((testimonial, index) => (
+                  <div
+                    key={`${testimonial.name}-${index}`}
+                    className="bg-[#0a0a0a] p-8 rounded-lg border border-[#2a2a2a] w-80 md:w-96 flex-shrink-0 hover:border-gold transition-colors"
+                  >
+                    <div className="flex gap-1 mb-6">
+                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        <Star key={i} className="w-5 h-5 fill-gold text-gold" />
+                      ))}
+                    </div>
+                    <p className="text-[#e5e5e5] mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
+                    <div>
+                      <p className="text-white mb-1 font-bold">{testimonial.name}</p>
+                      <p className="text-gold text-xs font-semibold uppercase tracking-wider">{testimonial.service}</p>
+                    </div>
                   </div>
-                  <p className="text-[#e5e5e5] mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
-                  <div>
-                    <p className="text-white mb-1">{testimonial.name}</p>
-                    <p className="text-[#9ca3af] text-sm">{testimonial.service}</p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+                ))}
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
