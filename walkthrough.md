@@ -34,6 +34,14 @@ To ensure no stock images or external dependencies are referenced on the website
 * Replaced all fallback image URLs and SEO OpenGraph/Twitter meta tag images across the site components with local asset URLs from `/Photos/` (such as `/Photos/weddings/01.jpg` and `/Photos/portraits/03.jpg`).
 * Removed the `images.unsplash.com` preconnect hint link from `index.html`.
 
+## 5. 100% Dynamic Content & Loading Skeletons
+* **Removed Hardcoded Mock States**:
+  * Set initial React state arrays to empty (`[]`) for services, portfolio items, packages, add-ons, stats, and testimonials on the [HomePage](file:///d:/Data/Project/BlackLens_Website/src/components/HomePage.tsx), [ServicesPage](file:///d:/Data/Project/BlackLens_Website/src/components/ServicesPage.tsx), [PortfolioPage](file:///d:/Data/Project/BlackLens_Website/src/components/PortfolioPage.tsx), and [PackagesPage](file:///d:/Data/Project/BlackLens_Website/src/components/PackagesPage.tsx).
+* **Animated Skeleton Loaders**:
+  * Designed and integrated beautiful, highly-responsive shimmer loading pulse components that display while data is being fetched from Sanity CMS.
+  * Skeletons are customized for each page layout: masonry-like card grid skeletons for Portfolio, listing pulse layouts for Services, pricing card templates for Packages, stat counters, and slide-in blocks for Testimonials.
+
 ## Verification Results
 * **Compilation Status**: Built cleanly with zero typescript errors or build warnings (`vite build` exited successfully with code `0`).
-* **Runtime Verification**: Re-verified the database updates and ensured all assets render without breaking the UI.
+* **Deployment Validation**: Checked the built bundle structure and confirmed all routes and hooks compile into fully-functional dynamic pages.
+
