@@ -123,7 +123,7 @@ export function ContactPage() {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, whatsapp, instagram, facebook, mapEmbedUrl, locationsCovered }`)
+      .fetch(`*[_type == "siteSettings"] | order(_updatedAt desc)[0]{ phone, email, address, businessHours, whatsapp, instagram, facebook, mapEmbedUrl, locationsCovered }`)
       .then(setSettings)
       .catch(console.error);
 

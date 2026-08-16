@@ -108,7 +108,7 @@ export function HomePage() {
   useEffect(() => {
     // Fetch Home Page Settings
     sanityClient
-      .fetch(`*[_type == "homePage"][0]{ heroTitle, heroSubtitle, heroCTA, heroImage }`)
+      .fetch(`*[_type == "homePage"] | order(_updatedAt desc)[0]{ heroTitle, heroSubtitle, heroCTA, heroImage }`)
       .then(data => { if (data) setHomeContent(data); })
       .catch(console.error);
 

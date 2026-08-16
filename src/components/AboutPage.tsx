@@ -60,7 +60,7 @@ export function AboutPage() {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "aboutPage"][0]{ heroTitle, heroSubtitle, heroImage, storyTitle, storyParagraphs, storyImage, visionText, missionText }`)
+      .fetch(`*[_type == "aboutPage"] | order(_updatedAt desc)[0]{ heroTitle, heroSubtitle, heroImage, storyTitle, storyParagraphs, storyImage, visionText, missionText }`)
       .then((data) => {
         if (data) setAboutContent(data);
       })
@@ -74,7 +74,7 @@ export function AboutPage() {
       .catch(console.error);
 
     sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ showTeamSection }`)
+      .fetch(`*[_type == "siteSettings"] | order(_updatedAt desc)[0]{ showTeamSection }`)
       .then((data) => {
         if (data && typeof data.showTeamSection === 'boolean') {
           setShowTeam(data.showTeamSection);

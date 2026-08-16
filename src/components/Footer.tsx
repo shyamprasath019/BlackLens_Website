@@ -37,7 +37,7 @@ export function Footer() {
 
   useEffect(() => {
     sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ phone, email, address, businessHours, instagram, facebook, youtube, whatsapp }`)
+      .fetch(`*[_type == "siteSettings"] | order(_updatedAt desc)[0]{ phone, email, address, businessHours, instagram, facebook, youtube, whatsapp }`)
       .then(setSettings)
       .catch(console.error);
 

@@ -48,7 +48,7 @@ export function PortfolioPage() {
   useEffect(() => {
     // Fetch categories display toggle
     sanityClient
-      .fetch(`*[_type == "siteSettings"][0]{ showPortfolioCategories }`)
+      .fetch(`*[_type == "siteSettings"] | order(_updatedAt desc)[0]{ showPortfolioCategories }`)
       .then((settings) => {
         if (settings && typeof settings.showPortfolioCategories === 'boolean') {
           setShowCategories(settings.showPortfolioCategories);
