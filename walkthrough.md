@@ -40,6 +40,8 @@ To ensure no stock images or external dependencies are referenced on the website
 * **Animated Skeleton Loaders**:
   * Designed and integrated beautiful, highly-responsive shimmer loading pulse components that display while data is being fetched from Sanity CMS.
   * Skeletons are customized for each page layout: masonry-like card grid skeletons for Portfolio, listing pulse layouts for Services, pricing card templates for Packages, stat counters, and slide-in blocks for Testimonials.
+* **Robust Singleton Document Fetching**:
+  * Configured all singleton page queries (`homePage`, `aboutPage`, and `siteSettings`) to append `| order(_updatedAt desc)` before fetching the first item `[0]`. This ensures that even if legacy duplicate configurations exist in the Sanity database, the website always serves the most recently updated CMS settings document.
 
 ## Verification Results
 * **Compilation Status**: Built cleanly with zero typescript errors or build warnings (`vite build` exited successfully with code `0`).
