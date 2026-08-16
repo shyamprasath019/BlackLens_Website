@@ -1,9 +1,53 @@
 import { motion } from 'motion/react';
-import { ShieldCheck, Lock, FileText, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, Lock, FileText, ArrowLeft, Shield, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useEffect, useState } from 'react';
+import { sanityClient } from '../lib/sanityClient';
+
+interface PolicySection {
+  title: string;
+  content: string;
+  items?: string[];
+  icon?: string;
+}
+
+const getIcon = (name?: string) => {
+  if (!name) return FileText;
+  const n = name.toLowerCase();
+  if (n.includes('lock')) return Lock;
+  if (n.includes('shield') || n.includes('rights')) return Shield;
+  if (n.includes('text') || n.includes('document') || n.includes('use')) return FileText;
+  if (n.includes('phone') || n.includes('contact')) return Phone;
+  return FileText;
+};
 
 export function PrivacyPolicyPage() {
+  const [policyData, setPolicyData] = useState<{
+    lastUpdated?: string;
+    sections?: PolicySection[];
+  } | null>(null);
+
+  const [siteSettings, setSiteSettings] = useState<{
+    phone?: string;
+    email?: string;
+    address?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    // Fetch Privacy Policy
+    sanityClient
+      .fetch(`*[_type == "privacyPolicy"] | order(_updatedAt desc)[0]{ lastUpdated, sections }`)
+      .then(setPolicyData)
+      .catch(console.error);
+
+    // Fetch Contact settings
+    sanityClient
+      .fetch(`*[_type == "siteSettings"] | order(_updatedAt desc)[0]{ phone, email, address }`)
+      .then(setSiteSettings)
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="min-h-screen pt-28 pb-20 bg-[#0a0a0a]">
       <Helmet>
@@ -37,7 +81,7 @@ export function PrivacyPolicyPage() {
             <h1 className="text-3xl md:text-5xl font-bold text-white">Privacy Policy</h1>
           </div>
           <p className="text-[#9ca3af] text-sm">
-            Last Updated: August 2026 • Black Lens Photography, Thiruninravur, Chennai
+            Last Updated: {policyData?.lastUpdated || 'August 2026'} • Black Lens Photography, Thiruninravur, Chennai
           </p>
         </motion.div>
 
@@ -48,71 +92,61 @@ export function PrivacyPolicyPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="bg-[#1a1a1a] p-8 md:p-12 rounded-2xl border border-[#2a2a2a] text-[#e5e5e5] space-y-8 text-sm md:text-base leading-relaxed"
         >
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-              <Lock className="w-5 h-5 text-gold" />
-              1. Information We Collect
-            </h2>
-            <p className="text-[#9ca3af]">
-              At Black Lens Photography, we respect your personal privacy. When you interact with our website, inquire about our photography packages, or book a shoot, we may collect the following details:
-            </p>
-            <ul className="list-disc list-inside space-y-1.5 text-[#9ca3af] pl-4">
-              <li>Full Name and Contact details (Phone number, Email address)</li>
-              <li>Event location, shoot dates, and package preferences</li>
-              <li>Inquiry form messages and WhatsApp correspondence</li>
-              <li>Website usage analytics (IP address, browser type, page visit duration)</li>
-            </ul>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-              <FileText className="w-5 h-5 text-gold" />
-              2. How We Use Your Information
-            </h2>
-            <p className="text-[#9ca3af]">
-              The information collected is strictly used to fulfill your service requests and deliver exceptional photography experiences:
-            </p>
-            <ul className="list-disc list-inside space-y-1.5 text-[#9ca3af] pl-4">
-              <li>Communicating shoot schedules, quotes, and contract terms</li>
-              <li>Delivering digital galleries, photo previews, and custom albums</li>
-              <li>Improving website performance and service offerings</li>
-              <li>Sending occasional studio updates with your prior consent</li>
-            </ul>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold text-white">3. Image Rights & Portfolio Usage</h2>
-            <p className="text-[#9ca3af]">
-              As a professional photography studio, we celebrate our clients&apos; stories through our portfolio, website, and social media channels (e.g., Instagram, Facebook). If you prefer your private event or portrait photos to remain undisclosed from public marketing channels, please notify us in writing prior to your shoot date.
-            </p>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold text-white">4. Data Security</h2>
-            <p className="text-[#9ca3af]">
-              We implement industry-standard encryption and secure digital storage protocols to protect your personal details and high-resolution photo archives from unauthorized access or disclosure.
-            </p>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold text-white">5. Third-Party Services</h2>
-            <p className="text-[#9ca3af]">
-              We do not sell, rent, or trade your personal information to third parties. Third-party cloud storage and gallery hosting platforms used for delivering high-res photos adhere to strict data privacy policies.
-            </p>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-xl font-semibold text-white">6. Contact Us</h2>
-            <p className="text-[#9ca3af]">
-              If you have any questions regarding this Privacy Policy or wish to update your data preferences, please contact our studio team:
-            </p>
-            <div className="bg-[#0a0a0a] p-4 rounded-xl border border-[#2a2a2a] text-sm text-[#9ca3af]">
-              <p className="text-white font-medium">Black Lens Photography Studio</p>
-              <p>No: 23, Gomathi Puram, 1st Main Road, Thiruninravur, Chennai, Tamil Nadu</p>
-              <p>Email: <a href="mailto:info@blacklensphotography.com" className="text-gold hover:underline">info@blacklensphotography.com</a></p>
-              <p>Phone: +91 9361177140 / +91 7092221429</p>
+          {!policyData ? (
+            <div className="animate-pulse space-y-12">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-gold/5 h-8 w-8 rounded-lg"></div>
+                    <div className="bg-[#2a2a2a] h-7 w-1/3 rounded"></div>
+                  </div>
+                  <div className="bg-[#2a2a2a] h-4 w-full rounded"></div>
+                  <div className="bg-[#2a2a2a] h-4 w-5/6 rounded"></div>
+                  <div className="space-y-2 pl-4">
+                    <div className="bg-[#2a2a2a] h-4 w-1/2 rounded"></div>
+                    <div className="bg-[#2a2a2a] h-4 w-2/3 rounded"></div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </section>
+          ) : (
+            policyData.sections?.map((section, index) => {
+              const IconComponent = getIcon(section.icon);
+              const isContactSection = section.title.toLowerCase().includes('contact');
+
+              return (
+                <section key={index} className="space-y-3">
+                  <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+                    <IconComponent className="w-5 h-5 text-gold" />
+                    {section.title}
+                  </h2>
+                  <p className="text-[#9ca3af]">{section.content}</p>
+                  {section.items && section.items.length > 0 && (
+                    <ul className="list-disc list-inside space-y-1.5 text-[#9ca3af] pl-4">
+                      {section.items.map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {isContactSection && siteSettings && (
+                    <div className="bg-[#0a0a0a] p-4 rounded-xl border border-[#2a2a2a] text-sm text-[#9ca3af] mt-4 space-y-1">
+                      <p className="text-white font-medium">Black Lens Photography Studio</p>
+                      {siteSettings.address && <p>{siteSettings.address}</p>}
+                      {siteSettings.email && (
+                        <p>
+                          Email:{' '}
+                          <a href={`mailto:${siteSettings.email}`} className="text-gold hover:underline">
+                            {siteSettings.email}
+                          </a>
+                        </p>
+                      )}
+                      {siteSettings.phone && <p>Phone: {siteSettings.phone}</p>}
+                    </div>
+                  )}
+                </section>
+              );
+            })
+          )}
         </motion.div>
       </div>
     </div>

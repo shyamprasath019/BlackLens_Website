@@ -34,6 +34,20 @@ export const structure = (S: StructureBuilder) =>
             .documentId('homePage')
         ),
       S.listItem()
+        .title('🛡️ Privacy Policy')
+        .child(
+          S.document()
+            .schemaType('privacyPolicy')
+            .documentId('privacyPolicy')
+        ),
+      S.listItem()
+        .title('⚖️ Terms of Service')
+        .child(
+          S.document()
+            .schemaType('termsOfService')
+            .documentId('termsOfService')
+        ),
+      S.listItem()
         .title('⚙️ Site Settings')
         .child(
           S.document()
@@ -43,6 +57,6 @@ export const structure = (S: StructureBuilder) =>
       
       // Filter out types that are already handled as singletons
       ...S.documentTypeListItems().filter(
-        (listItem) => !['homePage', 'siteSettings', 'portfolioItem', 'testimonial', 'package', 'service', 'stat'].includes(listItem.getId()!)
+        (listItem) => !['homePage', 'privacyPolicy', 'termsOfService', 'siteSettings', 'portfolioItem', 'testimonial', 'package', 'service', 'stat'].includes(listItem.getId()!)
       ),
     ]);

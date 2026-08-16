@@ -8,6 +8,8 @@ import stat from './stat';
 import addOnService from './addOnService';
 import aboutPage from './aboutPage';
 import teamMember from './teamMember';
+import privacyPolicy from './privacyPolicy';
+import termsOfService from './termsOfService';
 
 export const schemaTypes = [
   siteSettings,
@@ -20,4 +22,6 @@ export const schemaTypes = [
   addOnService,
   aboutPage,
   teamMember,
+  privacyPolicy,
+  termsOfService,
 ];
