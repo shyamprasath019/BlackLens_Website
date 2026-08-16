@@ -42,6 +42,10 @@ To ensure no stock images or external dependencies are referenced on the website
   * Skeletons are customized for each page layout: masonry-like card grid skeletons for Portfolio, listing pulse layouts for Services, pricing card templates for Packages, stat counters, and slide-in blocks for Testimonials.
 * **Robust Singleton Document Fetching**:
   * Configured all singleton page queries (`homePage`, `aboutPage`, and `siteSettings`) to append `| order(_updatedAt desc)` before fetching the first item `[0]`. This ensures that even if legacy duplicate configurations exist in the Sanity database, the website always serves the most recently updated CMS settings document.
+* **Dynamic Legal Pages (Privacy & Terms)**:
+  * Created Sanity CMS schemas for `privacyPolicy` and `termsOfService` singleton documents and registered them in the Sanity Studio structure.
+  * Seeded the production database with initial data matching the previous copy, making it immediately editable from the CMS.
+  * Re-architected [PrivacyPolicyPage.tsx](file:///d:/Data/Project/BlackLens_Website/src/components/PrivacyPolicyPage.tsx) and [TermsPage.tsx](file:///d:/Data/Project/BlackLens_Website/src/components/TermsPage.tsx) to fetch policy sections dynamically from Sanity, render animated loading skeletons while fetching, and dynamically map contact details directly from `siteSettings`.
 
 ## Verification Results
 * **Compilation Status**: Built cleanly with zero typescript errors or build warnings (`vite build` exited successfully with code `0`).
